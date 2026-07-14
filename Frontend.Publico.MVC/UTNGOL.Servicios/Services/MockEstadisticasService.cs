@@ -26,7 +26,7 @@ public class MockEstadisticasService : IEstadisticasService
     public async Task<List<PosicionDTO>> ObtenerTablaPosicionesAsync()
     {
         return await Task.FromResult(new List<PosicionDTO> {
-            new PosicionDTO { Nombre = "Ecuador", Puntos = 3 }
+            new PosicionDTO { Nombre = "Ecuador", Puntos = 3, PartidosJugados = 1 }
         });
     }
 

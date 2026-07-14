@@ -1,41 +1,46 @@
-﻿<link rel="stylesheet" href="~/css/calendario-estilo.css" />
+﻿@model List<UTNGOL.Servicios.DTOs.PosicionDTO>
+
+<link rel="stylesheet" href="~/css/calendario-estilo.css" />
 
 <div class="container-fluid">
-    <h1 class="text-white mb-4"><i class="bi bi-calendar-event"></i> Calendario de Partidos</h1>
+    <h1 class="text-white mb-4"><i class="bi bi-graph-up-arrow"></i> Tabla de Posiciones</h1>
 
     <div class="calendar-container">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Partido</th>
-                    <th>Estadio</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>15 JUL</td>
-                    <td><strong>ECU vs MEX</strong></td>
-                    <td>Estadio Azteca</td>
-                    <td><span class="badge bg-success">En vivo</span></td>
-                </tr>
-                <tr>
-                    <td>18 JUL</td>
-                    <td><strong>USA vs CAN</strong></td>
-                    <td>SoFi Stadium</td>
-                    <td>Próximamente</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="match-card">
-                <h5>⚽ Gran Final</h5>
-                <p>25 de Julio - 20:00</p>
+        @if (Model != null && Model.Any())
+        {
+            <table class="table text-white align-middle">
+                <thead>
+                    <tr>
+                        <th>Selección</th>
+                        <th>PJ</th>
+                        <th>V</th>
+                        <th>E</th>
+                        <th>D</th>
+                        <th>DG</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.Nombre</strong> <small class="text-secondary">(@item.CodigoFifa)</small></td>
+                            <td>@item.PartidosJugados</td>
+                            <td>@item.Victorias</td>
+                            <td>@item.Empates</td>
+                            <td>@item.Derrotas</td>
+                            <td>@item.DiferenciaGoles</td>
+                            <td class="text-warning fw-bold">@item.Puntos</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <p class="text-white">No hay datos de posiciones disponibles en este momento.</p>
             </div>
-        </div>
+        }
     </div>
 </div>

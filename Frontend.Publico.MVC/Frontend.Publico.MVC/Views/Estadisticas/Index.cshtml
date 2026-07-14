@@ -1,0 +1,36 @@
+﻿@model IEnumerable<UTNGOL.Servicios.DTOs.PosicionDTO>
+<link rel="stylesheet" href="~/css/calendario-estilo.css" />
+
+<div class="container-fluid">
+    <h1 class="text-white mb-4"><i class="bi bi-graph-up-arrow"></i> Tabla de Posiciones</h1>
+
+    <div class="calendar-container">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th>Selección</th>
+                    <th>PJ</th>
+                    <th>V</th>
+                    <th>E</th>
+                    <th>D</th>
+                    <th>DG</th>
+                    <th>PTS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nombre (@item.CodigoFifa)</td>
+                        <td>@item.PartidosJugados</td>
+                        <td>@item.Victorias</td>
+                        <td>@item.Empates</td>
+                        <td>@item.Derrotas</td>
+                        <td>@item.DiferenciaGoles</td>
+                        <td class="text-warning fw-bold">@item.Puntos</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
