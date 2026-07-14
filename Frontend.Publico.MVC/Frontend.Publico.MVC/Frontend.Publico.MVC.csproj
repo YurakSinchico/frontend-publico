@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UTNGOL.Servicios\UTNGOL.Servicios.csproj" />
   </ItemGroup>
 

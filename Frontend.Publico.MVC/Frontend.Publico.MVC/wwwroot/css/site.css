@@ -1,31 +1,67 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+    --verde-dark: #004a22;
+    --verde-medio: #48ac77;
+    --crema: #e8e5d0;
+    --blanco-hueso: #f5f3e7;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    /* Aplicamos la imagen de fondo con filtro para no distraer */
+    background-image: url('/images/fondo-fifa.jpg'); /* Asegúrate de que esta ruta sea correcta */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 40, 10, 0.85); /* Capa verde para que no distraiga */
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Barra lateral con el degradado de tu gama */
+.sidebar {
+    width: 80px;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--verde-dark) 0%, var(--verde-medio) 100%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: width 0.3s ease;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.2);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    .sidebar:hover {
+        width: 240px;
+    }
+
+/* Contenido principal */
+.main-content {
+    margin-left: 100px;
+    padding: 40px;
+}
+
+/* Tarjetas con efecto de elevación y legibilidad */
+.card-ui {
+    background: rgba(255, 255, 255, 0.95); /* Legibilidad sobre el fondo colorido */
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+    .card-ui:hover {
+        transform: translateY(-15px); /* Se sube el cuadrito */
+        box-shadow: 0 20px 30px rgba(0,0,0,0.4);
+    }
+
+/* Botones con tu color oscuro */
+.btn-mundial {
+    background: var(--verde-dark);
+    color: white;
+    border-radius: 10px;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
 }

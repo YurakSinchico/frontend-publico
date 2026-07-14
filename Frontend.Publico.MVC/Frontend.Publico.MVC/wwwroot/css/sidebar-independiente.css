@@ -1,0 +1,42 @@
+﻿.sidebar-wrapper {
+    width: 80px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.1); /* Fondo claro semitransparente */
+    backdrop-filter: blur(20px); /* Efecto vidrio */
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Animación suave */
+    z-index: 1000;
+    overflow: hidden;
+}
+
+    .sidebar-wrapper:hover {
+        width: 280px;
+    }
+
+.nav-link-vivid {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    margin: 10px;
+    transition: background 0.3s;
+}
+
+    .nav-link-vivid:hover {
+        background: rgba(212, 175, 55, 0.3);
+    }
+/* Dorado suave */
+.nav-text {
+    opacity: 0;
+    margin-left: 20px;
+    transition: opacity 0.3s;
+}
+
+.sidebar-wrapper:hover .nav-text {
+    opacity: 1;
+}
