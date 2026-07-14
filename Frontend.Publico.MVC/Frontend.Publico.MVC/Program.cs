@@ -1,3 +1,6 @@
+using UTNGOL.Servicios.Interface;
+using UTNGOL.Servicios.Services;
+
 namespace Frontend.Publico.MVC
 {
     public class Program
@@ -8,7 +11,7 @@ namespace Frontend.Publico.MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<IEstadisticasService, MockEstadisticasService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

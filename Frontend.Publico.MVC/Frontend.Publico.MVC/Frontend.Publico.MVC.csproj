@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UTNGOL.Servicios\UTNGOL.Servicios.csproj" />
+  </ItemGroup>
+
 </Project>

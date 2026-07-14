@@ -1,0 +1,10 @@
+﻿@model IEnumerable<UTNGOL.Servicios.DTOs.PartidoDTO>
+
+<h2>Partidos</h2>
+
+<ul>
+    @foreach (var p in Model)
+    {
+        <li>@p.SeleccionLocal vs @p.SeleccionVisitante - Estado: @p.Estado</li>
+    }
+</ul>
