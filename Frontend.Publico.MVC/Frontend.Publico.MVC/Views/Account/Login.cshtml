@@ -1,0 +1,34 @@
+﻿@model UTNGOL.Servicios.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+        <h2 class="text-white text-center mb-4">UTN GolMundial 2026</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label text-white">Correo Electrónico</label>
+                <input asp-for="Email" class="form-control" style="background: rgba(0,0,0,0.3); color: white; border: 1px solid #ffc107;" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label text-white">Contraseña</label>
+                <input asp-for="Password" type="password" class="form-control" style="background: rgba(0,0,0,0.3); color: white; border: 1px solid #ffc107;" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-warning w-100 fw-bold mt-3">INGRESAR</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-action="Register" class="text-decoration-none text-white-50">¿No tienes cuenta? Regístrate</a>
+        </div>
+    </div>
+</div>

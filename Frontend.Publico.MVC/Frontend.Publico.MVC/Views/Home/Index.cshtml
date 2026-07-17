@@ -1,15 +1,26 @@
-﻿<div class="gif-hero"></div>
+﻿@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="gif-hero"></div>
 <div class="dark-overlay"></div>
 
-<div class="container-fluid">
-    <h1 class="display-2 fw-bold text-white mb-5">FIFA 26 MUNDIAL UTNGOL</h1>
-    <div class="row g-4">
-        <div class="col-md-4">
+<div class="container-fluid py-5">
+    <h1 class="display-2 fw-bold text-white mb-5 text-center">FIFA 26 MUNDIAL UTNGOL</h1>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-3">
             <a asp-controller="Calendario" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card"><h3>📅 Calendario</h3><p>Partidos y horarios.</p></div>
+                <div class="flash-card">
+                    <h3>📅 Calendario</h3>
+                    <p>Partidos y horarios.</p>
+                </div>
             </a>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-3">
             <a asp-controller="Estadisticas" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
                     <h3>📊 Estadísticas</h3>
@@ -17,10 +28,49 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-4">
-            <a asp-controller="Billetera" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card"><h3>💰 UTNGolCoin</h3><p>Gestión financiera.</p></div>
-            </a>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="col-md-3">
+                <a asp-controller="Billetera" asp-action="Index" class="text-decoration-none">
+                    <div class="flash-card">
+                        <h3>💰 UTNGolCoin</h3>
+                        <p>Gestión financiera y predicciones.</p>
+                    </div>
+                </a>
+            </div>
+        }
+
+        @if (User.IsInRole("Administrador"))
+        {
+            <div class="col-md-3">
+                <a asp-controller="Admin" asp-action="Dashboard" class="text-decoration-none">
+                    <div class="flash-card" style="border: 2px solid #ffc107;">
+                        <h3>⚙️ Panel Admin</h3>
+                        <p>Gestión del sistema.</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <button type="button" class="btn btn-outline-warning btn-lg px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-person-circle"></i> Iniciar Sesión / Registrarse
+                    </button>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-center gap-3">
+                        <span class="text-white align-self-center">Bienvenido, <strong>@User.Identity.Name</strong></span>
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger btn-lg">Cerrar Sesión</a>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>

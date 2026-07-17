@@ -1,0 +1,52 @@
+﻿@model List<UTNGOL.Servicios.DTOs.PosicionDTO>
+
+<link rel="stylesheet" href="~/css/calendario-estilo.css" />
+
+<div class="container-fluid py-4">
+    <div class="d-flex align-items-center mb-4">
+        <h1 class="text-white m-0"><i class="bi bi-graph-up-arrow text-warning me-2"></i> Tabla de Posiciones</h1>
+    </div>
+
+    <div class="calendar-container shadow-lg p-3 mb-5 rounded bg-dark bg-opacity-50">
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-hover table-dark table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Selección</th>
+                        <th class="text-center">PJ</th>
+                        <th class="text-center">V</th>
+                        <th class="text-center">E</th>
+                        <th class="text-center">D</th>
+                        <th class="text-center">DG</th>
+                        <th class="text-center">PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Nombre</strong>
+                                <small class="text-secondary d-block">(@item.CodigoFifa)</small>
+                            </td>
+                            <td class="text-center">@item.PartidosJugados</td>
+                            <td class="text-center">@item.Victorias</td>
+                            <td class="text-center">@item.Empates</td>
+                            <td class="text-center">@item.Derrotas</td>
+                            <td class="text-center">@item.DiferenciaGoles</td>
+                            <td class="text-center text-warning fw-bold">@item.Puntos</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-emoji-frown text-white fs-1"></i>
+                <p class="text-white mt-3">No hay datos de posiciones disponibles en este momento.</p>
+            </div>
+        }
+    </div>
+</div>

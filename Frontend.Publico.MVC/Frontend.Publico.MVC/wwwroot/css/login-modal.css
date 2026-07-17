@@ -1,0 +1,66 @@
+﻿/* login-modal.css */
+.modal-content-ecumex {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    border: none !important;
+}
+
+.modal-header-ecumex {
+    border: none !important;
+    text-align: center !important;
+    display: block !important;
+}
+
+.icon-ecumex {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.title-ecumex {
+    font-weight: bold !important;
+}
+
+.subtitle-ecumex {
+    color: #6c757d !important;
+    font-size: 0.8rem !important;
+}
+
+.modal-input-ecumex {
+    background: #f8f9fa !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 8px !important;
+}
+
+.label-ecumex {
+    color: #6c757d !important;
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+}
+
+.btn-login-ecumex {
+    background-color: #00d4b4 !important;
+    border: none !important;
+    color: white !important;
+    width: 100% !important;
+    padding: 12px !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+}
+
+.register-container-ecumex {
+    text-align: center !important;
+    margin-top: 1.5rem !important;
+}
+
+.register-text-ecumex {
+    color: #6c757d !important;
+    font-size: 0.75rem !important;
+}
+
+.link-register-ecumex {
+    color: #00d4b4 !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    font-size: 0.85rem !important;
+}
