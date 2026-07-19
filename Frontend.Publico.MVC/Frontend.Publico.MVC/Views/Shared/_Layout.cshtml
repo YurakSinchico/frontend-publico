@@ -14,11 +14,13 @@
         @RenderBody()
     </main>
 
+    <!-- Modal de Login Original -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-ecumex">
                 <div class="modal-header modal-header-ecumex">
                     <div class="w-100">
+                        <!-- Aquí va tu gif/icono original -->
                         <div class="icon-ecumex">⚡</div>
                         <h4 class="title-ecumex">UTN GOL MUNDIAL</h4>
                         <p class="subtitle-ecumex">TODO EMPIEZA AQUÍ</p>
@@ -27,20 +29,20 @@
                 <div class="modal-body">
                     <form asp-controller="Account" asp-action="Login" method="post">
                         @Html.AntiForgeryToken()
-
                         <div class="mb-3">
                             <label class="label-ecumex">USUARIO / CORREO</label>
-                            <input type="email" name="Email" class="form-control" value="admin@utn.edu.ec" required />
+                            <input type="email" name="Email" class="form-control" required />
                         </div>
                         <div class="mb-3">
                             <label class="label-ecumex">CONTRASEÑA</label>
-                            <input type="password" name="Password" class="form-control" value="12345678" required />
+                            <input type="password" name="Password" class="form-control" required />
                         </div>
                         <button type="submit" class="btn-login-ecumex">INGRESAR AL SISTEMA</button>
                     </form>
                     <div class="register-container-ecumex">
                         <p class="register-text-ecumex">¿AÚN NO TIENES CUENTA?</p>
-                        <a href="#" class="link-register-ecumex">REGÍSTRATE AQUÍ →</a>
+                        <!-- Redirección corregida al controlador de registro -->
+                        <a asp-controller="Account" asp-action="Register" class="link-register-ecumex">REGÍSTRATE AQUÍ →</a>
                     </div>
                 </div>
             </div>

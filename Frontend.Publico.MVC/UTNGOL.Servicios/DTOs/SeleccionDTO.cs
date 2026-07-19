@@ -16,8 +16,13 @@ namespace UTNGOL.Servicios.DTOs
         [JsonPropertyName("group")]
         public string Grupo { get; set; }
 
-        // Agrega el resto de propiedades si las necesitas...
-        [JsonPropertyName("confederation")] // Asegúrate de que el nombre entre comillas coincida con el JSON
+        [JsonPropertyName("points")]
+        public int Puntos { get; set; }
+
+        [JsonPropertyName("matchesPlayed")]
+        public int PartidosJugados { get; set; }
+
+        [JsonPropertyName("confederation")]
         public string Confederacion { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using UTNGOL.Servicios.DTOs;
 using UTNGOL.Servicios.Interface;
 
 namespace Frontend.Publico.MVC.Controllers
@@ -18,10 +20,29 @@ namespace Frontend.Publico.MVC.Controllers
         // GET: CalendarioController
         public async Task<IActionResult> Index()
         {
-            var partidos = await _service.ObtenerPartidosAsync();
-            return View(partidos); // Envía los datos a la vista
-        }
+            // Asegúrate de que esta URL sea exactamente la IP de tu Fedora (192.168.100.138)
+            var url = "http://192.168.100.138:8080/estadisticas-backend/api/partidos";
 
+            using var client = new HttpClient();
+            try
+            {
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    // Esto deserializa el JSON en tu lista de objetos DTO
+                    var partidos = JsonSerializer.Deserialize<List<PartidoDTO>>(json);
+                    return View(partidos);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Si hay error de conexión, imprime en la consola de Visual Studio
+                Console.WriteLine("Error al conectar con la API: " + ex.Message);
+            }
+
+            return View(new List<PartidoDTO>()); // Retorna lista vacía si hay error
+        }
         // GET: CalendarioController/Details/5
         public ActionResult Details(int id)
         {

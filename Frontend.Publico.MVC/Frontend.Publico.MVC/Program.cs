@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using UTNGOL.Servicios.Interface;
 using UTNGOL.Servicios.Services;
 
@@ -9,12 +10,10 @@ namespace Frontend.Publico.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Configuración de Autenticación
-            builder.Services.AddAuthentication("CookieAuth")
-                .AddCookie("CookieAuth", options => {
-                    options.LoginPath = "/Account/Login";
-                    options.AccessDeniedPath = "/Home/AccessDenied";
-                });
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+     .AddCookie(options => {
+         options.LoginPath = "/Account/Login";
+     });
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient<IEstadisticasService, EstadisticasService>();

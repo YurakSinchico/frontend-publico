@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json; // Importante
 using System.Text.Json.Serialization; // Necesario para el mapeo
 
 namespace UTNGOL.Servicios.DTOs
@@ -7,12 +8,11 @@ namespace UTNGOL.Servicios.DTOs
     {
         [JsonPropertyName("idMatch")]
         public int IdPartido { get; set; }
-
         [JsonPropertyName("fifaMatchNumber")]
-        public int NumeroPartidoFifa { get; set; }
+        public int? NumeroPartidoFifa { get; set; }
 
-        [JsonPropertyName("utcDateTime")]
-        public DateTime FechaHoraUtc { get; set; }
+        [JsonPropertyName("matchDateTimeUtc")]
+        public long? FechaHoraUtc { get; set; }
 
         [JsonPropertyName("status")]
         public string Estado { get; set; }
@@ -29,13 +29,13 @@ namespace UTNGOL.Servicios.DTOs
         [JsonPropertyName("awayGoals")]
         public int? GolesVisitante { get; set; }
 
-        [JsonPropertyName("stadium")]
+        [JsonPropertyName("venue")] // Cambiado de 'stadium' a 'venue' según tu JSON
         public string Estadio { get; set; }
 
         [JsonPropertyName("group")]
         public string Grupo { get; set; }
 
-        [JsonPropertyName("stage")]
+        [JsonPropertyName("phase")] // Cambiado de 'stage' a 'phase' según tu JSON
         public string Fase { get; set; }
     }
 }

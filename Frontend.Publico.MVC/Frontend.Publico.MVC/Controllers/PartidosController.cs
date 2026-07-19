@@ -1,85 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using UTNGOL.Servicios.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using UTNGOL.Servicios.DTOs;
+using System.Net.Http;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class PartidosController : Controller
     {
-        private readonly IEstadisticasService _service;
-        public PartidosController(IEstadisticasService service) => _service = service;
-
         public async Task<IActionResult> Index()
         {
-            var partidos = await _service.ObtenerPartidosAsync();
-            return View(partidos);
-        }
-        // GET: PartidosController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: PartidosController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PartidosController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                using var client = new HttpClient();
+                // Usamos la IP de tu servidor
+                var url = "http://192.168.100.138:8080/estadisticas-backend/api/partidos";
 
-        // GET: PartidosController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                var response = await client.GetAsync(url);
 
-        // POST: PartidosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var partidos = JsonSerializer.Deserialize<List<PartidoDTO>>(json, options);
 
-        // GET: PartidosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PartidosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                    return View(partidos);
+                }
+                else
+                {
+                    // Si el servidor responde un error, veremos el código aquí
+                    return Content("Error del servidor: " + response.StatusCode);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Si la conexión falla (Firewall, IP mal, etc), veremos esto
+                return Content("Error de conexión: " + ex.Message);
             }
         }
     }

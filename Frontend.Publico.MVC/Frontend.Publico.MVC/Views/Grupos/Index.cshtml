@@ -1,0 +1,37 @@
+﻿@model IEnumerable<IGrouping<string, UTNGOL.Servicios.DTOs.SeleccionDTO>>
+
+@{
+    ViewData["Title"] = "Grupos";
+}
+
+<h1 class="mb-4">Clasificación por Grupos</h1>
+
+@foreach (var grupo in Model)
+{
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>@grupo.Key</h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Selección</th>
+                    <th>Código FIFA</th>
+                    <th>Puntos</th>
+                    <th>Partidos Jugados</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var seleccion in grupo)
+                {
+                    <tr>
+                        <td>@seleccion.Nombre</td>
+                        <td>@seleccion.CodigoFifa</td>
+                        <td>@seleccion.Puntos</td>
+                        <td>@seleccion.PartidosJugados</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

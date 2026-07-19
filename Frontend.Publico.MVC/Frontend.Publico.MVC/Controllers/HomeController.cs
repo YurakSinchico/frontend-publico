@@ -1,21 +1,29 @@
 using Frontend.Publico.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using UTNGOL.Servicios.Interface; // Asegúrate de tener este using
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IEstadisticasService _service; // 1. Variable para el servicio
 
-        public HomeController(ILogger<HomeController> logger)
+        // 2. Inyectamos el servicio en el constructor
+        public HomeController(ILogger<HomeController> logger, IEstadisticasService service)
         {
             _logger = logger;
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // 3. Llamamos a la API para obtener los datos
+            var grupos = await _service.ObtenerGruposAsync();
+
+            // Enviamos los datos a la vista
+            return View(grupos);
         }
 
         public IActionResult Privacy()

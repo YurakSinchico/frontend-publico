@@ -8,10 +8,12 @@ namespace UTNGOL.Servicios.Interface
 {
     public interface IEstadisticasService
     {
-        Task<List<PartidoDTO>> ObtenerPartidosAsync();
-        Task<List<PosicionDTO>> ObtenerTablaPosicionesAsync();
-        // Y este para los grupos
+        // Dentro de IEstadisticasService.cs
+        Task<GrupoDTO> ObtenerTablaPosicionesAsync(int idGrupo);
         Task<List<GrupoDTO>> ObtenerGruposAsync();
+
+        // Y este para los grupos
+        Task<List<PartidoDTO>> ObtenerPartidosAsync();
 
         // Y este para selecciones
         Task<List<SeleccionDTO>> ObtenerSeleccionesAsync();

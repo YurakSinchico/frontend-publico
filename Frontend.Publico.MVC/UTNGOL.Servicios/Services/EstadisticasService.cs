@@ -11,7 +11,7 @@ namespace UTNGOL.Servicios.Services
     public class EstadisticasService : IEstadisticasService
     {
         private readonly HttpClient _httpClient;
-        // Definimos la base correcta según lo que funciona en tu API
+        // La URL base apunta a tu máquina virtual Fedora con el contexto del despliegue
         private readonly string _baseUrl = "http://192.168.100.138:8080/estadisticas-backend/api";
 
         public EstadisticasService(HttpClient httpClient)
@@ -21,17 +21,54 @@ namespace UTNGOL.Servicios.Services
 
         public async Task<List<PartidoDTO>> ObtenerPartidosAsync()
         {
-            // Cambiamos "/matches" por "/partidos" para que coincida con tu @Path en Java
-            return await _httpClient.GetFromJsonAsync<List<PartidoDTO>>($"{_baseUrl}/partidos") ?? new();
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<PartidoDTO>>($"{_baseUrl}/partidos") ?? new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar con Estadísticas (Partidos): {ex.Message}");
+                return new List<PartidoDTO>();
+            }
         }
 
-        public async Task<List<PosicionDTO>> ObtenerTablaPosicionesAsync() =>
-            await _httpClient.GetFromJsonAsync<List<PosicionDTO>>($"{_baseUrl}/posiciones") ?? new();
+        public async Task<GrupoDTO> ObtenerTablaPosicionesAsync(int idGrupo)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<GrupoDTO>($"{_baseUrl}/grupos/{idGrupo}/posiciones");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar con Estadísticas (Posiciones): {ex.Message}");
+                return null;
+            }
+        }
 
-        public async Task<List<GrupoDTO>> ObtenerGruposAsync() =>
-            await _httpClient.GetFromJsonAsync<List<GrupoDTO>>($"{_baseUrl}/grupos") ?? new();
+        public async Task<List<GrupoDTO>> ObtenerGruposAsync()
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<GrupoDTO>>($"{_baseUrl}/grupos") ?? new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar con Estadísticas (Grupos): {ex.Message}");
+                return new List<GrupoDTO>();
+            }
+        }
 
-        public async Task<List<SeleccionDTO>> ObtenerSeleccionesAsync() =>
-            await _httpClient.GetFromJsonAsync<List<SeleccionDTO>>($"{_baseUrl}/selecciones") ?? new();
+        public async Task<List<SeleccionDTO>> ObtenerSeleccionesAsync()
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<SeleccionDTO>>($"{_baseUrl}/selecciones") ?? new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar con Estadísticas (Selecciones): {ex.Message}");
+                return new List<SeleccionDTO>();
+            }
+        }
     }
 }

@@ -4,43 +4,42 @@ using UTNGOL.Servicios.Interface;
 
 namespace Frontend.Publico.MVC.Controllers
 {
-    public class EstadisticasController : Controller
+    public class GruposController : Controller
     {
         private readonly IEstadisticasService _estadisticasService;
-        public EstadisticasController(IEstadisticasService estadisticasService)
+
+        public GruposController(IEstadisticasService estadisticasService)
         {
             _estadisticasService = estadisticasService;
         }
-        // GET: EstadisticasController
-        // GET: EstadisticasController
-        public async Task<IActionResult> Index(int id = 1)
+        // GET: GruposController
+        // GET: GruposController
+        public async Task<IActionResult> Index()
         {
-            // 1. Obtenemos el objeto completo del servicio
-            var grupo = await _estadisticasService.ObtenerTablaPosicionesAsync(id);
+            // 1. Obtener todas las selecciones de la API usando el nombre correcto: _estadisticasService
+            var selecciones = await _estadisticasService.ObtenerSeleccionesAsync();
 
-            // 2. Si el grupo es nulo o no tiene posiciones, enviamos una lista vacía
-            if (grupo == null || grupo.Posiciones == null)
-            {
-                return View(new List<UTNGOL.Servicios.DTOs.PosicionDTO>());
-            }
+            // 2. Agruparlas por la propiedad Grupo
+            // Asegúrate que en tu SeleccionDTO la propiedad se llame exactamente 'Grupo'
+            var gruposAgrupados = selecciones.GroupBy(s => s.Grupo)
+                                            .OrderBy(g => g.Key);
 
-            // 3. ENVIAMOS SOLO LA LISTA, que es lo que tu vista espera
-            return View(grupo.Posiciones);
+            return View(gruposAgrupados);
         }
 
-        // GET: EstadisticasController/Details/5
+        // GET: GruposController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: EstadisticasController/Create
+        // GET: GruposController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EstadisticasController/Create
+        // POST: GruposController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -55,13 +54,13 @@ namespace Frontend.Publico.MVC.Controllers
             }
         }
 
-        // GET: EstadisticasController/Edit/5
+        // GET: GruposController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: EstadisticasController/Edit/5
+        // POST: GruposController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -76,13 +75,13 @@ namespace Frontend.Publico.MVC.Controllers
             }
         }
 
-        // GET: EstadisticasController/Delete/5
+        // GET: GruposController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: EstadisticasController/Delete/5
+        // POST: GruposController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
