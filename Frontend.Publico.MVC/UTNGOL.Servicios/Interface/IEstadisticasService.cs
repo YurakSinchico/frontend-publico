@@ -14,7 +14,7 @@ namespace UTNGOL.Servicios.Interface
         Task<List<GrupoDTO>> ObtenerGruposAsync();
 
         // Y este para selecciones
-        Task<List<SeleccionDTO>> ObtenerSeleccionAsync(string codigoFifa);
+        Task<List<SeleccionDTO>> ObtenerSeleccionesAsync();
     }
 }
 

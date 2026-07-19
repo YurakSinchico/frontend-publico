@@ -1,0 +1,23 @@
+﻿@model IEnumerable<UTNGOL.Servicios.DTOs.SeleccionDTO>
+
+<h1>Selecciones Disponibles</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Código FIFA</th>
+            <th>Grupo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.CodigoFifa</td>
+                <td>@item.Grupo</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<UTNGOL.Servicios.DTOs.GrupoDTO>
+
+<h2>Conexión con Fedora - Test de Grupos</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Nombre</th>
+        </tr>
+        @foreach (var grupo in Model)
+        {
+            <tr>
+                <td>@grupo.IdGrupo</td>
+                <td>@grupo.Codigo</td>
+                <td>@grupo.Nombre</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p style="color:red;">No se recibieron datos. Revisa la consola o la IP de tu servidor.</p>
+}

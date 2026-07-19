@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace UTNGOL.Servicios.DTOs
 {
     public class SeleccionDTO
     {
+        [JsonPropertyName("idTeam")]
         public int IdSeleccion { get; set; }
+
+        [JsonPropertyName("name")]
         public string Nombre { get; set; }
+
+        [JsonPropertyName("fifaCode")]
         public string CodigoFifa { get; set; }
-        public bool EsAnfitrion { get; set; }
-        public string Clasificacion { get; set; }
+
+        [JsonPropertyName("group")]
         public string Grupo { get; set; }
-        public string Confederacion { get; set; }
-        public int PartidosJugados { get; set; }
-        public int Puntos { get; set; }
-        public int Victorias { get; set; }
-        public int Empates { get; set; }
-        public int Derrotas { get; set; }
-        public int GolesFavor { get; set; }
-        public int GolesContra { get; set; }
-        public int DiferenciaGoles { get; set; }
+
+        // Agrega el resto de propiedades si las necesitas...
     }
 }

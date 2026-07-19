@@ -1,0 +1,32 @@
+﻿@model UTNGOL.Servicios.DTOs.SeleccionDTO
+
+@{
+    ViewData["Title"] = "Detalle de Selección";
+}
+
+<div class="container mt-4">
+    <h2>Detalle de la Selección</h2>
+    <hr />
+
+    @if (Model != null)
+    {
+        <dl class="row">
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Código FIFA:</dt>
+            <dd class="col-sm-9">@Model.CodigoFifa</dd>
+
+            <dt class="col-sm-3">Grupo:</dt>
+            <dd class="col-sm-9">@Model.Grupo</dd>
+        </dl>
+
+        <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            No se encontró información para esta selección.
+        </div>
+    }
+</div>

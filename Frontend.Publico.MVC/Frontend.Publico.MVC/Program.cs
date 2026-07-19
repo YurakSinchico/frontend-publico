@@ -17,7 +17,7 @@ namespace Frontend.Publico.MVC
                 });
 
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IEstadisticasService, MockEstadisticasService>();
+            builder.Services.AddHttpClient<IEstadisticasService, EstadisticasService>();
 
             var app = builder.Build();
 

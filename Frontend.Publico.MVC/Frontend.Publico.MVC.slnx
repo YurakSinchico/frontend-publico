@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="Frontend.Publico.MVC/Frontend.Publico.MVC.csproj" />
-  <Project Path="UTNGOL.Seguro/UTNGOL.Seguro.csproj" Id="40846777-dfd1-4d5f-9fab-b70ae91db033" />
   <Project Path="UTNGOL.Servicios/UTNGOL.Servicios.csproj" Id="e0b398f0-3a12-42d5-af35-67de2a9611b0" />
 </Solution>

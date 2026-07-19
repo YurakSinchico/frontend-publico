@@ -1,0 +1,41 @@
+﻿/* Estilo general del fondo estilo estadio/campo */
+.stadium-bg {
+    background: linear-gradient(135deg, #008080 0%, #20b2aa 50%, #32cd32 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+/* Estilo de las tarjetas de partido */
+.match-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+    .match-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+/* Estilos de texto y badges */
+.team-name {
+    color: #008080;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.score-badge {
+    background: #008080;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.title-header {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
