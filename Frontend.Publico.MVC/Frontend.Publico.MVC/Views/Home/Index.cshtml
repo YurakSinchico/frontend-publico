@@ -6,13 +6,13 @@
 
 <div class="gif-hero"></div>
 <div class="dark-overlay"></div>
-
 <div class="container-fluid py-5">
     <h1 class="display-2 fw-bold text-white mb-5 text-center">FIFA 26 MUNDIAL UTNGOL</h1>
 
     <div class="row g-4 justify-content-center">
+        <!-- Calendario -->
         <div class="col-md-3">
-            <a asp-controller="Calendario" asp-action="Index" class="text-decoration-none">
+            <a asp-controller="Partidos" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
                     <h3>📅 Calendario</h3>
                     <p>Partidos y horarios.</p>
@@ -20,11 +20,32 @@
             </a>
         </div>
 
+        <!-- Estadísticas -->
         <div class="col-md-3">
             <a asp-controller="Estadisticas" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
                     <h3>📊 Estadísticas</h3>
                     <p>Posiciones y rendimiento.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Selecciones -->
+        <div class="col-md-3">
+            <a asp-controller="Selecciones" asp-action="Index" class="text-decoration-none">
+                <div class="flash-card">
+                    <h3>⚽ Selecciones</h3>
+                    <p>Equipos participantes.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Grupos (Apuntando a Selecciones por ahora hasta crear el controlador) -->
+        <div class="col-md-3">
+            <a asp-controller="Selecciones" asp-action="Index" class="text-decoration-none">
+                <div class="flash-card">
+                    <h3>🏆 Grupos</h3>
+                    <p>Clasificación por zonas.</p>
                 </div>
             </a>
         </div>
