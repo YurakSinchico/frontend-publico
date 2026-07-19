@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text.Json; // Importante
-using System.Text.Json.Serialization; // Necesario para el mapeo
+using System.Text.Json;
+using System.Text.Json.Serialization; 
 
 namespace UTNGOL.Servicios.DTOs
 {
@@ -29,13 +29,13 @@ namespace UTNGOL.Servicios.DTOs
         [JsonPropertyName("awayGoals")]
         public int? GolesVisitante { get; set; }
 
-        [JsonPropertyName("venue")] // Cambiado de 'stadium' a 'venue' según tu JSON
+        [JsonPropertyName("venue")] 
         public string Estadio { get; set; }
 
         [JsonPropertyName("group")]
         public string Grupo { get; set; }
 
-        [JsonPropertyName("phase")] // Cambiado de 'stage' a 'phase' según tu JSON
+        [JsonPropertyName("phase")] 
         public string Fase { get; set; }
     }
 }
