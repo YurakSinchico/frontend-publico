@@ -22,6 +22,24 @@ namespace Frontend.Publico.MVC.Controllers
             // Enviamos la lista entera a la vista
             return View(lista);
         }
-    
-}
+        [Route("Selecciones/Details/{id?}")] // El signo '?' hace que el ID sea opcional
+        public async Task<IActionResult> Details(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index"); // Si no hay ID, te manda al listado en vez de dar error
+            }
+
+            var todasLasSelecciones = await _estadisticasService.ObtenerSeleccionesAsync();
+            var seleccion = todasLasSelecciones?.FirstOrDefault(s => s.CodigoFifa == id);
+
+            if (seleccion == null)
+            {
+                return NotFound();
+            }
+
+            return View(seleccion);
+        }
+
+    }
 }
