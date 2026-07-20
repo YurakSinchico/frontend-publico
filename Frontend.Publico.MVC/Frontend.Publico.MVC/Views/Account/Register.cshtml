@@ -1,51 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Registro";
-}
+﻿@model Frontend.Publico.MVC.ViewModels.RegisterViewModel
+<div class="container mt-5">
+    <div class="card bg-dark text-white shadow">
+        <div class="card-body">
+            <h2>Registrarse en UTN GOL</h2>
 
-<div class="container py-5 mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card p-4 shadow">
-                <h2 class="text-center mb-4 text-dark">Crear Cuenta</h2>
+            <!-- AQUÍ DEBES PONER LA LÍNEA -->
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-                <!-- AÑADIDO: Bloque para mostrar errores de servidor -->
-                @if (Context.Request.Query.ContainsKey("error"))
-                {
-                    <div class="alert alert-danger text-center">
-                        @Context.Request.Query["error"]
-                    </div>
-                }
-
-                <form asp-controller="Account" asp-action="Register" method="post">
-                    @Html.AntiForgeryToken()
-
-                    <div class="mb-3">
-                        <label class="form-label">Nombre Completo</label>
-                        <input type="text" name="Nombre" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Correo Electrónico</label>
-                        <input type="email" name="Email" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" name="Password" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Confirmar Contraseña</label>
-                        <input type="password" name="ConfirmPassword" class="form-control" required />
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-
-                    <div class="mt-3 text-center">
-                        <a asp-controller="Home" asp-action="Index">Volver al inicio</a>
-                    </div>
-                </form>
-            </div>
+            <form asp-action="Register" method="post">
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input asp-for="Nombre" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label>Nombre de Usuario</label>
+                    <input asp-for="Username" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label>Correo</label>
+                    <input asp-for="Email" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label>Contraseña</label>
+                    <input asp-for="Password" type="password" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-success">Crear Cuenta</button>
+            </form>
         </div>
     </div>
 </div>

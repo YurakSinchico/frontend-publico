@@ -10,14 +10,22 @@ namespace Frontend.Publico.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-     .AddCookie(options => {
+            builder.Services.AddAuthentication("CookieAuth")
+     .AddCookie("CookieAuth", options =>
+     {
+         options.Cookie.Name = "UTNGOL.Cookie";
          options.LoginPath = "/Account/Login";
+         options.AccessDeniedPath = "/Account/AccessDenied";
+         options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Sesión de 1 hora
      });
-
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient<IEstadisticasService, EstadisticasService>();
 
+            builder.Services.AddHttpClient<UTNGOL.Servicios.AuthService>(client =>
+            {
+                // Esta es la IP donde está tu API de Java
+                client.BaseAddress = new Uri("http://192.168.100.138:8080/");
+            });
             var app = builder.Build();
 
             // 2. Pipeline de Peticiones (Orden estricto)
@@ -28,11 +36,11 @@ namespace Frontend.Publico.MVC
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); // Importante para tus CSS y JS
+            app.UseStaticFiles(); 
 
             app.UseRouting();
 
-            // ¡IMPORTANTE!: Este orden es lo que permite que el Login funcione
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -1,73 +1,116 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Frontend.Publico.MVC.ViewModels;
+using Frontend.Publico.MVC.ViewModels.Frontend.Publico.MVC.ViewModels;
+using Microsoft.AspNetCore.Authentication; // Asegúrate de añadir esto
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using System.Security.Claims; // Y esto
+using UTNGOL.Servicios;
+using UTNGOL.Servicios.DTOs;
 
-public class AccountController : Controller
+namespace Frontend.Publico.MVC.Controllers
 {
-    private readonly HttpClient _httpClient;
-    // URL base correcta del proyecto en WildFly
-    private readonly string _baseUrl = "http://192.168.0.12:8080/estadisticas-backend";
-
-    public AccountController(HttpClient httpClient)
+    public class AccountController : Controller
     {
-        _httpClient = httpClient;
-    }
+        private readonly AuthService _authService;
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(string Email, string Password)
-    {
-        // La ruta final será /estadisticas-backend/usuarios/login
-        var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/usuarios/login", new { Email, Password });
-
-        if (response.IsSuccessStatusCode)
+        public AccountController(AuthService authService)
         {
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, Email) };
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            return RedirectToAction("Index", "Home");
+            _authService = authService;
+        }
+        // GET: /Account/Login
+        public IActionResult Login()
+        {
+            return View();
         }
 
-        return RedirectToAction("Index", "Home", new { error = "Credenciales incorrectas" });
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(string Email, string Password, string ConfirmPassword, string Nombre)
-    {
-        if (Password != ConfirmPassword)
-            return RedirectToAction("Register", new { error = "Las contraseñas no coinciden" });
-
-        try
+        // POST: /Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            // LA CORRECCIÓN: La ruta es exactamente la que definiste en Java (@Path("/usuarios") + @Path("/registrar"))
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/usuarios/registrar", new { Email, Password, Nombre });
+            if (!ModelState.IsValid) return View(model);
 
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return RedirectToAction("Index", "Home", new { mensaje = "¡Registro exitoso!" });
+                // Mapeo a DTO
+                var loginDto = new LoginDTO { Email = model.Email, Password = model.Password };
+
+                // Llamada real al servicio
+                bool esValido = await _authService.LoginAsync(loginDto);
+
+                if (esValido)
+                {
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, model.Email) };
+                    var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
+
+                    return RedirectToAction("Index", "Partidos");
+                }
+
+                // Si llega aquí, es porque la API respondió "No autorizado" o "Error"
+                ViewBag.Error = "Credenciales incorrectas o usuario no encontrado.";
+            }
+            catch (Exception ex)
+            {
+                // ESTA PARTE ES LA CLAVE PARA SABER QUÉ PASA
+                System.Diagnostics.Debug.WriteLine("ERROR DE CONEXIÓN CON API: " + ex.Message);
+                ViewBag.Error = "Error al conectar con el servidor. Verifica que la API esté encendida.";
             }
 
-            return RedirectToAction("Register", new { error = "El API devolvió error: " + response.StatusCode });
+            return View(model);
         }
-        catch (Exception ex)
+
+        [HttpGet]
+        public IActionResult Register()
         {
-            return RedirectToAction("Register", new { error = "Excepción de red: " + ex.Message });
+            return View(); // Necesitas crear esta vista
         }
-    }
 
-    [HttpGet]
-    public IActionResult Register() => View();
 
-    public async Task<IActionResult> Logout()
-    {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Index", "Home");
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var userDto = new UserInputDTO
+            {
+                Name = model.Nombre,
+                Email = model.Email,
+                Username = model.Username ?? model.Email,
+                Password = model.Password,
+                IdRole = 1,
+                Active = true
+            };
+
+            try
+            {
+                // Llamamos al nuevo método que nos da la respuesta completa
+                var response = await _authService.RegisterAsyncRaw(userDto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+
+                // AQUÍ CAPTURAMOS EL ERROR REAL DEL SERVIDOR
+                var errorContent = await response.Content.ReadAsStringAsync();
+
+                // Esto se mostrará en tu <div asp-validation-summary="All">
+                ModelState.AddModelError("", "Error del servidor: " + errorContent);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "No se pudo conectar con el servidor: " + ex.Message);
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("CookieAuth");
+            return RedirectToAction("Index", "Partidos");
+        }
     }
 }
