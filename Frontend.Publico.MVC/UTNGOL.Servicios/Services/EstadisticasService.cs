@@ -70,5 +70,16 @@ namespace UTNGOL.Servicios.Services
                 return new List<SeleccionDTO>();
             }
         }
+        public async Task<HttpResponseMessage> GuardarPrediccionAsync(PrediccionDTO prediccion, string email, string password)
+        {
+            var authString = $"{email}:{password}";
+            var base64Auth = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(authString));
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/predicciones");
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64Auth);
+            request.Content = JsonContent.Create(prediccion);
+
+            return await _httpClient.SendAsync(request);
+        }
     }
 }

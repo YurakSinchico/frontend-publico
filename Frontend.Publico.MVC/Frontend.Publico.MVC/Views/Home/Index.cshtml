@@ -4,7 +4,7 @@
     ViewData["Title"] = "Inicio";
 }
 
-<!-- BLOQUE DE ERROR AÑADIDO: Muestra el mensaje si ocurre una falla en Login/Register -->
+<!-- BLOQUE DE ERROR -->
 @if (Context.Request.Query.ContainsKey("error"))
 {
     <div class="container mt-3">
@@ -16,11 +16,12 @@
 
 <div class="gif-hero"></div>
 <div class="dark-overlay"></div>
+
 <div class="container-fluid py-5">
     <h1 class="display-2 fw-bold text-white mb-5 text-center">FIFA 26 MUNDIAL UTNGOL</h1>
 
     <div class="row g-4 justify-content-center">
-        <!-- Calendario -->
+        <!-- Tarjetas siempre visibles -->
         <div class="col-md-3">
             <a asp-controller="Partidos" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
@@ -29,8 +30,6 @@
                 </div>
             </a>
         </div>
-
-        <!-- Estadísticas -->
         <div class="col-md-3">
             <a asp-controller="Estadisticas" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
@@ -39,8 +38,6 @@
                 </div>
             </a>
         </div>
-
-        <!-- Selecciones -->
         <div class="col-md-3">
             <a asp-controller="Selecciones" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
@@ -49,8 +46,6 @@
                 </div>
             </a>
         </div>
-
-        <!-- Grupos -->
         <div class="col-md-3">
             <a asp-controller="Grupos" asp-action="Index" class="text-decoration-none">
                 <div class="flash-card">
@@ -60,6 +55,27 @@
             </a>
         </div>
 
+        <!-- TARJETA CONDICIONAL LOGIN / MI PANEL -->
+        <div class="col-md-3">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="flash-card" style="border: 2px solid #ffc107; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <h3>👤 Login</h3>
+                    <p>Inicia sesión para predecir.</p>
+                </div>
+            }
+            else
+            {
+                <a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">
+                    <div class="flash-card" style="border: 2px solid #198754;">
+                        <h3>⚡ Mi Panel</h3>
+                        <p>Bienvenido, @User.Identity.Name</p>
+                    </div>
+                </a>
+            }
+        </div>
+
+        <!-- Tarjetas para Logueados -->
         @if (User.Identity.IsAuthenticated)
         {
             <div class="col-md-3">
@@ -72,6 +88,7 @@
             </div>
         }
 
+        <!-- Tarjeta solo para administradores -->
         @if (User.IsInRole("Administrador"))
         {
             <div class="col-md-3">
@@ -83,25 +100,5 @@
                 </a>
             </div>
         }
-    </div>
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12 text-center">
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <button type="button" class="btn btn-outline-warning btn-lg px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
-                        <i class="bi bi-person-circle"></i> Iniciar Sesión / Registrarse
-                    </button>
-                }
-                else
-                {
-                    <div class="d-flex justify-content-center gap-3">
-                        <span class="text-white align-self-center">Bienvenido, <strong>@User.Identity.Name</strong></span>
-                        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger btn-lg">Cerrar Sesión</a>
-                    </div>
-                }
-            </div>
-        </div>
     </div>
 </div>

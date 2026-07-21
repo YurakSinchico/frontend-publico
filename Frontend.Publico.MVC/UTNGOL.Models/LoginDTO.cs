@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UTNGOL.Servicios.DTOs
+namespace UTNGOL.Models
 {
-    public class RegistroDTO
+    public class LoginDTO
     {
-        public string Nombre { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

@@ -1,34 +1,53 @@
-﻿@model UTNGOL.Servicios.DTOs.PartidoDTO
+﻿@model UTNGOL.Models.PartidoDTO
+
+@{
+    ViewData["Title"] = "Detalle del Partido";
+}
 
 <div class="container mt-5">
     <div class="card bg-dark text-white shadow">
         <div class="card-header bg-info text-dark text-center">
             <h3>Detalle del Partido: @Model.SeleccionLocal vs @Model.SeleccionVisitante</h3>
         </div>
+
         <div class="card-body">
+
             <div class="row text-center mb-4">
                 <div class="col-md-5">
                     <h2 class="display-5 fw-bold">@Model.SeleccionLocal</h2>
                 </div>
+
                 <div class="col-md-2">
                     <h2 class="display-5">VS</h2>
                 </div>
+
                 <div class="col-md-5">
                     <h2 class="display-5 fw-bold">@Model.SeleccionVisitante</h2>
                 </div>
             </div>
 
-            <!-- ... dentro del card-body ... -->
             <div class="row mt-4">
+
                 <div class="col-md-6 border-end">
-                    <p><strong>Fase:</strong> @(Model.Fase ?? "No definida")</p>
-                    <p><strong>Grupo:</strong> @(Model.Grupo ?? "N/A")</p>
-                    <!-- Nueva lógica de fecha -->
+                    <p>
+                        <strong>Fase:</strong>
+                        @(Model.Fase ?? "No definida")
+                    </p>
+
+                    <p>
+                        <strong>Grupo:</strong>
+                        @(Model.Grupo ?? "N/A")
+                    </p>
+
                     <p>
                         <strong>Fecha y Hora:</strong>
+
                         @if (Model.FechaHoraUtc.HasValue)
                         {
-                            var fecha = DateTimeOffset.FromUnixTimeMilliseconds(Model.FechaHoraUtc.Value).LocalDateTime;
+                            var fecha = DateTimeOffset
+                                .FromUnixTimeMilliseconds(Model.FechaHoraUtc.Value)
+                                .LocalDateTime;
+
                             @fecha.ToString("dd MMM yyyy, HH:mm")
                         }
                         else
@@ -37,28 +56,49 @@
                         }
                     </p>
                 </div>
+
                 <div class="col-md-6">
-                    <p><strong>Estado:</strong> <span class="badge bg-warning text-dark">@Model.Estado</span></p>
+
+                    <p>
+                        <strong>Estado:</strong>
+                        <span class="badge bg-warning text-dark">
+                            @Model.Estado
+                        </span>
+                    </p>
+
                     <p>
                         <strong>Marcador:</strong>
+
                         @if (Model.Estado == "FINALIZADO")
                         {
-                            @Model.GolesLocal
-                            @:- @Model.GolesVisitante
+                            @($"{Model.GolesLocal} - {Model.GolesVisitante}")
                         }
                         else
                         {
                             <span>0 - 0</span>
                         }
                     </p>
-                    <!-- Nueva información de Estadio -->
-                    <p><strong>Estadio:</strong> @(Model.Estadio ?? "Por definir")</p>
-                    <p><strong>País:</strong> Qatar</p> <!-- Aquí puedes poner el valor real si tu API lo envía -->
+
+                    <p>
+                        <strong>Estadio:</strong>
+                        @(Model.Estadio ?? "Por definir")
+                    </p>
+
+                    <p>
+                        <strong>País:</strong>
+                        Qatar
+                    </p>
+
                 </div>
+
             </div>
+
         </div>
+
         <div class="card-footer text-center">
-            <a asp-action="Index" class="btn btn-outline-light">Regresar al Calendario</a>
+            <a asp-action="Index" class="btn btn-outline-light">
+                Regresar al Calendario
+            </a>
         </div>
     </div>
 </div>

@@ -1,100 +1,77 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Api.Consumer.Consumers;
 using Microsoft.AspNetCore.Mvc;
-using UTNGOL.Servicios.Interface;
+using UTNGOL.Models;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class EstadisticasController : Controller
     {
-        private readonly IEstadisticasService _estadisticasService;
-        public EstadisticasController(IEstadisticasService estadisticasService)
+        private readonly EstadisticasConsumer _consumer;
+
+        public EstadisticasController(EstadisticasConsumer consumer)
         {
-            _estadisticasService = estadisticasService;
+            _consumer = consumer;
         }
-        // GET: EstadisticasController
-        // GET: EstadisticasController
+
+        // GET: Estadisticas
         public async Task<IActionResult> Index(int id = 1)
         {
-            // 1. Obtenemos el objeto completo del servicio
-            var grupo = await _estadisticasService.ObtenerTablaPosicionesAsync(id);
-
-            // 2. Si el grupo es nulo o no tiene posiciones, enviamos una lista vacía
-            if (grupo == null || grupo.Posiciones == null)
-            {
-                return View(new List<UTNGOL.Servicios.DTOs.PosicionDTO>());
-            }
-
-            // 3. ENVIAMOS SOLO LA LISTA, que es lo que tu vista espera
-            return View(grupo.Posiciones);
-        }
-
-        // GET: EstadisticasController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: EstadisticasController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EstadisticasController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
             try
             {
-                return RedirectToAction(nameof(Index));
+                GrupoDTO grupo = await _consumer.ObtenerTablaPosicionesAsync(id);
+
+                if (grupo == null || grupo.Posiciones == null)
+                {
+                    return View(new List<PosicionDTO>());
+                }
+
+                return View(grupo.Posiciones);
             }
             catch
             {
-                return View();
+                return View(new List<PosicionDTO>());
             }
         }
 
-        // GET: EstadisticasController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
-        // POST: EstadisticasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EstadisticasController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EstadisticasController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Create(IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, IFormCollection collection)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
+        {
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model UTNGOL.Models.PrediccionDTO
+
+@{
+    ViewData["Title"] = "Realizar Predicción";
+}
+
+<div class="container mt-4">
+    <h2 class="text-white">Realizar Predicción</h2>
+
+    <form asp-action="Create" method="post" class="bg-dark p-4 rounded text-white">
+        @Html.AntiForgeryToken()
+
+        <!-- ID del partido -->
+        <input type="hidden" asp-for="IdPartido" />
+
+        <div class="mb-3">
+            <label asp-for="GolesLocal" class="form-label"></label>
+            <input asp-for="GolesLocal" class="form-control" type="number" />
+            <span asp-validation-for="GolesLocal" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="GolesVisitante" class="form-label"></label>
+            <input asp-for="GolesVisitante" class="form-control" type="number" />
+            <span asp-validation-for="GolesVisitante" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Guardar Predicción
+        </button>
+
+        <a asp-controller="Partidos"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

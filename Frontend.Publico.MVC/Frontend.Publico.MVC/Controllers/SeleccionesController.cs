@@ -1,37 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using UTNGOL.Servicios.Interface;
+﻿using Api.Consumer.Consumers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class SeleccionesController : Controller
     {
-        private readonly IEstadisticasService _estadisticasService;
+        private readonly EstadisticasConsumer _estadisticasConsumer;
 
-        public SeleccionesController(IEstadisticasService estadisticasService)
+        public SeleccionesController(EstadisticasConsumer estadisticasConsumer)
         {
-            _estadisticasService = estadisticasService;
+            _estadisticasConsumer = estadisticasConsumer;
         }
 
-        // Al entrar a /Selecciones o /Selecciones/Index, verás la lista
+        // GET: Selecciones
         public async Task<IActionResult> Index()
         {
-            // Traemos todas las selecciones de una vez
-            var lista = await _estadisticasService.ObtenerSeleccionesAsync();
+            var lista = await _estadisticasConsumer.ObtenerSeleccionesAsync();
 
-            // Enviamos la lista entera a la vista
             return View(lista);
         }
-        [Route("Selecciones/Details/{id?}")] // El signo '?' hace que el ID sea opcional
+
+        // GET: Selecciones/Details/ECU
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrWhiteSpace(id))
             {
-                return RedirectToAction("Index"); // Si no hay ID, te manda al listado en vez de dar error
+                return RedirectToAction(nameof(Index));
             }
 
-            var todasLasSelecciones = await _estadisticasService.ObtenerSeleccionesAsync();
-            var seleccion = todasLasSelecciones?.FirstOrDefault(s => s.CodigoFifa == id);
+            var selecciones = await _estadisticasConsumer.ObtenerSeleccionesAsync();
+
+            var seleccion = selecciones.FirstOrDefault(s => s.CodigoFifa == id);
 
             if (seleccion == null)
             {
@@ -40,6 +40,5 @@ namespace Frontend.Publico.MVC.Controllers
 
             return View(seleccion);
         }
-
     }
 }

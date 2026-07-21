@@ -1,18 +1,18 @@
-﻿using Frontend.Publico.MVC.ViewModels;
-using Frontend.Publico.MVC.ViewModels.Frontend.Publico.MVC.ViewModels;
-using Microsoft.AspNetCore.Authentication; // Asegúrate de añadir esto
+﻿using Api.Consumer.Consumers;
+using Frontend.Publico.MVC.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims; // Y esto
-using UTNGOL.Servicios;
-using UTNGOL.Servicios.DTOs;
+using System.Security.Claims;
+using UTNGOL.Models;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AuthService _authService;
+        private readonly AuthConsumer _authService;
 
-        public AccountController(AuthService authService)
+        public AccountController(AuthConsumer authService)
         {
             _authService = authService;
         }
@@ -44,6 +44,8 @@ namespace Frontend.Publico.MVC.Controllers
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
                     await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
+                    // Guardamos la contraseña en un lugar accesible pero temporal
+                    HttpContext.Session.SetString("Password", model.Password);
 
                     return RedirectToAction("Index", "Partidos");
                 }

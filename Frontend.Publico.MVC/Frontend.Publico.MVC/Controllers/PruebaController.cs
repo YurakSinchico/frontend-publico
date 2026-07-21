@@ -1,26 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using UTNGOL.Servicios.Interface; // Asegúrate de tener este using
+﻿using Api.Consumer.Consumers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class PruebaController : Controller
     {
-        private readonly IEstadisticasService _estadisticasService;
+        private readonly EstadisticasConsumer _estadisticasConsumer;
 
-        // Inyectamos el servicio real a través del constructor
-        public PruebaController(IEstadisticasService estadisticasService)
+        public PruebaController(EstadisticasConsumer estadisticasConsumer)
         {
-            _estadisticasService = estadisticasService;
+            _estadisticasConsumer = estadisticasConsumer;
         }
 
-        // GET: PruebaController
+        // GET: Prueba
         public async Task<IActionResult> Index()
         {
-            // Consumimos el API real desde el backend en Fedora
-            var grupos = await _estadisticasService.ObtenerGruposAsync();
-
-            // Enviamos los datos reales a la vista
+            var grupos = await _estadisticasConsumer.ObtenerGruposAsync();
             return View(grupos);
         }
     }

@@ -17,6 +17,8 @@ namespace UTNGOL.Servicios.Interface
 
         // Y este para selecciones
         Task<List<SeleccionDTO>> ObtenerSeleccionesAsync();
+
+        Task<HttpResponseMessage> GuardarPrediccionAsync(PrediccionDTO prediccion, string email, string password);
     }
 }
 

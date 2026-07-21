@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using UTNGOL.Servicios.Interface;
-using UTNGOL.Servicios.Services;
+using Api.Consumer.Consumers;
 
 namespace Frontend.Publico.MVC
 {
@@ -10,25 +8,45 @@ namespace Frontend.Publico.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddAuthentication("CookieAuth")
-     .AddCookie("CookieAuth", options =>
-     {
-         options.Cookie.Name = "UTNGOL.Cookie";
-         options.LoginPath = "/Account/Login";
-         options.AccessDeniedPath = "/Account/AccessDenied";
-         options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Sesión de 1 hora
-     });
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddHttpClient<IEstadisticasService, EstadisticasService>();
+            // ==========================
+            // AUTENTICACIÓN
+            // ==========================
+            builder.Services
+                .AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", options =>
+                {
+                    options.Cookie.Name = "UTNGOL.Cookie";
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                });
 
-            builder.Services.AddHttpClient<UTNGOL.Servicios.AuthService>(client =>
+            // ==========================
+            // MVC
+            // ==========================
+            builder.Services.AddControllersWithViews();
+
+            // ==========================
+            // SESSION
+            // ==========================
+            builder.Services.AddSession(options =>
             {
-                // Esta es la IP donde está tu API de Java
-                client.BaseAddress = new Uri("http://192.168.100.138:8080/");
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
+
+            // ==========================
+            // HTTP CLIENTS
+            // ==========================
+            builder.Services.AddHttpClient<AuthConsumer>();
+
+            builder.Services.AddHttpClient<EstadisticasConsumer>();
+
+            builder.Services.AddHttpClient<GolCoinConsumer>();
+
             var app = builder.Build();
 
-            // 2. Pipeline de Peticiones (Orden estricto)
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -36,10 +54,11 @@ namespace Frontend.Publico.MVC
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); 
+            app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

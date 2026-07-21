@@ -1,0 +1,170 @@
+﻿@model Frontend.Publico.MVC.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Bienvenido
+    </h2>
+
+    <div class="card mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4>Mi Billetera</h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <h3>
+
+                @if (Model.Wallet != null)
+                {
+                    @Model.Wallet.Balance.ToString("N2")
+                }
+                else
+                {
+                    <span>0</span>
+                }
+
+                GolCoins
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    Mis Predicciones
+
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.Predictions.Any())
+                    {
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Partido</th>
+
+                                    <th>Monto</th>
+
+                                    <th>Estado</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model.Predictions)
+                                {
+                                    <tr>
+
+                                        <td>@item.MatchId</td>
+
+                                        <td>@item.Amount</td>
+
+                                        <td>@item.Status</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No existen predicciones.</p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    Transacciones
+
+                </div>
+
+                <div class="card-body">
+
+                    @if (Model.Transactions.Any())
+                    {
+
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Tipo</th>
+
+                                    <th>Monto</th>
+
+                                    <th>Fecha</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model.Transactions)
+                                {
+
+                                    <tr>
+
+                                        <td>@item.Type</td>
+
+                                        <td>@item.Amount</td>
+
+                                        <td>@item.Date</td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    }
+                    else
+                    {
+                        <p>No existen transacciones.</p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

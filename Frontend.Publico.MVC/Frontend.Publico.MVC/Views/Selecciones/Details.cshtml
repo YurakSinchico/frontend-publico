@@ -1,32 +1,59 @@
-﻿@model UTNGOL.Servicios.DTOs.SeleccionDTO
+﻿@model UTNGOL.Models.SeleccionDTO
 
 @{
     ViewData["Title"] = "Detalle de " + Model.Nombre;
 }
 
 <div class="container mt-4">
+
     <h2>Detalle de la Selección: @Model.Nombre</h2>
+
     <hr />
 
-    <div class="card">
+    <div class="card shadow">
+
         <div class="card-body">
+
             <dl class="row">
-                <dt class="col-sm-3">Nombre:</dt>
-                <dd class="col-sm-9">@Model.Nombre</dd>
 
-                <dt class="col-sm-3">Código FIFA:</dt>
-                <dd class="col-sm-9">@Model.CodigoFifa</dd>
+                <dt class="col-sm-3">
+                    Nombre:
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Nombre
+                </dd>
 
-                <dt class="col-sm-3">Grupo:</dt>
-                <dd class="col-sm-9">@Model.Grupo</dd>
+                <dt class="col-sm-3">
+                    Código FIFA:
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.CodigoFifa
+                </dd>
 
-                <dt class="col-sm-3">Confederación:</dt>
-                <dd class="col-sm-9">@Model.Confederacion</dd>
+                <dt class="col-sm-3">
+                    Grupo:
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Grupo
+                </dd>
+
+                <dt class="col-sm-3">
+                    Confederación:
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Confederacion
+                </dd>
+
             </dl>
+
         </div>
+
     </div>
 
     <div class="mt-3">
-        <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+        <a asp-action="Index" class="btn btn-secondary">
+            Volver al listado
+        </a>
     </div>
+
 </div>

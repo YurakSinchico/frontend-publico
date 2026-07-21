@@ -1,34 +1,38 @@
 ﻿using System.Net.Http.Json;
 using System.Diagnostics; // Necesario para Debug.WriteLine
-using UTNGOL.Servicios.DTOs;
+using UTNGOL.Models;
+using Api.Consumer.Config;
 
-namespace UTNGOL.Servicios
+namespace Api.Consumer.Consumers
 {
-    public class AuthService
+    public class AuthConsumer
     {
         private readonly HttpClient _httpClient;
 
-        public AuthService(HttpClient httpClient)
+        public AuthConsumer(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
         public async Task<bool> LoginAsync(LoginDTO loginDto)
         {
-            // La ruta correcta es "estadisticas-backend/api/login"
-            var response = await _httpClient.PostAsJsonAsync("estadisticas-backend/api/login", loginDto);
+            var response = await _httpClient.PostAsJsonAsync(
+                $"{ApiConfig.Estadisticas}/login",
+                loginDto);
+
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 var mensajeError = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine("EL SERVIDOR DICE: " + mensajeError);
+                Debug.WriteLine("EL SERVIDOR DICE: " + mensajeError);
             }
+
             return response.IsSuccessStatusCode;
         }
         public async Task<HttpResponseMessage> RegisterAsyncRaw(UserInputDTO userInputDto)
         {
-            // ELIMINA LAS LÍNEAS DE AUTHENTICATIONHEADERVALUE
-            // Solo envía la petición limpia
-            return await _httpClient.PostAsJsonAsync("estadisticas-backend/api/usuarios/registrar", userInputDto);
+            return await _httpClient.PostAsJsonAsync(
+    $"{ApiConfig.Estadisticas}/usuarios/registrar",
+    userInputDto);
         }
     }
 }

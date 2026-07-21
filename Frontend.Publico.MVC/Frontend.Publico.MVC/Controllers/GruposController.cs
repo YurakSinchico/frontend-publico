@@ -1,99 +1,83 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Api.Consumer.Consumers;
 using Microsoft.AspNetCore.Mvc;
-using UTNGOL.Servicios.Interface;
+using UTNGOL.Models;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class GruposController : Controller
     {
-        private readonly IEstadisticasService _estadisticasService;
+        private readonly EstadisticasConsumer _consumer;
 
-        public GruposController(IEstadisticasService estadisticasService)
+        public GruposController(EstadisticasConsumer consumer)
         {
-            _estadisticasService = estadisticasService;
+            _consumer = consumer;
         }
-        // GET: GruposController
-        // GET: GruposController
+
+        // GET: Grupos
         public async Task<IActionResult> Index()
         {
-            // 1. Obtener todas las selecciones de la API usando el nombre correcto: _estadisticasService
-            var selecciones = await _estadisticasService.ObtenerSeleccionesAsync();
-
-            // 2. Agruparlas por la propiedad Grupo
-            // Asegúrate que en tu SeleccionDTO la propiedad se llame exactamente 'Grupo'
-            var gruposAgrupados = selecciones.GroupBy(s => s.Grupo)
-                                            .OrderBy(g => g.Key);
-
-            return View(gruposAgrupados);
-        }
-
-        // GET: GruposController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: GruposController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: GruposController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var selecciones = await _consumer.ObtenerSeleccionesAsync();
+
+                var gruposAgrupados = selecciones
+                    .GroupBy(s => s.Grupo)
+                    .OrderBy(g => g.Key);
+
+                return View(gruposAgrupados);
             }
             catch
             {
-                return View();
+                return View(Enumerable.Empty<IGrouping<string, SeleccionDTO>>());
             }
         }
 
-        // GET: GruposController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Grupos/Details/5
+        public IActionResult Details(int id)
         {
             return View();
         }
 
-        // POST: GruposController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: GruposController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Grupos/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: GruposController/Delete/5
+        // POST: Grupos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Create(IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Grupos/Edit/5
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: Grupos/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, IFormCollection collection)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Grupos/Delete/5
+        public IActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: Grupos/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
+        {
+            return RedirectToAction(nameof(Index));
         }
     }
 }

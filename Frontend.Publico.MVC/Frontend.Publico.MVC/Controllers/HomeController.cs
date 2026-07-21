@@ -1,28 +1,34 @@
 using Frontend.Publico.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using UTNGOL.Servicios.Interface; // Asegúrate de tener este using
+using Api.Consumer.Consumers;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IEstadisticasService _service; // 1. Variable para el servicio
+        private readonly EstadisticasConsumer _estadisticasConsumer;
 
-        // 2. Inyectamos el servicio en el constructor
-        public HomeController(ILogger<HomeController> logger, IEstadisticasService service)
+        public HomeController(
+            ILogger<HomeController> logger,
+            EstadisticasConsumer estadisticasConsumer)
         {
             _logger = logger;
-            _service = service;
+            _estadisticasConsumer = estadisticasConsumer;
         }
 
         public async Task<IActionResult> Index()
         {
-            // 3. Llamamos a la API para obtener los datos
-            var grupos = await _service.ObtenerGruposAsync();
+            // Si el usuario inició sesión
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
 
-            // Enviamos los datos a la vista
+            // Usuario invitado
+            var grupos = await _estadisticasConsumer.ObtenerGruposAsync();
+
             return View(grupos);
         }
 
@@ -31,10 +37,15 @@ namespace Frontend.Publico.MVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0,
+            Location = ResponseCacheLocation.None,
+            NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

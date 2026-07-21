@@ -1,26 +1,36 @@
-﻿@model IEnumerable<UTNGOL.Servicios.DTOs.GrupoDTO>
+﻿@model IEnumerable<UTNGOL.Models.GrupoDTO>
+
+@{
+    ViewData["Title"] = "Grupos";
+}
 
 <h2>Conexión con Fedora - Test de Grupos</h2>
 
 @if (Model != null && Model.Any())
 {
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Código</th>
-            <th>Nombre</th>
-        </tr>
-        @foreach (var grupo in Model)
-        {
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@grupo.IdGrupo</td>
-                <td>@grupo.Codigo</td>
-                <td>@grupo.Nombre</td>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var grupo in Model)
+            {
+                <tr>
+                    <td>@grupo.IdGrupo</td>
+                    <td>@grupo.Codigo</td>
+                    <td>@grupo.Nombre</td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else
 {
-    <p style="color:red;">No se recibieron datos. Revisa la consola o la IP de tu servidor.</p>
+    <div class="alert alert-warning">
+        No se recibieron datos desde la API de Estadísticas.
+    </div>
 }

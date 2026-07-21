@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IGrouping<string, UTNGOL.Servicios.DTOs.SeleccionDTO>>
+﻿@model IEnumerable<IGrouping<string, UTNGOL.Models.SeleccionDTO>>
 
 @{
     ViewData["Title"] = "Grupos";
@@ -9,10 +9,13 @@
 @foreach (var grupo in Model)
 {
     <div class="card mb-4">
+
         <div class="card-header bg-primary text-white">
             <h3>@grupo.Key</h3>
         </div>
-        <table class="table">
+
+        <table class="table table-striped table-hover mb-0">
+
             <thead>
                 <tr>
                     <th>Selección</th>
@@ -21,7 +24,9 @@
                     <th>Partidos Jugados</th>
                 </tr>
             </thead>
+
             <tbody>
+
                 @foreach (var seleccion in grupo)
                 {
                     <tr>
@@ -31,7 +36,10 @@
                         <td>@seleccion.PartidosJugados</td>
                     </tr>
                 }
+
             </tbody>
+
         </table>
+
     </div>
 }

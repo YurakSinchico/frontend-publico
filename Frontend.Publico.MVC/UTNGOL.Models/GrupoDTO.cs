@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization; // Necesario para los atributos de mapeo
 
-namespace UTNGOL.Servicios.DTOs
+namespace UTNGOL.Models
 {
     public class GrupoDTO
     {

@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Api.Consumer/Api.Consumer.csproj" Id="162ba8d2-bafc-47fb-b619-c81fe8c3828b" />
   <Project Path="Frontend.Publico.MVC/Frontend.Publico.MVC.csproj" />
-  <Project Path="UTNGOL.Servicios/UTNGOL.Servicios.csproj" Id="e0b398f0-3a12-42d5-af35-67de2a9611b0" />
+  <Project Path="UTNGOL.Models/UTNGOL.Models.csproj" Id="fc554425-73e5-47a8-8722-20e9f907824a" />
 </Solution>

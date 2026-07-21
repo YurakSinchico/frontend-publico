@@ -1,17 +1,37 @@
-﻿/* Sidebar con Glassmorphism puro */
-.sidebar-wrapper {
-    width: 80px; height: 100vh;
-    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    position: fixed; left: 0; top: 0; z-index: 1000;
-    transition: width 0.4s ease; overflow: hidden;
+﻿/* sidebar-moderna.css */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0b0f19; /* Fondo oscuro elegante */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.sidebar-wrapper:hover { width: 260px; }
-.nav-link-modern {
-    display: flex; align-items: center; padding: 20px;
-    color: #fff !important; text-decoration: none;
+
+/* Sidebar fijo a la izquierda */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: #111827; /* Gris muy oscuro tipo dashboard */
+    border-right: 1px solid #1f2937;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
-.nav-icon { font-size: 1.5rem; min-width: 40px; color: #d4af37; text-align: center; }
-.nav-text { opacity: 0; margin-left: 15px; transition: opacity 0.2s; }
-.sidebar-wrapper:hover .nav-text { opacity: 1; }
-.main-content-wrapper { margin-left: 80px; padding: 50px; }
+
+/* Ajuste del contenido principal para que no se ponga debajo del sidebar */
+.main-content-wrapper {
+    margin-left: 260px; /* Deja espacio exacto para el sidebar */
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    background-color: #0b0f19;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* Si el usuario NO está logueado, ocupa toda la pantalla */
+.main-content-full {
+    margin-left: 0 !important;
+    width: 100% !important;
+}

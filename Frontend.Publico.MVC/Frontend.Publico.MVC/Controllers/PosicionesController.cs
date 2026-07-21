@@ -1,31 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Api.Consumer.Consumers;
 using Microsoft.AspNetCore.Mvc;
-using UTNGOL.Servicios.Interface;
+using UTNGOL.Models;
 
 namespace Frontend.Publico.MVC.Controllers
 {
     public class PosicionesController : Controller
     {
-        private readonly IEstadisticasService _service;
-        public PosicionesController(IEstadisticasService service)
+        private readonly EstadisticasConsumer _estadisticasConsumer;
+
+        public PosicionesController(EstadisticasConsumer estadisticasConsumer)
         {
-            _service = service;
+            _estadisticasConsumer = estadisticasConsumer;
         }
-        // GET: PosicionesController
+
+        // GET: Posiciones
         public async Task<IActionResult> Index(int id = 1)
         {
-            // 1. Llamas al servicio para traer el grupo completo
-            var grupo = await _service.ObtenerTablaPosicionesAsync(id);
+            var grupo = await _estadisticasConsumer.ObtenerTablaPosicionesAsync(id);
 
-            // 2. Si el grupo existe, envías solo la lista a la vista
-            if (grupo != null && grupo.Posiciones != null)
+            if (grupo?.Posiciones == null)
             {
-                return View(grupo.Posiciones);
+                return View(new List<PosicionDTO>());
             }
 
-            // 3. Si no hay datos, envías una lista vacía para que no se caiga
-            return View(new List<UTNGOL.Servicios.DTOs.PosicionDTO>());
+            return View(grupo.Posiciones);
         }
-
     }
 }

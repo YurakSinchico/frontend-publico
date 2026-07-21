@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.Json;
-using System.Text.Json.Serialization; 
+using System.Text.Json.Serialization;
 
-namespace UTNGOL.Servicios.DTOs
+namespace UTNGOL.Models
 {
     public class PartidoDTO
     {

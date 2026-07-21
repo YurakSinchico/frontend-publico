@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UTNGOL.Servicios.DTOs.SeleccionDTO>
+﻿@model IEnumerable<UTNGOL.Models.SeleccionDTO>
 
 @{
     ViewData["Title"] = "Listado de Selecciones";
@@ -6,7 +6,7 @@
 
 <h1>Selecciones Participantes</h1>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -16,7 +16,9 @@
             <th>Acciones</th>
         </tr>
     </thead>
+
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -24,10 +26,16 @@
                 <td>@item.CodigoFifa</td>
                 <td>@item.Grupo</td>
                 <td>@item.Confederacion</td>
+
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.CodigoFifa">Ver Detalle</a>
+                    <a asp-action="Details"
+                       asp-route-id="@item.CodigoFifa"
+                       class="btn btn-primary btn-sm">
+                        Ver Detalle
+                    </a>
                 </td>
             </tr>
         }
+
     </tbody>
 </table>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UTNGOL.Servicios.DTOs
+namespace UTNGOL.Models
 {
     public class UserInputDTO
     {

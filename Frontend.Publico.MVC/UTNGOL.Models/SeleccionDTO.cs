@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace UTNGOL.Servicios.DTOs
+namespace UTNGOL.Models
 {
     public class SeleccionDTO
     {
