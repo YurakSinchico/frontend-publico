@@ -1,85 +1,35 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Api.Consumer.Consumers;
+using Frontend.Publico.MVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Frontend.Publico.MVC.Controllers
 {
-    [Authorize(Roles = "Registrado,Administrador")] // RESTRICTIVO SEGÚN PROYECTO
+    [Authorize(Roles = "Registrado,Administrador")]
     public class BilleteraController : Controller
     {
-        // GET: BilleteraController
-        public ActionResult Index()
+        private readonly GolCoinConsumer _golCoinConsumer;
+
+        public BilleteraController(GolCoinConsumer golCoinConsumer)
         {
-            return View();
+            _golCoinConsumer = golCoinConsumer;
         }
 
-        // GET: BilleteraController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            int? userId = HttpContext.Session.GetInt32("UserId");
 
-        // GET: BilleteraController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
 
-        // POST: BilleteraController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var model = new DashboardViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Wallet = await _golCoinConsumer.ObtenerWalletAsync(userId.Value),
+                Transactions = await _golCoinConsumer.ObtenerTransaccionesAsync(userId.Value),
+                Predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value)
+            };
 
-        // GET: BilleteraController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BilleteraController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: BilleteraController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BilleteraController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
     }
 }

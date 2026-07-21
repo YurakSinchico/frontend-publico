@@ -1,0 +1,118 @@
+﻿@model Frontend.Publico.MVC.ViewModels.PredictionViewModel
+
+@{
+    ViewData["Title"] = "Nueva Predicción";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success shadow">
+
+        @TempData["Success"]
+
+    </div>
+}
+
+<div asp-validation-summary="All"
+     class="alert alert-danger">
+</div>
+<link rel="stylesheet" href="~/css/predicciones.css" />
+
+<div class="container py-5">
+
+    <div class="prediction-card">
+
+        <h2 class="text-center mb-4">
+            🎯 Nueva Predicción
+        </h2>
+
+        <div class="match-box">
+
+            <div class="team">
+                @Model.HomeTeam
+            </div>
+
+            <div class="vs">
+                VS
+            </div>
+
+            <div class="team">
+                @Model.AwayTeam
+            </div>
+
+        </div>
+
+        <div class="wallet mt-4">
+
+            💰 Saldo disponible:
+            <strong>@Model.WalletBalance UTNGolCoin</strong>
+
+        </div>
+
+        <form asp-action="Create" method="post">
+
+            <input asp-for="MatchId" type="hidden" />
+            <input asp-for="MatchStartDate" type="hidden" />
+            <input asp-for="HomeTeam" type="hidden" />
+            <input asp-for="AwayTeam" type="hidden" />
+            <input asp-for="WalletBalance" type="hidden" />
+
+            <div class="mt-4">
+
+                <label class="form-label">
+                    Resultado esperado
+                </label>
+
+                <select asp-for="PredictedResult" class="form-select">
+
+                    <option value="">Seleccione...</option>
+
+                    <option value="1">
+                        Gana @Model.HomeTeam
+                    </option>
+
+                    <option value="X">
+                        Empate
+                    </option>
+
+                    <option value="2">
+                        Gana @Model.AwayTeam
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="PredictedResult" class="text-danger"></span>
+
+            </div>
+
+            <div class="mt-3">
+
+                <label class="form-label">
+                    Cantidad de monedas
+                </label>
+
+                <input asp-for="Amount" class="form-control" />
+
+                <span asp-validation-for="Amount" class="text-danger"></span>
+
+            </div>
+
+            <div class="mt-4 d-grid">
+
+                <button class="btn btn-warning btn-lg">
+
+                    🎯 Confirmar Predicción
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

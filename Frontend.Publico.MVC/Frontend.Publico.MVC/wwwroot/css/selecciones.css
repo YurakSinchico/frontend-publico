@@ -1,0 +1,79 @@
+﻿body {
+    background: #071421;
+}
+
+.titulo-selecciones {
+    color: white;
+    font-size: 52px;
+    font-weight: 700;
+}
+
+.subtitulo-selecciones {
+    color: #d0d0d0;
+    font-size: 20px;
+}
+
+.team-card {
+    background: linear-gradient(145deg,#11263c,#1c4f82);
+    border-radius: 25px;
+    padding: 35px;
+    text-align: center;
+    color: white;
+    transition: .35s;
+    height: 100%;
+    box-shadow: 0 15px 30px rgba(0,0,0,.35);
+}
+
+    .team-card:hover {
+        transform: translateY(-10px);
+        border: 2px solid #f4c430;
+    }
+
+.team-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.team-card h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.team-card p {
+    color: #dddddd;
+}
+
+.team-card hr {
+    border-color: rgba(255,255,255,.2);
+}
+
+.team-card .btn {
+    margin-top: 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.detalle-seleccion {
+    max-width: 950px;
+    margin: auto;
+    background: linear-gradient(145deg,#102338,#19466f);
+    border-radius: 30px;
+    padding: 50px;
+    color: white;
+}
+
+.info-box {
+    background: #0f2237;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+}
+
+    .info-box h5 {
+        color: #f4c430;
+    }
+
+    .info-box p {
+        font-size: 22px;
+        margin: 0;
+    }

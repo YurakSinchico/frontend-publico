@@ -1,0 +1,59 @@
+﻿body {
+    background: #071421;
+}
+
+.titulo-grupos {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.subtitulo-grupos {
+    color: #cccccc;
+    font-size: 20px;
+}
+
+.grupo-card {
+    background: linear-gradient(135deg,#102338,#1a4a77);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,.35);
+    transition: .35s;
+}
+
+    .grupo-card:hover {
+        transform: translateY(-10px);
+    }
+
+.grupo-header {
+    background: #f4c430;
+    color: #0f2034;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.seleccion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: white;
+}
+
+    .seleccion-item:last-child {
+        border-bottom: none;
+    }
+
+    .seleccion-item h5 {
+        margin: 0;
+        font-weight: bold;
+    }
+
+.puntos {
+    color: #f4c430;
+    font-size: 28px;
+    font-weight: bold;
+}

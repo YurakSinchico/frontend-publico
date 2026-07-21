@@ -1,11 +1,78 @@
-﻿<form id="loginForm" method="post" action="/Account/Login">
-    <div class="mb-3">
-        <label class="text-white">Correo Electrónico</label>
-        <input type="email" name="Email" class="form-control" required />
+﻿<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content modal-content-ecumex">
+
+            <div class="modal-header border-0 bg-dark text-white">
+
+                <div class="w-100 text-center">
+                    <div class="fs-1">⚡</div>
+                    <h4 class="fw-bold">UTN GOL MUNDIAL</h4>
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body bg-dark text-white">
+
+                <form asp-controller="Account"
+                      asp-action="Login"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label text-warning fw-semibold">
+                            CORREO
+                        </label>
+
+                        <input type="email"
+                               name="Email"
+                               class="form-control"
+                               required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-warning fw-semibold">
+                            CONTRASEÑA
+                        </label>
+
+                        <input type="password"
+                               name="Password"
+                               class="form-control"
+                               required />
+                    </div>
+
+                    <button class="btn btn-primary w-100 fw-bold">
+                        INGRESAR
+                    </button>
+
+                    <hr class="text-secondary" />
+
+                    <div class="text-center">
+
+                        ¿No tienes cuenta?
+
+                        <a href="#"
+                           data-bs-dismiss="modal"
+                           data-bs-toggle="modal"
+                           data-bs-target="#registerModal">
+
+                            Regístrate aquí
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="mb-3">
-        <label class="text-white">Contraseña</label>
-        <input type="password" name="Password" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-warning w-100 fw-bold">INGRESAR</button>
-</form>
+</div>

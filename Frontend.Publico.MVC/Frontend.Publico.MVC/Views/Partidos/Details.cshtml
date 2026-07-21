@@ -4,101 +4,205 @@
     ViewData["Title"] = "Detalle del Partido";
 }
 
-<div class="container mt-5">
-    <div class="card bg-dark text-white shadow">
-        <div class="card-header bg-info text-dark text-center">
-            <h3>Detalle del Partido: @Model.SeleccionLocal vs @Model.SeleccionVisitante</h3>
-        </div>
+<link rel="stylesheet" href="~/css/partidos.css" />
 
-        <div class="card-body">
+@{
+    DateTime? fecha = null;
 
-            <div class="row text-center mb-4">
-                <div class="col-md-5">
-                    <h2 class="display-5 fw-bold">@Model.SeleccionLocal</h2>
-                </div>
+    if (Model.FechaHoraUtc.HasValue)
+    {
+        fecha = DateTimeOffset
+            .FromUnixTimeMilliseconds(Model.FechaHoraUtc.Value)
+            .LocalDateTime;
+    }
+}
 
-                <div class="col-md-2">
-                    <h2 class="display-5">VS</h2>
-                </div>
+<div class="container py-5">
 
-                <div class="col-md-5">
-                    <h2 class="display-5 fw-bold">@Model.SeleccionVisitante</h2>
-                </div>
-            </div>
+    <div class="detalle-card">
 
-            <div class="row mt-4">
+        <div class="text-center">
 
-                <div class="col-md-6 border-end">
-                    <p>
-                        <strong>Fase:</strong>
-                        @(Model.Fase ?? "No definida")
-                    </p>
+            <div class="badge-fase">
 
-                    <p>
-                        <strong>Grupo:</strong>
-                        @(Model.Grupo ?? "N/A")
-                    </p>
-
-                    <p>
-                        <strong>Fecha y Hora:</strong>
-
-                        @if (Model.FechaHoraUtc.HasValue)
-                        {
-                            var fecha = DateTimeOffset
-                                .FromUnixTimeMilliseconds(Model.FechaHoraUtc.Value)
-                                .LocalDateTime;
-
-                            @fecha.ToString("dd MMM yyyy, HH:mm")
-                        }
-                        else
-                        {
-                            <span>Sin programar</span>
-                        }
-                    </p>
-                </div>
-
-                <div class="col-md-6">
-
-                    <p>
-                        <strong>Estado:</strong>
-                        <span class="badge bg-warning text-dark">
-                            @Model.Estado
-                        </span>
-                    </p>
-
-                    <p>
-                        <strong>Marcador:</strong>
-
-                        @if (Model.Estado == "FINALIZADO")
-                        {
-                            @($"{Model.GolesLocal} - {Model.GolesVisitante}")
-                        }
-                        else
-                        {
-                            <span>0 - 0</span>
-                        }
-                    </p>
-
-                    <p>
-                        <strong>Estadio:</strong>
-                        @(Model.Estadio ?? "Por definir")
-                    </p>
-
-                    <p>
-                        <strong>País:</strong>
-                        Qatar
-                    </p>
-
-                </div>
+                @(Model.Fase ?? "Fase de Grupos")
 
             </div>
 
+            <h1 class="titulo-detalle">
+
+                FIFA WORLD CUP 2026
+
+            </h1>
+
         </div>
 
-        <div class="card-footer text-center">
-            <a asp-action="Index" class="btn btn-outline-light">
-                Regresar al Calendario
+        <div class="equipos-detalle">
+
+            <div class="equipo-detalle">
+
+                <div class="balon-detalle">
+
+                    ⚽
+
+                </div>
+
+                <h2>
+
+                    @Model.SeleccionLocal
+
+                </h2>
+
+            </div>
+
+            <div class="vs-detalle">
+
+                @if (Model.Estado == "FINALIZADO")
+                {
+                    <span>
+
+                        @Model.GolesLocal - @Model.GolesVisitante
+
+                    </span>
+                }
+                else
+                {
+                    <span>
+
+                        VS
+
+                    </span>
+                }
+
+            </div>
+
+            <div class="equipo-detalle">
+
+                <div class="balon-detalle">
+
+                    ⚽
+
+                </div>
+
+                <h2>
+
+                    @Model.SeleccionVisitante
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="datos-partido">
+
+            <div class="dato">
+
+                <h5>📅 Fecha</h5>
+
+                <p>
+
+                    @(fecha?.ToString("dd MMMM yyyy") ?? "Sin programar")
+
+                </p>
+
+            </div>
+
+            <div class="dato">
+
+                <h5>🕒 Hora</h5>
+
+                <p>
+
+                    @(fecha?.ToString("HH:mm") ?? "--:--")
+
+                </p>
+
+            </div>
+
+            <div class="dato">
+
+                <h5>🏆 Grupo</h5>
+
+                <p>
+
+                    @(Model.Grupo ?? "-")
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="estado-partido">
+
+            @if (Model.Estado == "PROGRAMADO")
+            {
+                <span class="badge bg-success fs-5">
+
+                    🟢 PROGRAMADO
+
+                </span>
+            }
+            else if (Model.Estado == "FINALIZADO")
+            {
+                <span class="badge bg-danger fs-5">
+
+                    🔴 FINALIZADO
+
+                </span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark fs-5">
+
+                    @Model.Estado
+
+                </span>
+            }
+
+        </div>
+
+        @{
+            bool puedePredecir =
+                User.Identity?.IsAuthenticated == true &&
+                Model.Estado == "PROGRAMADO" &&
+                fecha.HasValue &&
+                fecha.Value > DateTime.Now;
+        }
+
+        <div class="acciones-detalle">
+
+            @if (puedePredecir)
+            {
+                <a asp-controller="Predicciones"
+                   asp-action="Create"
+                   asp-route-matchId="@Model.IdPartido"
+                   asp-route-homeTeam="@Model.SeleccionLocal"
+                   asp-route-awayTeam="@Model.SeleccionVisitante"
+                   asp-route-matchStartDate="@fecha"
+                   class="btn btn-warning btn-lg">
+
+                    🎯 Realizar Predicción
+
+                </a>
+            }
+            else
+            {
+                <button class="btn btn-secondary btn-lg" disabled>
+                    🔒 Predicciones cerradas
+                </button>
+            }
+
+            <a asp-action="Index"
+               class="btn btn-outline-light btn-lg">
+
+                ← Volver
+
             </a>
+
         </div>
+
     </div>
+
 </div>

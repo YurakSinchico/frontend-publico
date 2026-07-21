@@ -1,0 +1,24 @@
+﻿.flash-card {
+    background: rgba(35,40,52,.70);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: white;
+    transition: .3s;
+    backdrop-filter: blur(12px);
+}
+
+    .flash-card:hover {
+        transform: translateY(-8px);
+        background: rgba(45,50,65,.90);
+        box-shadow: 0 15px 35px rgba(0,0,0,.35);
+    }
+
+body {
+    background-image: url("/img/fondo-mundial.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}

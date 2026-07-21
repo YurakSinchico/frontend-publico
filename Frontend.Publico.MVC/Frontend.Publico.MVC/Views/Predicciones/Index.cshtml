@@ -1,0 +1,120 @@
+﻿@model IEnumerable<UTNGOL.Models.PredictionDTO>
+
+@{
+    ViewData["Title"] = "Mis Predicciones";
+}
+
+<link rel="stylesheet" href="~/css/mis-predicciones.css" />
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="titulo">
+
+            🎯 Mis Predicciones
+
+        </h1>
+
+        <p>
+
+            Historial completo de tus apuestas deportivas.
+
+        </p>
+
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+
+            Todavía no has realizado ninguna predicción.
+
+        </div>
+    }
+    else
+    {
+        <div class="row">
+
+            @foreach (var p in Model)
+            {
+
+                <div class="col-lg-6 mb-4">
+
+                    <div class="prediction-card">
+
+                        <h4>
+
+                            Partido #@p.MatchId
+
+                        </h4>
+
+                        <hr />
+
+                        <p>
+
+                            <strong>Resultado elegido:</strong>
+
+                            @p.PredictedResult
+
+                        </p>
+
+                        <p>
+
+                            <strong>Monto:</strong>
+
+                            @p.Amount Coins
+
+                        </p>
+
+                        <p>
+
+                            <strong>Cuota:</strong>
+
+                            @p.AppliedOdds
+
+                        </p>
+
+                        <p>
+
+                            <strong>Fecha:</strong>
+
+                            @p.RegistrationDate.ToString("dd/MM/yyyy HH:mm")
+
+                        </p>
+
+                        @if (p.Status == "Ganada")
+                        {
+                            <span class="badge bg-success">
+
+                                🟢 Ganada
+
+                            </span>
+                        }
+                        else if (p.Status == "Perdida")
+                        {
+                            <span class="badge bg-danger">
+
+                                🔴 Perdida
+
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+
+                                🟡 Pendiente
+
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    }
+
+</div>

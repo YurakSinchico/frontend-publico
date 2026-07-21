@@ -4,12 +4,11 @@
     ViewData["Title"] = "Inicio";
 }
 
-<!-- BLOQUE DE ERROR -->
 @if (Context.Request.Query.ContainsKey("error"))
 {
     <div class="container mt-3">
-        <div class="alert alert-danger text-center shadow">
-            <strong>Error:</strong> @Context.Request.Query["error"]
+        <div class="alert alert-danger shadow text-center">
+            @Context.Request.Query["error"]
         </div>
     </div>
 }
@@ -17,88 +16,294 @@
 <div class="gif-hero"></div>
 <div class="dark-overlay"></div>
 
-<div class="container-fluid py-5">
-    <h1 class="display-2 fw-bold text-white mb-5 text-center">FIFA 26 MUNDIAL UTNGOL</h1>
+<div class="hero-container">
 
-    <div class="row g-4 justify-content-center">
-        <!-- Tarjetas siempre visibles -->
-        <div class="col-md-3">
-            <a asp-controller="Partidos" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card">
-                    <h3>📅 Calendario</h3>
-                    <p>Partidos y horarios.</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="Estadisticas" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card">
-                    <h3>📊 Estadísticas</h3>
-                    <p>Posiciones y rendimiento.</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="Selecciones" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card">
-                    <h3>⚽ Selecciones</h3>
-                    <p>Equipos participantes.</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="Grupos" asp-action="Index" class="text-decoration-none">
-                <div class="flash-card">
-                    <h3>🏆 Grupos</h3>
-                    <p>Clasificación por zonas.</p>
-                </div>
-            </a>
-        </div>
+    <div class="hero-content">
 
-        <!-- TARJETA CONDICIONAL LOGIN / MI PANEL -->
-        <div class="col-md-3">
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <div class="flash-card" style="border: 2px solid #ffc107; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <h3>👤 Login</h3>
-                    <p>Inicia sesión para predecir.</p>
-                </div>
-            }
-            else
-            {
-                <a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">
-                    <div class="flash-card" style="border: 2px solid #198754;">
-                        <h3>⚡ Mi Panel</h3>
-                        <p>Bienvenido, @User.Identity.Name</p>
+        <img src="~/logos/logo.png" class="hero-logo" />
+
+        <h1>
+
+            FIFA WORLD CUP 2026
+
+        </h1>
+
+        <h2>
+
+            UTN GOL
+
+        </h2>
+
+        <p>
+
+            Vive la emoción del Mundial, consulta resultados, estadísticas,
+            grupos y realiza tus predicciones.
+
+        </p>
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <button class="btn-login"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+
+                Iniciar Sesión
+
+            </button>
+        }
+        else
+        {
+            <a asp-controller="Dashboard"
+               asp-action="Index"
+               class="btn-dashboard">
+
+                Ir a mi Panel
+
+            </a>
+        }
+
+    </div>
+
+</div>
+
+<div class="container pb-5">
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <a asp-controller="Partidos"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="flash-card">
+
+                    <div class="icono">
+
+                        📅
+
                     </div>
-                </a>
-            }
+
+                    <h3>
+
+                        Calendario
+
+                    </h3>
+
+                    <p>
+
+                        Consulta todos los partidos del Mundial.
+
+                    </p>
+
+                </div>
+
+            </a>
+
         </div>
 
-        <!-- Tarjetas para Logueados -->
+        <div class="col-lg-3 col-md-6">
+
+            <a asp-controller="Estadisticas"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="flash-card">
+
+                    <div class="icono">
+
+                        📊
+
+                    </div>
+
+                    <h3>
+
+                        Estadísticas
+
+                    </h3>
+
+                    <p>
+
+                        Rendimiento de selecciones y jugadores.
+
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <a asp-controller="Selecciones"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="flash-card">
+
+                    <div class="icono">
+
+                        ⚽
+
+                    </div>
+
+                    <h3>
+
+                        Selecciones
+
+                    </h3>
+
+                    <p>
+
+                        Conoce todos los equipos participantes.
+
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <a asp-controller="Grupos"
+               asp-action="Index"
+               class="text-decoration-none">
+
+                <div class="flash-card">
+
+                    <div class="icono">
+
+                        🏆
+
+                    </div>
+
+                    <h3>
+
+                        Grupos
+
+                    </h3>
+
+                    <p>
+
+                        Consulta la clasificación oficial.
+
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="col-md-3">
-                <a asp-controller="Billetera" asp-action="Index" class="text-decoration-none">
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Dashboard"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
                     <div class="flash-card">
-                        <h3>💰 UTNGolCoin</h3>
-                        <p>Gestión financiera y predicciones.</p>
+
+                        <div class="icono">
+
+                            ⚡
+
+                        </div>
+
+                        <h3>
+
+                            Mi Panel
+
+                        </h3>
+
+                        <p>
+
+                            Bienvenido @Context.Session.GetString("UserName")
+
+                        </p>
+
                     </div>
+
                 </a>
+
             </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Billetera"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
+                    <div class="flash-card">
+
+                        <div class="icono">
+
+                            💰
+
+                        </div>
+
+                        <h3>
+
+                            GolCoins
+
+                        </h3>
+
+                        <p>
+
+                            Gestiona tu billetera virtual.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
         }
 
-        <!-- Tarjeta solo para administradores -->
         @if (User.IsInRole("Administrador"))
         {
-            <div class="col-md-3">
-                <a asp-controller="Admin" asp-action="Dashboard" class="text-decoration-none">
-                    <div class="flash-card" style="border: 2px solid #ffc107;">
-                        <h3>⚙️ Panel Admin</h3>
-                        <p>Gestión del sistema.</p>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Admin"
+                   asp-action="Dashboard"
+                   class="text-decoration-none">
+
+                    <div class="flash-card admin-card">
+
+                        <div class="icono">
+
+                            ⚙
+
+                        </div>
+
+                        <h3>
+
+                            Administración
+
+                        </h3>
+
+                        <p>
+
+                            Gestión completa del sistema.
+
+                        </p>
+
                     </div>
+
                 </a>
+
             </div>
+
         }
+
     </div>
+
 </div>

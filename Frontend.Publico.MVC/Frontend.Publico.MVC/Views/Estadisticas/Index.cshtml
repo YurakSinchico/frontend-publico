@@ -1,44 +1,193 @@
-﻿@model IEnumerable<UTNGOL.Servicios.DTOs.PosicionDTO>
+﻿@model IEnumerable<UTNGOL.Models.PosicionDTO>
 
 @{
-    ViewData["Title"] = "Tabla de Posiciones";
+    ViewData["Title"] = "Centro de Estadísticas";
+
+    var lider = Model.OrderByDescending(x => x.Puntos).FirstOrDefault();
+    var goleador = Model.OrderByDescending(x => x.GolesFavor).FirstOrDefault();
+    var defensa = Model.OrderBy(x => x.GolesContra).FirstOrDefault();
+    var diferencia = Model.OrderByDescending(x => x.DiferenciaGoles).FirstOrDefault();
 }
 
-<link rel="stylesheet" href="~/css/calendario-estilo.css" />
+<link rel="stylesheet" href="~/css/estadisticas.css" />
 
-<div class="container-fluid">
-    <h1 class="text-white mb-4"><i class="bi bi-graph-up-arrow"></i> Tabla de Posiciones</h1>
+<div class="container-fluid py-5">
 
-    <div class="calendar-container table-responsive">
-        <table class="table table-dark table-hover text-white">
-            <thead>
-                <tr class="text-secondary">
-                    <th>Selección</th>
-                    <th class="text-center">PJ</th>
-                    <th class="text-center">V</th>
-                    <th class="text-center">E</th>
-                    <th class="text-center">D</th>
-                    <th class="text-center">DG</th>
-                    <th class="text-center">PTS</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr class="align-middle">
-                        <td>
-                            <strong>@item.Nombre</strong>
-                            <small class="text-muted">(@item.CodigoFifa)</small>
-                        </td>
-                        <td class="text-center">@item.PartidosJugados</td>
-                        <td class="text-center">@item.Victorias</td>
-                        <td class="text-center">@item.Empates</td>
-                        <td class="text-center">@item.Derrotas</td>
-                        <td class="text-center">@item.DiferenciaGoles</td>
-                        <td class="text-center text-warning fw-bold">@item.Puntos</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="text-center mb-5">
+
+        <h1 class="titulo-estadisticas">
+
+            📊 CENTRO DE ESTADÍSTICAS
+
+        </h1>
+
+        <p class="subtitulo-estadisticas">
+
+            FIFA WORLD CUP 2026 • UTN GOL
+
+        </p>
+
     </div>
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🏆</div>
+
+                <h5>Líder</h5>
+
+                <h3>@lider?.Nombre</h3>
+
+                <span>@lider?.Puntos pts</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">⚽</div>
+
+                <h5>Más Goles</h5>
+
+                <h3>@goleador?.Nombre</h3>
+
+                <span>@goleador?.GolesFavor goles</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🛡</div>
+
+                <h5>Mejor Defensa</h5>
+
+                <h3>@defensa?.Nombre</h3>
+
+                <span>@defensa?.GolesContra recibidos</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📈</div>
+
+                <h5>Mejor Diferencia</h5>
+
+                <h3>@diferencia?.Nombre</h3>
+
+                <span>@diferencia?.DiferenciaGoles</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="tabla-card">
+
+        <table class="table table-dark align-middle mb-0">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Selección</th>
+                    <th>Pts</th>
+                    <th>PJ</th>
+                    <th>PG</th>
+                    <th>PE</th>
+                    <th>PP</th>
+                    <th>GF</th>
+                    <th>GC</th>
+                    <th>DG</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @{
+                    int pos = 1;
+                }
+
+                @foreach (var item in Model.OrderByDescending(x => x.Puntos).ThenByDescending(x => x.DiferenciaGoles))
+                {
+
+                    <tr>
+
+                        <td>
+
+                            @if (pos == 1)
+                            {
+                                <span class="oro">@pos</span>
+                            }
+                            else if (pos == 2)
+                            {
+                                <span class="plata">@pos</span>
+                            }
+                            else if (pos == 3)
+                            {
+                                <span class="bronce">@pos</span>
+                            }
+                            else
+                            {
+                                @pos
+                            }
+
+                        </td>
+
+                        <td>
+
+                            ⚽ @item.Nombre
+
+                        </td>
+
+                        <td>
+
+                            <strong>@item.Puntos</strong>
+
+                        </td>
+
+                        <td>@item.PartidosJugados</td>
+
+                        <td>@item.Victorias</td>
+
+                        <td>@item.Empates</td>
+
+                        <td>@item.Derrotas</td>
+
+                        <td>@item.GolesFavor</td>
+
+                        <td>@item.GolesContra</td>
+
+                        <td>@item.DiferenciaGoles</td>
+
+                    </tr>
+
+                    pos++;
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>

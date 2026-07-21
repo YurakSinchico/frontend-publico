@@ -1,0 +1,119 @@
+﻿body {
+    background: #071421;
+}
+
+.wallet-banner {
+    background: linear-gradient(135deg,#0b2744,#0f4d7a);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
+
+    .wallet-banner h1 {
+        font-size: 45px;
+        color: #FFD54F;
+        font-weight: bold;
+    }
+
+    .wallet-banner p {
+        color: #d6d6d6;
+        font-size: 18px;
+    }
+
+.wallet-balance {
+    font-size: 70px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: white;
+}
+
+.wallet-banner span {
+    color: #FFD54F;
+    font-size: 22px;
+}
+
+.resume-card {
+    background: #10263b;
+    border-radius: 25px;
+    color: white;
+    padding: 35px;
+    text-align: center;
+    transition: .4s;
+    height: 100%;
+}
+
+    .resume-card:hover {
+        transform: translateY(-8px);
+        background: #15436a;
+    }
+
+    .resume-card h3 {
+        font-size: 50px;
+        color: #FFD54F;
+    }
+
+.emoji {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.history {
+    background: #10263b;
+    border-radius: 25px;
+    padding: 35px;
+    color: white;
+}
+
+    .history h2 {
+        color: #FFD54F;
+        margin-bottom: 30px;
+    }
+
+.movement-card {
+    display: flex;
+    align-items: center;
+    background: #17344f;
+    padding: 18px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    transition: .3s;
+}
+
+    .movement-card:hover {
+        background: #1f507d;
+    }
+
+.movement-icon {
+    font-size: 35px;
+    width: 60px;
+    text-align: center;
+}
+
+.movement-info {
+    flex: 1;
+    padding-left: 20px;
+}
+
+    .movement-info h5 {
+        margin: 0;
+        color: white;
+    }
+
+    .movement-info small {
+        color: #cccccc;
+    }
+
+.movement-amount {
+    color: #FFD54F;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.empty-wallet {
+    text-align: center;
+    color: #bbbbbb;
+    padding: 40px;
+    font-size: 20px;
+}

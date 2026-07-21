@@ -1,7 +1,6 @@
 ﻿using Api.Consumer.Consumers;
 using Frontend.Publico.MVC.ViewModels;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using UTNGOL.Models;
@@ -16,70 +15,98 @@ namespace Frontend.Publico.MVC.Controllers
         {
             _authService = authService;
         }
-        // GET: /Account/Login
+
+        // ===========================
+        // LOGIN
+        // ===========================
+
+        [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Complete correctamente el formulario.";
+                return RedirectToAction("Index", "Home");
+            }
 
             try
             {
-                // Mapeo a DTO
-                var loginDto = new LoginDTO { Email = model.Email, Password = model.Password };
-
-                // Llamada real al servicio
-                bool esValido = await _authService.LoginAsync(loginDto);
-
-                if (esValido)
+                var loginDto = new LoginDTO
                 {
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, model.Email) };
-                    var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    Email = model.Email,
+                    Password = model.Password
+                };
 
-                    await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
-                    // Guardamos la contraseña en un lugar accesible pero temporal
+                var usuario = await _authService.LoginAsync(loginDto);
+
+                if (usuario != null)
+                {
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, usuario.Name ?? ""),
+                        new Claim(ClaimTypes.Email, usuario.Email ?? ""),
+                        new Claim(ClaimTypes.Role, usuario.Role ?? "USER"),
+                        new Claim("IdUser", usuario.IdUser.ToString())
+                    };
+
+                    var identity = new ClaimsIdentity(claims, "CookieAuth");
+                    var principal = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync("CookieAuth", principal);
+
+                    HttpContext.Session.SetInt32("IdUser", usuario.IdUser);
+                    HttpContext.Session.SetString("Nombre", usuario.Name ?? "");
+                    HttpContext.Session.SetString("Email", usuario.Email ?? "");
+                    HttpContext.Session.SetString("Role", usuario.Role ?? "USER");
                     HttpContext.Session.SetString("Password", model.Password);
 
-                    return RedirectToAction("Index", "Partidos");
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
-                // Si llega aquí, es porque la API respondió "No autorizado" o "Error"
-                ViewBag.Error = "Credenciales incorrectas o usuario no encontrado.";
+                TempData["Error"] = "Correo o contraseña incorrectos.";
             }
             catch (Exception ex)
             {
-                // ESTA PARTE ES LA CLAVE PARA SABER QUÉ PASA
-                System.Diagnostics.Debug.WriteLine("ERROR DE CONEXIÓN CON API: " + ex.Message);
-                ViewBag.Error = "Error al conectar con el servidor. Verifica que la API esté encendida.";
+                TempData["Error"] = ex.Message;
             }
 
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
+
+        // ===========================
+        // REGISTRO
+        // ===========================
 
         [HttpGet]
         public IActionResult Register()
         {
-            return View(); // Necesitas crear esta vista
+            return RedirectToAction("Index", "Home");
         }
 
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Complete correctamente el formulario.";
+                return RedirectToAction("Index", "Home");
+            }
 
-            var userDto = new UserInputDTO
+            var dto = new UserInputDTO
             {
                 Name = model.Nombre,
                 Email = model.Email,
-                Username = model.Username ?? model.Email,
+                Username = string.IsNullOrWhiteSpace(model.Username)
+                    ? model.Email
+                    : model.Username,
                 Password = model.Password,
                 IdRole = 1,
                 Active = true
@@ -87,32 +114,34 @@ namespace Frontend.Publico.MVC.Controllers
 
             try
             {
-                // Llamamos al nuevo método que nos da la respuesta completa
-                var response = await _authService.RegisterAsyncRaw(userDto);
+                var response = await _authService.RegisterAsyncRaw(dto);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Login", "Account");
+                    TempData["Success"] = "Usuario registrado correctamente. Ahora inicia sesión.";
+                    return RedirectToAction("Index", "Home");
                 }
 
-                // AQUÍ CAPTURAMOS EL ERROR REAL DEL SERVIDOR
-                var errorContent = await response.Content.ReadAsStringAsync();
-
-                // Esto se mostrará en tu <div asp-validation-summary="All">
-                ModelState.AddModelError("", "Error del servidor: " + errorContent);
+                TempData["Error"] = await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "No se pudo conectar con el servidor: " + ex.Message);
+                TempData["Error"] = ex.Message;
             }
 
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
+
+        // ===========================
+        // LOGOUT
+        // ===========================
 
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Clear();
             await HttpContext.SignOutAsync("CookieAuth");
-            return RedirectToAction("Index", "Partidos");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

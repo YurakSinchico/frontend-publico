@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
-using System.Diagnostics; // Necesario para Debug.WriteLine
-using UTNGOL.Models;
 using Api.Consumer.Config;
+using UTNGOL.Models;
 
 namespace Api.Consumer.Consumers
 {
@@ -14,25 +13,23 @@ namespace Api.Consumer.Consumers
             _httpClient = httpClient;
         }
 
-        public async Task<bool> LoginAsync(LoginDTO loginDto)
+        public async Task<UserDTO?> LoginAsync(LoginDTO loginDto)
         {
             var response = await _httpClient.PostAsJsonAsync(
                 $"{ApiConfig.Estadisticas}/login",
                 loginDto);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                var mensajeError = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine("EL SERVIDOR DICE: " + mensajeError);
-            }
+            if (!response.IsSuccessStatusCode)
+                return null;
 
-            return response.IsSuccessStatusCode;
+            return await response.Content.ReadFromJsonAsync<UserDTO>();
         }
-        public async Task<HttpResponseMessage> RegisterAsyncRaw(UserInputDTO userInputDto)
+
+        public async Task<HttpResponseMessage> RegisterAsyncRaw(UserInputDTO dto)
         {
             return await _httpClient.PostAsJsonAsync(
-    $"{ApiConfig.Estadisticas}/usuarios/registrar",
-    userInputDto);
+                $"{ApiConfig.Estadisticas}/usuarios/registrar",
+                dto);
         }
     }
 }

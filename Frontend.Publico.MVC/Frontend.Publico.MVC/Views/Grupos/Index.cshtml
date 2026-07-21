@@ -4,42 +4,89 @@
     ViewData["Title"] = "Grupos";
 }
 
-<h1 class="mb-4">Clasificación por Grupos</h1>
+<link rel="stylesheet" href="~/css/grupos.css" />
 
-@foreach (var grupo in Model)
-{
-    <div class="card mb-4">
+<div class="container-fluid py-5">
 
-        <div class="card-header bg-primary text-white">
-            <h3>@grupo.Key</h3>
-        </div>
+    <div class="text-center mb-5">
 
-        <table class="table table-striped table-hover mb-0">
+        <h1 class="titulo-grupos">
 
-            <thead>
-                <tr>
-                    <th>Selección</th>
-                    <th>Código FIFA</th>
-                    <th>Puntos</th>
-                    <th>Partidos Jugados</th>
-                </tr>
-            </thead>
+            🏆 FASE DE GRUPOS
 
-            <tbody>
+        </h1>
 
-                @foreach (var seleccion in grupo)
-                {
-                    <tr>
-                        <td>@seleccion.Nombre</td>
-                        <td>@seleccion.CodigoFifa</td>
-                        <td>@seleccion.Puntos</td>
-                        <td>@seleccion.PartidosJugados</td>
-                    </tr>
-                }
+        <p class="subtitulo-grupos">
 
-            </tbody>
+            FIFA WORLD CUP 2026
 
-        </table>
+        </p>
 
     </div>
-}
+
+    <div class="row">
+
+        @foreach (var grupo in Model)
+        {
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="grupo-card">
+
+                    <div class="grupo-header">
+
+                        Grupo @grupo.Key
+
+                    </div>
+
+                    @foreach (var item in grupo.OrderByDescending(x => x.Puntos))
+                    {
+
+                        <div class="seleccion-item">
+
+                            <div>
+
+                                <h5>
+
+                                    ⚽ @item.Nombre
+
+                                </h5>
+
+                                <small>
+
+                                    Código FIFA:
+                                    @item.CodigoFifa
+
+                                </small>
+
+                            </div>
+
+                            <div class="text-end">
+
+                                <div class="puntos">
+
+                                    @item.Puntos pts
+
+                                </div>
+
+                                <small>
+
+                                    PJ @item.PartidosJugados
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>

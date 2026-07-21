@@ -1,59 +1,106 @@
 ﻿@model UTNGOL.Models.SeleccionDTO
 
 @{
-    ViewData["Title"] = "Detalle de " + Model.Nombre;
+    ViewData["Title"] = Model.Nombre;
 }
 
-<div class="container mt-4">
+<link rel="stylesheet" href="~/css/selecciones.css" />
 
-    <h2>Detalle de la Selección: @Model.Nombre</h2>
+<div class="container py-5">
 
-    <hr />
+    <div class="detalle-seleccion">
 
-    <div class="card shadow">
+        <div class="text-center">
 
-        <div class="card-body">
+            <div class="team-icon">
 
-            <dl class="row">
+                ⚽
 
-                <dt class="col-sm-3">
-                    Nombre:
-                </dt>
-                <dd class="col-sm-9">
-                    @Model.Nombre
-                </dd>
+            </div>
 
-                <dt class="col-sm-3">
-                    Código FIFA:
-                </dt>
-                <dd class="col-sm-9">
-                    @Model.CodigoFifa
-                </dd>
+            <h1>
 
-                <dt class="col-sm-3">
-                    Grupo:
-                </dt>
-                <dd class="col-sm-9">
-                    @Model.Grupo
-                </dd>
+                @Model.Nombre
 
-                <dt class="col-sm-3">
-                    Confederación:
-                </dt>
-                <dd class="col-sm-9">
-                    @Model.Confederacion
-                </dd>
-
-            </dl>
+            </h1>
 
         </div>
 
-    </div>
+        <div class="row mt-5">
 
-    <div class="mt-3">
-        <a asp-action="Index" class="btn btn-secondary">
-            Volver al listado
-        </a>
+            <div class="col-md-4">
+
+                <div class="info-box">
+
+                    <h5>
+
+                        Código FIFA
+
+                    </h5>
+
+                    <p>
+
+                        @Model.CodigoFifa
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="info-box">
+
+                    <h5>
+
+                        Grupo
+
+                    </h5>
+
+                    <p>
+
+                        @Model.Grupo
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="info-box">
+
+                    <h5>
+
+                        Confederación
+
+                    </h5>
+
+                    <p>
+
+                        @Model.Confederacion
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5">
+
+            <a asp-action="Index"
+               class="btn btn-outline-light btn-lg">
+
+                ← Volver
+
+            </a>
+
+        </div>
+
     </div>
 
 </div>

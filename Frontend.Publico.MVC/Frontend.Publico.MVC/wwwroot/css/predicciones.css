@@ -1,0 +1,54 @@
+﻿body {
+    background: #0f172a;
+}
+
+.prediction-card {
+    max-width: 700px;
+    margin: auto;
+    background: rgba(255,255,255,.06);
+    border-radius: 25px;
+    backdrop-filter: blur(18px);
+    padding: 40px;
+    color: white;
+    box-shadow: 0 15px 40px rgba(0,0,0,.4);
+}
+
+.match-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.team {
+    width: 220px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.vs {
+    font-size: 35px;
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.wallet {
+    font-size: 20px;
+    text-align: center;
+    color: #ffd54f;
+}
+
+.form-control {
+    height: 55px;
+}
+
+.form-select {
+    height: 55px;
+}
+
+.btn-warning {
+    font-size: 20px;
+    border-radius: 12px;
+}

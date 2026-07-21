@@ -1,0 +1,99 @@
+﻿@model Frontend.Publico.MVC.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Mi Billetera";
+}
+
+<link rel="stylesheet" href="~/css/billetera.css" />
+
+<div class="container py-5">
+
+    <div class="wallet-card">
+
+        <h1 class="mb-4">
+
+            💰 Mi Billetera UTNGolCoin
+
+        </h1>
+
+        <div class="saldo">
+
+            @Model.Wallet?.Balance.ToString("N2") Coins
+
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+
+        <h3>
+
+            📜 Historial de Transacciones
+
+        </h3>
+
+        <table class="table table-dark table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Fecha</th>
+
+                    <th>Tipo</th>
+
+                    <th>Monto</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var t in Model.Transactions)
+                {
+                    <tr>
+
+                        <td>
+
+                            @t.Date.ToString("dd/MM/yyyy HH:mm")
+
+                        </td>
+
+                        <td>
+
+                            @t.Type
+
+                        </td>
+
+                        <td>
+
+                            @if (t.Amount > 0)
+                            {
+                                <span class="text-success fw-bold">
+
+                                    +@t.Amount
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-danger fw-bold">
+
+                                    @t.Amount
+
+                                </span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

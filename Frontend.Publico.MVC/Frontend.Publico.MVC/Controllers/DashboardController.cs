@@ -17,15 +17,19 @@ namespace Frontend.Publico.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Temporalmente usamos el usuario 1
-            // Después lo obtendremos automáticamente desde el login.
-            int userId = 1;
+            // Obtener el usuario que inició sesión
+            var userId = HttpContext.Session.GetInt32("IdUser");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             var model = new DashboardViewModel
             {
-                Wallet = await _golCoinConsumer.ObtenerWalletAsync(userId),
-                Predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId),
-                Transactions = await _golCoinConsumer.ObtenerTransaccionesAsync(userId)
+                Wallet = await _golCoinConsumer.ObtenerWalletAsync(userId.Value),
+                Predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value),
+                Transactions = await _golCoinConsumer.ObtenerTransaccionesAsync(userId.Value)
             };
 
             return View(model);

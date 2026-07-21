@@ -1,0 +1,214 @@
+﻿/*==============================
+        FIFA WORLD CUP 2026
+===============================*/
+
+body {
+    background: #08131f;
+    color: white;
+}
+
+.titulo-seccion h1 {
+    color: #FFD54F;
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.titulo-seccion p {
+    color: #d0d0d0;
+    font-size: 20px;
+}
+
+/*==============================
+          TARJETA
+===============================*/
+
+.match-card {
+    background: rgba(15,25,40,.92);
+    border-radius: 25px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,.08);
+    transition: .35s;
+    backdrop-filter: blur(12px);
+    height: 100%;
+    box-shadow: 0 10px 35px rgba(0,0,0,.45);
+}
+
+    .match-card:hover {
+        transform: translateY(-10px);
+        border-color: #FFD54F;
+        box-shadow: 0 25px 50px rgba(0,0,0,.55);
+    }
+
+/*==============================
+            FASE
+===============================*/
+
+.fase {
+    text-align: center;
+    color: #FFD54F;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+/*==============================
+          EQUIPOS
+===============================*/
+
+.equipos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.equipo {
+    width: 220px;
+    text-align: center;
+}
+
+.icono {
+    font-size: 55px;
+    margin-bottom: 12px;
+}
+
+.equipo h3 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.vs {
+    font-size: 42px;
+    color: #FFD54F;
+    font-weight: bold;
+}
+
+/*==============================
+        INFORMACION
+===============================*/
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: #d7d7d7;
+    font-size: 15px;
+}
+
+/*==============================
+        ESTADO
+===============================*/
+
+.estado {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.resultado {
+    font-size: 42px;
+    color: #FFD54F;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+/*==============================
+        BOTONES
+===============================*/
+
+.acciones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-detalle {
+    background: #17314d;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .35s;
+}
+
+    .btn-detalle:hover {
+        background: #21476d;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+.btn-prediccion {
+    background: linear-gradient(135deg,#FFD54F,#FFC107);
+    color: #111;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .35s;
+}
+
+    .btn-prediccion:hover {
+        color: #111;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(255,193,7,.45);
+    }
+
+.btn-login {
+    background: #495057;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+}
+
+.btn-cerrado {
+    background: #b02a37;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+}
+
+/*==============================
+        BADGES
+===============================*/
+
+.badge {
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: 25px;
+}
+
+/*==============================
+        RESPONSIVE
+===============================*/
+
+@media(max-width:992px) {
+
+    .equipos {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .acciones {
+        flex-direction: column;
+    }
+
+    .equipo {
+        width: 100%;
+    }
+}

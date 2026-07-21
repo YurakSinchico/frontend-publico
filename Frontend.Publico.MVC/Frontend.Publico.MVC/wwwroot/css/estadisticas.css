@@ -1,0 +1,87 @@
+﻿body {
+    background: #071421;
+}
+
+.titulo-estadisticas {
+    color: white;
+    font-size: 52px;
+    font-weight: bold;
+}
+
+.subtitulo-estadisticas {
+    color: #cfcfcf;
+    font-size: 20px;
+}
+
+.stat-card {
+    background: linear-gradient(145deg,#133250,#1d4d80);
+    border-radius: 25px;
+    padding: 35px;
+    text-align: center;
+    color: white;
+    transition: .35s;
+    box-shadow: 0 15px 30px rgba(0,0,0,.35);
+    height: 100%;
+}
+
+    .stat-card:hover {
+        transform: translateY(-10px);
+        border: 2px solid gold;
+    }
+
+.stat-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.stat-card h5 {
+    color: #f4c430;
+}
+
+.stat-card span {
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.tabla-card {
+    background: #12263b;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.40);
+}
+
+.table {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background: #f4c430;
+        color: #0f2034;
+    }
+
+    .table tbody tr {
+        transition: .3s;
+    }
+
+        .table tbody tr:hover {
+            background: #1d4d80;
+        }
+
+.oro {
+    color: gold;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.plata {
+    color: silver;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.bronce {
+    color: #cd7f32;
+    font-weight: bold;
+    font-size: 20px;
+}

@@ -45,6 +45,8 @@ namespace Frontend.Publico.MVC
 
             builder.Services.AddHttpClient<GolCoinConsumer>();
 
+            builder.Services.AddHttpClient<PredictionConsumer>();
+
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
