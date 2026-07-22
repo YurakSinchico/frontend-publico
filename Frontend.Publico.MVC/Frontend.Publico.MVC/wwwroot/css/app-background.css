@@ -1,0 +1,10 @@
+﻿.app-background {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)), url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwvcUQYvCbb3aKxYAJA_-3EOP-c3zYIXc85uDbl3Z3tg&s");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: -100;
+}

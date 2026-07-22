@@ -78,7 +78,7 @@
         <h5 class="fw-bold text-dark mb-3">Tabla Completa de Métricas</h5>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
+                <thead>
                     <tr>
                         <th style="width: 50px;">#</th>
                         <th>Selección</th>
@@ -103,7 +103,10 @@
                                 else if (pos == 3) { <span class="badge bg-amber text-white rounded-circle" style="background-color: #b45309;">3</span> }
                                 else { <span class="text-muted">@pos</span> }
                             </td>
-                            <td><strong class="text-dark">⚽ @item.Nombre</strong></td>
+                            <td>
+                                <i class="bi bi-globe-americas text-primary me-2"></i>
+                                <strong>@item.Nombre</strong>
+                            </td>
                             <td class="text-center fw-extrabold text-cyan fs-6">@item.Puntos</td>
                             <td class="text-center">@item.PartidosJugados</td>
                             <td class="text-center text-success fw-semibold">@item.Victorias</td>

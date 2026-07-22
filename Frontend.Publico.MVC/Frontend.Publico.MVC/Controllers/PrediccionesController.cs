@@ -19,6 +19,7 @@ namespace Frontend.Publico.MVC.Controllers
         }
 
         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             int? userId = HttpContext.Session.GetInt32("IdUser");
@@ -27,6 +28,10 @@ namespace Frontend.Publico.MVC.Controllers
                 return RedirectToAction("Login", "Account");
 
             var predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value);
+
+            var partidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+
+            ViewBag.Partidos = partidos;
 
             return View(predictions);
         }
@@ -177,6 +182,24 @@ namespace Frontend.Publico.MVC.Controllers
 
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            int? userId = HttpContext.Session.GetInt32("IdUser");
+
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
+
+            var predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value);
+
+            var prediction = predictions.FirstOrDefault(p => p.Id == id);
+
+            if (prediction == null)
+                return NotFound();
+
+            return View(prediction);
         }
     }
 }

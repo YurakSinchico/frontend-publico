@@ -50,15 +50,35 @@
     else
     {
         <div class="row g-4 col-lg-10 mx-auto">
+            @using UTNGOL.Models
+
+@{
+                var partidos = ViewBag.Partidos as List<PartidoDTO>;
+            }
             @foreach (var p in Model)
             {
+                var partido = partidos?.FirstOrDefault(x => x.IdPartido == p.MatchId);
+
+                string nombrePartido = partido == null
+                    ? $"Partido #{p.MatchId}"
+                    : $"{partido.SeleccionLocal} vs {partido.SeleccionVisitante}";
+
+                string apuesta = p.PredictedResult switch
+                {
+                    "1" => partido?.SeleccionLocal ?? "Local",
+                    "2" => partido?.SeleccionVisitante ?? "Visitante",
+                    "X" => "Empate",
+                    _ => p.PredictedResult
+                };
+
                 var resultText = p.PredictedResult == "1" ? "Local (1)" : p.PredictedResult == "2" ? "Visitante (2)" : p.PredictedResult == "X" ? "Empate (X)" : p.PredictedResult;
 
                 <div class="col-lg-6">
                     <div class="bg-white p-4 rounded-4 border shadow-sm h-100 hover-shadow transition-all">
                         <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
                             <h4 class="m-0 fw-bold text-dark fs-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-trophy text-warning"></i> Partido #@p.MatchId
+                                <i class="bi bi-trophy text-warning"></i>
+                                @nombrePartido
                             </h4>
                             @if (p.Status == "Ganada" || p.Status == "GANADA")
                             {
@@ -83,7 +103,9 @@
                         <div class="row g-3 text-start">
                             <div class="col-6">
                                 <span class="text-muted small d-block">Resultado Pronosticado</span>
-                                <div class="text-cyan fw-extrabold fs-6">@resultText</div>
+                                <div class="text-cyan fw-extrabold fs-6">
+                                    @apuesta
+                                </div>
                             </div>
 
                             <div class="col-6">
@@ -93,7 +115,7 @@
 
                             <div class="col-6">
                                 <span class="text-muted small d-block">Cuota Aplicada</span>
-                                <div class="text-secondary fw-bold">@p.AppliedOdds x</div>
+                                <div class="text-secondary fw-bold">@p.AppliedOdds.ToString("N2") x</div>
                             </div>
 
                             <div class="col-6">
@@ -104,6 +126,10 @@
                     </div>
                 </div>
             }
+
+
+
+
         </div>
     }
 

@@ -1,0 +1,71 @@
+﻿@model UTNGOL.Models.PredictionDTO
+
+@{
+    ViewData["Title"] = "Detalle de la Predicción";
+}
+
+<link rel="stylesheet" href="~/css/mis-predicciones.css" />
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="m-0">
+                🎯 Detalle de la Predicción
+            </h3>
+        </div>
+
+        <div class="card-body p-4">
+
+            <table class="table">
+
+                <tr>
+                    <th>ID</th>
+                    <td>@Model.Id</td>
+                </tr>
+
+                <tr>
+                    <th>Partido</th>
+                    <td>#@Model.MatchId</td>
+                </tr>
+
+                <tr>
+                    <th>Resultado Pronosticado</th>
+                    <td>@Model.PredictedResult</td>
+                </tr>
+
+                <tr>
+                    <th>Monto Apostado</th>
+                    <td>@Model.Amount GolCoins</td>
+                </tr>
+
+                <tr>
+                    <th>Cuota</th>
+                    <td>@Model.AppliedOdds</td>
+                </tr>
+
+                <tr>
+                    <th>Estado</th>
+                    <td>@Model.Status</td>
+                </tr>
+
+                <tr>
+                    <th>Fecha</th>
+                    <td>@Model.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+
+            </table>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                ← Volver
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

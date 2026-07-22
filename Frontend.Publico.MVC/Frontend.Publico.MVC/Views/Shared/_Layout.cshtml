@@ -11,12 +11,15 @@
     <link rel="stylesheet" href="~/css/sidebar-moderna.css" />
     <link rel="stylesheet" href="~/css/home-estilos.css" />
     <link rel="stylesheet" href="~/css/login-modal.css" />
+    <link rel="stylesheet" href="~/css/app-background.css" />
 </head>
 
 <body>
 
     @if (User.Identity?.IsAuthenticated == true)
     {
+        <div class="app-background"></div>
+
         <div class="sidebar">
             <partial name="_Sidebar" />
         </div>
