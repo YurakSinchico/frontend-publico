@@ -1,4 +1,4 @@
-﻿@using System.Security.Claims
+@using System.Security.Claims
 
 @{
     ViewData["Title"] = "Inicio";
@@ -6,8 +6,8 @@
 
 @if (Context.Request.Query.ContainsKey("error"))
 {
-    <div class="container mt-3">
-        <div class="alert alert-danger shadow text-center">
+    <div class="container mt-3 position-relative z-3">
+        <div class="alert alert-danger text-center shadow-lg">
             @Context.Request.Query["error"]
         </div>
     </div>
@@ -16,294 +16,117 @@
 <div class="gif-hero"></div>
 <div class="dark-overlay"></div>
 
-<div class="hero-container">
-
-    <div class="hero-content">
-
-        <img src="~/logos/logo.png" class="hero-logo" />
-
-        <h1>
-
-            FIFA WORLD CUP 2026
-
-        </h1>
-
-        <h2>
-
-            UTN GOL
-
-        </h2>
-
-        <p>
-
-            Vive la emoción del Mundial, consulta resultados, estadísticas,
-            grupos y realiza tus predicciones.
-
-        </p>
-
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <button class="btn-login"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginModal">
-
-                Iniciar Sesión
-
-            </button>
-        }
-        else
-        {
-            <a asp-controller="Dashboard"
-               asp-action="Index"
-               class="btn-dashboard">
-
-                Ir a mi Panel
-
-            </a>
-        }
-
-    </div>
-
-</div>
-
-<div class="container pb-5">
-
-    <div class="row g-4">
-
-        <div class="col-lg-3 col-md-6">
-
-            <a asp-controller="Partidos"
-               asp-action="Index"
-               class="text-decoration-none">
-
-                <div class="flash-card">
-
-                    <div class="icono">
-
-                        📅
-
-                    </div>
-
-                    <h3>
-
-                        Calendario
-
-                    </h3>
-
-                    <p>
-
-                        Consulta todos los partidos del Mundial.
-
-                    </p>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-
-            <a asp-controller="Estadisticas"
-               asp-action="Index"
-               class="text-decoration-none">
-
-                <div class="flash-card">
-
-                    <div class="icono">
-
-                        📊
-
-                    </div>
-
-                    <h3>
-
-                        Estadísticas
-
-                    </h3>
-
-                    <p>
-
-                        Rendimiento de selecciones y jugadores.
-
-                    </p>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-
-            <a asp-controller="Selecciones"
-               asp-action="Index"
-               class="text-decoration-none">
-
-                <div class="flash-card">
-
-                    <div class="icono">
-
-                        ⚽
-
-                    </div>
-
-                    <h3>
-
-                        Selecciones
-
-                    </h3>
-
-                    <p>
-
-                        Conoce todos los equipos participantes.
-
-                    </p>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-
-            <a asp-controller="Grupos"
-               asp-action="Index"
-               class="text-decoration-none">
-
-                <div class="flash-card">
-
-                    <div class="icono">
-
-                        🏆
-
-                    </div>
-
-                    <h3>
-
-                        Grupos
-
-                    </h3>
-
-                    <p>
-
-                        Consulta la clasificación oficial.
-
-                    </p>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-
-            <div class="col-lg-3 col-md-6">
-
+<div class="landing-wrapper">
+    <section class="hero-container">
+        <div class="hero-content">
+            <h3 class="hero-brand">FIFA</h3>
+            <h1 class="hero-title">WORLD CUP 2026</h1>
+            <div class="hero-subtitle-wrapper">
+                <span class="hero-line"></span>
+                <span class="hero-subtitle">UNITED BY FOOTBALL</span>
+                <span class="hero-line"></span>
+            </div>
+            <p class="hero-description">
+                Vive la emoción del Mundial, consulta resultados, estadísticas,<br class="d-none d-md-inline" />
+                grupos y realiza tus predicciones.
+            </p>
+
+            @if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                <button class="btn-login-gold"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal">
+                    <i class="bi bi-person-fill"></i>
+                    INICIAR SESIÓN
+                </button>
+            }
+            else
+            {
                 <a asp-controller="Dashboard"
                    asp-action="Index"
-                   class="text-decoration-none">
-
-                    <div class="flash-card">
-
-                        <div class="icono">
-
-                            ⚡
-
-                        </div>
-
-                        <h3>
-
-                            Mi Panel
-
-                        </h3>
-
-                        <p>
-
-                            Bienvenido @Context.Session.GetString("UserName")
-
-                        </p>
-
-                    </div>
-
+                   class="btn-login-gold text-decoration-none">
+                    <i class="bi bi-speedometer2"></i>
+                    IR A MI PANEL
                 </a>
+            }
+        </div>
+    </section>
 
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <a asp-controller="Billetera"
-                   asp-action="Index"
-                   class="text-decoration-none">
-
-                    <div class="flash-card">
-
-                        <div class="icono">
-
-                            💰
-
+    <div class="container cards-home-container">
+        <div class="cards-glass-box">
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <a asp-controller="Partidos"
+                       asp-action="Index"
+                       class="text-decoration-none h-100 d-block">
+                        <div class="flash-card card-calendario">
+                            <div class="icono-box icono-blue">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <h3>Calendario</h3>
+                            <p>Consulta todos los partidos del Mundial.</p>
+                            <div class="arrow-box arrow-blue">
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
                         </div>
+                    </a>
+                </div>
 
-                        <h3>
-
-                            GolCoins
-
-                        </h3>
-
-                        <p>
-
-                            Gestiona tu billetera virtual.
-
-                        </p>
-
-                    </div>
-
-                </a>
-
-            </div>
-
-        }
-
-        @if (User.IsInRole("Administrador"))
-        {
-
-            <div class="col-lg-3 col-md-6">
-
-                <a asp-controller="Admin"
-                   asp-action="Dashboard"
-                   class="text-decoration-none">
-
-                    <div class="flash-card admin-card">
-
-                        <div class="icono">
-
-                            ⚙
-
+                <div class="col-lg-3 col-md-6">
+                    <a asp-controller="Estadisticas"
+                       asp-action="Index"
+                       class="text-decoration-none h-100 d-block">
+                        <div class="flash-card card-estadisticas">
+                            <div class="icono-box icono-green">
+                                <i class="bi bi-bar-chart-line"></i>
+                            </div>
+                            <h3>Estadísticas</h3>
+                            <p>Rendimiento de selecciones y jugadores.</p>
+                            <div class="arrow-box arrow-green">
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
                         </div>
+                    </a>
+                </div>
 
-                        <h3>
+                <div class="col-lg-3 col-md-6">
+                    <a asp-controller="Selecciones"
+                       asp-action="Index"
+                       class="text-decoration-none h-100 d-block">
+                        <div class="flash-card card-selecciones">
+                            <div class="icono-box icono-purple">
+                                <i class="bi bi-dribbble"></i>
+                            </div>
+                            <h3>Selecciones</h3>
+                            <p>Conoce todos los equipos participantes.</p>
+                            <div class="arrow-box arrow-purple">
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-                            Administración
-
-                        </h3>
-
-                        <p>
-
-                            Gestión completa del sistema.
-
-                        </p>
-
-                    </div>
-
-                </a>
-
+                <div class="col-lg-3 col-md-6">
+                    <a asp-controller="Grupos"
+                       asp-action="Index"
+                       class="text-decoration-none h-100 d-block">
+                        <div class="flash-card card-grupos">
+                            <div class="icono-box icono-gold">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h3>Grupos</h3>
+                            <p>Consulta la clasificación oficial.</p>
+                            <div class="arrow-box arrow-gold">
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
+        </div>
 
-        }
-
+        <footer class="home-footer text-center">
+            <p>© 2026 UTN GOL - Todos los derechos reservados.</p>
+        </footer>
     </div>
-
 </div>

@@ -35,26 +35,45 @@ namespace Frontend.Publico.MVC.Controllers
         // ============================
         [HttpGet]
         public async Task<IActionResult> Create(
-    int matchId,
-    string homeTeam,
-    string awayTeam,
-    DateTime matchStartDate)
+     int matchId,
+     string homeTeam,
+     string awayTeam,
+     DateTime matchStartDate)
         {
             try
             {
                 int? userId = HttpContext.Session.GetInt32("IdUser");
+
+                Console.WriteLine("======================");
+                Console.WriteLine("USUARIO EN SESION:");
+                Console.WriteLine(userId);
+                Console.WriteLine("======================");
+
 
                 if (userId == null)
                 {
                     return Content("IdUser es NULL");
                 }
 
-                var wallet = await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
+
+                var wallet =
+                    await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
+
 
                 if (wallet == null)
                 {
-                    return Content("Wallet es NULL");
+                    Console.WriteLine("NO EXISTE WALLET PARA:");
+                    Console.WriteLine(userId);
+
+                    return Content(
+                        "Wallet es NULL para usuario " + userId
+                    );
                 }
+
+
+                Console.WriteLine("WALLET ENCONTRADA:");
+                Console.WriteLine(wallet.Balance);
+
 
                 var model = new PredictionViewModel
                 {
@@ -64,6 +83,7 @@ namespace Frontend.Publico.MVC.Controllers
                     MatchStartDate = matchStartDate,
                     WalletBalance = wallet.Balance
                 };
+
 
                 return View(model);
             }

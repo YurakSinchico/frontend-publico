@@ -1,23 +1,28 @@
-﻿<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-ecumex-card">
 
-        <div class="modal-content modal-content-ecumex">
-
-            <div class="modal-header border-0 bg-dark text-white">
-
-                <div class="w-100 text-center">
-                    <div class="fs-1">⚡</div>
-                    <h4 class="fw-bold">UTN GOL MUNDIAL</h4>
-                </div>
-
+            <div class="modal-header border-0 pb-0 justify-content-end">
                 <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
                 </button>
-
             </div>
 
-            <div class="modal-body bg-dark text-white">
+            <div class="modal-body px-4 px-sm-5 pb-4 pt-0">
+
+                <div class="text-center mb-4">
+                    <div class="ecumex-icon-badge mx-auto mb-3">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                    </div>
+                    <h3 class="fw-extrabold ecumex-title mb-1">
+                        UTN<span class="text-cyan">GOL</span>
+                    </h3>
+                    <p class="ecumex-subtitle text-uppercase mb-0">
+                        TU PRÓXIMA VICTORIA EMPIEZA AQUÍ
+                    </p>
+                </div>
 
                 <form asp-controller="Account"
                       asp-action="Login"
@@ -26,46 +31,40 @@
                     @Html.AntiForgeryToken()
 
                     <div class="mb-3">
-                        <label class="form-label text-warning fw-semibold">
-                            CORREO
+                        <label class="form-label ecumex-label">
+                            <i class="bi bi-envelope me-1"></i> USUARIO / CORREO
                         </label>
-
                         <input type="email"
                                name="Email"
-                               class="form-control"
+                               class="form-control ecumex-input"
+                               placeholder="Ingresa tu usuario"
                                required />
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label text-warning fw-semibold">
-                            CONTRASEÑA
+                    <div class="mb-4">
+                        <label class="form-label ecumex-label">
+                            <i class="bi bi-key me-1"></i> CONTRASEÑA
                         </label>
-
                         <input type="password"
                                name="Password"
-                               class="form-control"
+                               class="form-control ecumex-input"
+                               placeholder="••••••••"
                                required />
                     </div>
 
-                    <button class="btn btn-primary w-100 fw-bold">
-                        INGRESAR
+                    <button type="submit" class="btn btn-cyan-ecumex w-100 fw-bold mb-4 py-3">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> INGRESAR AL SISTEMA
                     </button>
 
-                    <hr class="text-secondary" />
-
-                    <div class="text-center">
-
-                        ¿No tienes cuenta?
-
+                    <div class="text-center pt-2 border-top">
+                        <span class="ecumex-footer-text me-1">¿AÚN NO TIENES CUENTA?</span>
                         <a href="#"
+                           class="text-cyan-link fw-bold text-decoration-none"
                            data-bs-dismiss="modal"
                            data-bs-toggle="modal"
                            data-bs-target="#registerModal">
-
-                            Regístrate aquí
-
+                            REGÍSTRATE AQUÍ <i class="bi bi-arrow-right"></i>
                         </a>
-
                     </div>
 
                 </form>
@@ -73,6 +72,6 @@
             </div>
 
         </div>
-
     </div>
 </div>
+

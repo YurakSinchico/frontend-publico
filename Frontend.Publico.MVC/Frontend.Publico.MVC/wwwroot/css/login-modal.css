@@ -1,66 +1,174 @@
-﻿/* login-modal.css */
-.modal-content-ecumex {
+/* ==========================================
+   ESTILOS DE MODALES LOGIN Y REGISTRO ECUMEX/UTNGOL
+   ========================================== */
+
+.modal-ecumex-card {
     background-color: #ffffff !important;
-    border-radius: 20px !important;
-    padding: 20px !important;
+    border-radius: 28px !important;
     border: none !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+    overflow: hidden;
 }
 
-.modal-header-ecumex {
-    border: none !important;
-    text-align: center !important;
-    display: block !important;
+.register-header-dark {
+    background-color: #0b1329 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.icon-ecumex {
-    font-size: 2rem !important;
-    margin-bottom: 0.5rem !important;
+.ecumex-icon-badge {
+    width: 58px;
+    height: 58px;
+    background: #00d4b4;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b1329;
+    font-size: 28px;
+    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.35);
 }
 
-.title-ecumex {
-    font-weight: bold !important;
+.ecumex-title {
+    color: #0f172a;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
-.subtitle-ecumex {
-    color: #6c757d !important;
-    font-size: 0.8rem !important;
-}
-
-.modal-input-ecumex {
-    background: #f8f9fa !important;
-    border: 1px solid #ced4da !important;
-    border-radius: 8px !important;
-}
-
-.label-ecumex {
-    color: #6c757d !important;
-    font-size: 0.75rem !important;
-    font-weight: bold !important;
-}
-
-.btn-login-ecumex {
-    background-color: #00d4b4 !important;
-    border: none !important;
-    color: white !important;
-    width: 100% !important;
-    padding: 12px !important;
-    border-radius: 8px !important;
-    font-weight: bold !important;
-}
-
-.register-container-ecumex {
-    text-align: center !important;
-    margin-top: 1.5rem !important;
-}
-
-.register-text-ecumex {
-    color: #6c757d !important;
-    font-size: 0.75rem !important;
-}
-
-.link-register-ecumex {
+.text-cyan {
     color: #00d4b4 !important;
-    text-decoration: none !important;
-    font-weight: bold !important;
-    font-size: 0.85rem !important;
 }
+
+.ecumex-subtitle {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.ecumex-subtitle-light {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.ecumex-label {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.ecumex-input {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    color: #1e293b !important;
+    transition: all 0.25s ease !important;
+}
+
+.ecumex-input:focus {
+    background-color: #ffffff !important;
+    border-color: #00d4b4 !important;
+    box-shadow: 0 0 0 4px rgba(0, 212, 180, 0.15) !important;
+    outline: none !important;
+}
+
+/* Botón Cian brillante para Login */
+.btn-cyan-ecumex {
+    background-color: #00d4b4 !important;
+    color: #0b1329 !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 14px 20px !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.35) !important;
+}
+
+.btn-cyan-ecumex:hover {
+    background-color: #00c0a3 !important;
+    color: #0b1329 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 212, 180, 0.45) !important;
+}
+
+/* Botón Oscuro Navy para Registro */
+.btn-dark-ecumex {
+    background-color: #0b1329 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 14px 20px !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: 0 8px 20px rgba(11, 19, 41, 0.3) !important;
+}
+
+.btn-dark-ecumex:hover {
+    background-color: #1a233d !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(11, 19, 41, 0.4) !important;
+}
+
+/* Botón Claro para Volver */
+.btn-light-ecumex {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 14px 20px !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.25s ease !important;
+}
+
+.btn-light-ecumex:hover {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+.section-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.accent-bar {
+    width: 4px;
+    height: 16px;
+    background-color: #00d4b4;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.ecumex-section-title {
+    color: #0f172a;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.ecumex-footer-text {
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.text-cyan-link {
+    color: #00d4b4 !important;
+    font-size: 0.8rem;
+    transition: color 0.2s ease;
+}
+
+.text-cyan-link:hover {
+    color: #00b398 !important;
+}
+
+

@@ -16,6 +16,7 @@ namespace Frontend.Publico.MVC.Controllers
             _authService = authService;
         }
 
+
         // ===========================
         // LOGIN
         // ===========================
@@ -26,15 +27,22 @@ namespace Frontend.Publico.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            Console.WriteLine("===== LOGIN MVC =====");
+            Console.WriteLine($"Email: '{model.Email}'");
+            Console.WriteLine($"Password: '{model.Password}'");
+
+
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Complete correctamente el formulario.";
                 return RedirectToAction("Index", "Home");
             }
+
 
             try
             {
@@ -44,7 +52,9 @@ namespace Frontend.Publico.MVC.Controllers
                     Password = model.Password
                 };
 
+
                 var usuario = await _authService.LoginAsync(loginDto);
+
 
                 if (usuario != null)
                 {
@@ -56,29 +66,73 @@ namespace Frontend.Publico.MVC.Controllers
                         new Claim("IdUser", usuario.IdUser.ToString())
                     };
 
-                    var identity = new ClaimsIdentity(claims, "CookieAuth");
+
+                    var identity = new ClaimsIdentity(
+                        claims,
+                        "CookieAuth"
+                    );
+
+
                     var principal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync("CookieAuth", principal);
 
-                    HttpContext.Session.SetInt32("IdUser", usuario.IdUser);
-                    HttpContext.Session.SetString("Nombre", usuario.Name ?? "");
-                    HttpContext.Session.SetString("Email", usuario.Email ?? "");
-                    HttpContext.Session.SetString("Role", usuario.Role ?? "USER");
-                    HttpContext.Session.SetString("Password", model.Password);
+                    await HttpContext.SignInAsync(
+                        "CookieAuth",
+                        principal
+                    );
 
-                    return RedirectToAction("Index", "Dashboard");
+
+                    HttpContext.Session.SetInt32(
+                        "IdUser",
+                        usuario.IdUser
+                    );
+
+
+                    HttpContext.Session.SetString(
+                        "Nombre",
+                        usuario.Name ?? ""
+                    );
+
+
+                    HttpContext.Session.SetString(
+                        "Email",
+                        usuario.Email ?? ""
+                    );
+
+
+                    HttpContext.Session.SetString(
+                        "Role",
+                        usuario.Role ?? "USER"
+                    );
+
+
+                    return RedirectToAction(
+                        "Index",
+                        "Dashboard"
+                    );
                 }
 
-                TempData["Error"] = "Correo o contraseña incorrectos.";
+
+                TempData["Error"] =
+                    "Correo o contraseña incorrectos.";
+
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
+                Console.WriteLine(ex);
+
+                TempData["Error"] =
+                    ex.Message;
             }
 
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction(
+                "Index",
+                "Home"
+            );
         }
+
+
 
         // ===========================
         // REGISTRO
@@ -90,47 +144,121 @@ namespace Frontend.Publico.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+
+            Console.WriteLine("===== REGISTRO MVC =====");
+
+            Console.WriteLine($"Nombre: {model.Nombre}");
+            Console.WriteLine($"Email: {model.Email}");
+            Console.WriteLine($"Username: {model.Username}");
+            Console.WriteLine($"Password: {model.Password}");
+
+
+
             if (!ModelState.IsValid)
             {
-                TempData["Error"] = "Complete correctamente el formulario.";
-                return RedirectToAction("Index", "Home");
+                TempData["Error"] =
+                    "Complete correctamente el formulario.";
+
+                return RedirectToAction(
+                    "Index",
+                    "Home"
+                );
             }
+
+
 
             var dto = new UserInputDTO
             {
                 Name = model.Nombre,
+
                 Email = model.Email,
-                Username = string.IsNullOrWhiteSpace(model.Username)
+
+                Username =
+                    string.IsNullOrWhiteSpace(model.Username)
                     ? model.Email
                     : model.Username,
+
                 Password = model.Password,
+
                 IdRole = 1,
+
                 Active = true
             };
 
+
+
             try
             {
-                var response = await _authService.RegisterAsyncRaw(dto);
 
-                if (response.IsSuccessStatusCode)
+                // Crear usuario en backend Java
+                var usuario =
+                    await _authService.RegisterAsync(dto);
+
+
+
+                if (usuario == null)
                 {
-                    TempData["Success"] = "Usuario registrado correctamente. Ahora inicia sesión.";
-                    return RedirectToAction("Index", "Home");
+                    TempData["Error"] =
+                        "No se pudo crear el usuario.";
+
+                    return RedirectToAction(
+                        "Index",
+                        "Home"
+                    );
                 }
 
-                TempData["Error"] = await response.Content.ReadAsStringAsync();
+
+
+                Console.WriteLine(
+                    $"Usuario creado ID: {usuario.IdUser}"
+                );
+
+
+                /*
+                 La creación de la wallet NO se hace aquí.
+
+                 La regla del negocio:
+                 "Todo usuario nuevo recibe 10 GolCoins"
+
+                 debe manejarla el backend de GolCoin.
+                */
+
+
+                TempData["Success"] =
+                    "Usuario registrado correctamente.";
+
+
+                return RedirectToAction(
+                    "Index",
+                    "Home"
+                );
+
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
+
+                Console.WriteLine(ex);
+
+                TempData["Error"] =
+                    ex.Message;
+
             }
 
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction(
+                "Index",
+                "Home"
+            );
         }
+
+
+
 
         // ===========================
         // LOGOUT
@@ -138,10 +266,20 @@ namespace Frontend.Publico.MVC.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear();
-            await HttpContext.SignOutAsync("CookieAuth");
 
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.Clear();
+
+
+            await HttpContext.SignOutAsync(
+                "CookieAuth"
+            );
+
+
+            return RedirectToAction(
+                "Index",
+                "Home"
+            );
         }
+
     }
 }

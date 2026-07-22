@@ -13,6 +13,7 @@ namespace Api.Consumer.Consumers
             _httpClient = httpClient;
         }
 
+
         public async Task<UserDTO?> LoginAsync(LoginDTO loginDto)
         {
             var response = await _httpClient.PostAsJsonAsync(
@@ -25,11 +26,20 @@ namespace Api.Consumer.Consumers
             return await response.Content.ReadFromJsonAsync<UserDTO>();
         }
 
-        public async Task<HttpResponseMessage> RegisterAsyncRaw(UserInputDTO dto)
+
+        public async Task<UserDTO?> RegisterAsync(UserInputDTO dto)
         {
-            return await _httpClient.PostAsJsonAsync(
-                $"{ApiConfig.Estadisticas}/usuarios/registrar",
-                dto);
+            var response = await _httpClient.PostAsJsonAsync(
+                $"{ApiConfig.Estadisticas}/usuarios",
+                dto
+            );
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+
+            return await response.Content
+                .ReadFromJsonAsync<UserDTO>();
         }
     }
 }

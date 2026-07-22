@@ -8,10 +8,13 @@ namespace Api.Consumer.Consumers
     {
         private readonly HttpClient _httpClient;
 
+
         public GolCoinConsumer(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
+
+
 
         // ===========================
         // WALLET
@@ -29,6 +32,8 @@ namespace Api.Consumer.Consumers
                 return null;
             }
         }
+
+
 
         // ===========================
         // TRANSACCIONES
@@ -48,6 +53,8 @@ namespace Api.Consumer.Consumers
             }
         }
 
+
+
         // ===========================
         // PREDICCIONES
         // ===========================
@@ -65,6 +72,8 @@ namespace Api.Consumer.Consumers
                 return new List<PredictionDTO>();
             }
         }
+
+
 
         public async Task<HttpResponseMessage> CrearPrediccionAsync(CreatePredictionDTO dto)
         {

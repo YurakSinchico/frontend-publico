@@ -1,22 +1,28 @@
-﻿@model Frontend.Publico.MVC.ViewModels.RegisterViewModel
+@model Frontend.Publico.MVC.ViewModels.RegisterViewModel
 
 <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content modal-content-ecumex">
-
-            <div class="modal-header border-0 bg-dark text-white">
-                <h4 class="w-100 text-center">
-                    Crear Cuenta
-                </h4>
-
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-ecumex-card p-0 overflow-hidden">
+          <div class="register-header-dark position-relative p-4 text-center">
                 <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
+                        class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
                 </button>
+
+                <div class="ecumex-icon-badge mx-auto mb-3">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <h3 class="fw-extrabold text-white mb-1">
+                    ÚNETE A <span class="text-cyan">UTNGOL</span>
+                </h3>
+                <p class="ecumex-subtitle-light text-uppercase mb-0">
+                    ESTÁS A UN PASO DE TU PRÓXIMO PARTIDO
+                </p>
             </div>
 
-            <div class="modal-body bg-dark text-white">
+     
+            <div class="modal-body p-4 p-sm-5 bg-white">
 
                 <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
@@ -26,35 +32,82 @@
 
                     @Html.AntiForgeryToken()
 
-                    <div class="mb-3">
-                        <label>Nombre</label>
-                        <input asp-for="Nombre" class="form-control" required />
+                    <div class="row g-4">
+                     
+                        <div class="col-md-6">
+                            <div class="section-title-wrapper mb-3">
+                                <span class="accent-bar"></span>
+                                <h6 class="fw-bold ecumex-section-title mb-0">DATOS DE USUARIO</h6>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label ecumex-label">NOMBRE COMPLETO</label>
+                                <input asp-for="Nombre"
+                                       class="form-control ecumex-input"
+                                       placeholder="Ej. Juan Alberto"
+                                       required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label ecumex-label">NOMBRE DE USUARIO</label>
+                                <input asp-for="Username"
+                                       class="form-control ecumex-input"
+                                       placeholder="Ej. juanperez"
+                                       required />
+                            </div>
+                        </div>
+
+                     
+                        <div class="col-md-6">
+                            <div class="section-title-wrapper mb-3">
+                                <span class="accent-bar"></span>
+                                <h6 class="fw-bold ecumex-section-title mb-0">CONTACTO Y SEGURIDAD</h6>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label ecumex-label">CORREO ELECTRÓNICO</label>
+                                <input asp-for="Email"
+                                       type="email"
+                                       class="form-control ecumex-input"
+                                       placeholder="usuario@ejemplo.com"
+                                       required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label ecumex-label">CONTRASEÑA</label>
+                                <input asp-for="Password"
+                                       type="password"
+                                       class="form-control ecumex-input"
+                                       placeholder="Mínimo 8 caracteres"
+                                       required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label>Usuario</label>
-                        <input asp-for="Username" class="form-control" required />
+                    
+                    <div class="row g-3 mt-3 pt-2">
+                        <div class="col-md-6">
+                            <button type="button"
+                                    class="btn btn-light-ecumex w-100 fw-bold py-3"
+                                    data-bs-dismiss="modal"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal">
+                                VOLVER AL LOGIN
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-dark-ecumex w-100 fw-bold py-3">
+                                REGISTRAR MI CUENTA
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label>Correo</label>
-                        <input asp-for="Email" type="email" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Contraseña</label>
-                        <input asp-for="Password" type="password" class="form-control" required />
-                    </div>
-
-                    <button class="btn btn-success w-100">
-                        Registrarme
-                    </button>
 
                 </form>
 
             </div>
 
         </div>
-
     </div>
 </div>
+
+

@@ -1,13 +1,327 @@
-﻿.container.pb-5 {
-    position: relative;
-    z-index: 5;
-    margin-top: 60px;
-    margin-bottom: 40px;
-    background: rgba(10,15,25,.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 25px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    border: 1px solid rgba(255,255,255,.08);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #030712;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Anular el fondo sólido de sidebar-moderna.css para la vista de invitado */
+.main-content-wrapper,
+.main-content-full {
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+
+/* ==========================
+   FONDO Y SUPERPOSICIÓN
+========================== */
+
+.gif-hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../images/fifa.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    z-index: 0;
+}
+
+.dark-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(3, 7, 18, 0.3) 0%, rgba(3, 7, 18, 0.65) 70%, rgba(3, 7, 18, 0.92) 100%),
+                linear-gradient(180deg, rgba(3, 7, 18, 0.35) 0%, rgba(3, 7, 18, 0.6) 60%, rgba(3, 7, 18, 0.9) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.landing-wrapper {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+}
+
+/* ==========================
+   HERO / ENCABEZADO
+========================== */
+
+.hero-container {
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: center;
+    padding: 45px 20px 25px 20px;
+}
+
+.hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.hero-brand {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    color: #ffffff;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #ffffff;
+    line-height: 1.1;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.hero-subtitle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.hero-line {
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-description {
+    font-size: 16px;
+    font-weight: 400;
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* ==========================
+   BOTÓN DORADO DE INICIO
+========================== */
+
+.btn-login-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 42px;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #d4af37 100%);
+    color: #0b1329;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.btn-login-gold i {
+    font-size: 19px;
+}
+
+.btn-login-gold:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #ffe082 0%, #ffb74d 50%, #e6c200 100%);
+    color: #000000;
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+/* ==========================
+   CONTENEDOR GLASSMORPHISM DE TARJETAS
+========================== */
+
+.cards-home-container {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.cards-glass-box {
+    background: rgba(11, 20, 38, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================
+   TARJETAS FLASH CARD
+========================== */
+
+.flash-card {
+    background: rgba(15, 25, 48, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    color: white;
+    transition: all 0.35s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.flash-card:hover {
+    transform: translateY(-8px);
+    background: rgba(22, 36, 68, 0.75);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.icono-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 18px;
+    transition: transform 0.3s ease;
+}
+
+.flash-card:hover .icono-box {
+    transform: scale(1.1);
+}
+
+/* COLORES DE ICONOS Y RESPLANDORES */
+.icono-blue {
+    background: rgba(0, 210, 255, 0.12);
+    color: #00d2ff;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.icono-green {
+    background: rgba(0, 230, 118, 0.12);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.icono-purple {
+    background: rgba(179, 136, 255, 0.12);
+    color: #b388ff;
+    border: 1px solid rgba(179, 136, 255, 0.3);
+}
+
+.icono-gold {
+    background: rgba(255, 213, 79, 0.12);
+    color: #ffd54f;
+    border: 1px solid rgba(255, 213, 79, 0.3);
+}
+
+.flash-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.flash-card p {
+    color: #94a3b8;
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.arrow-box {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.flash-card:hover .arrow-box {
+    transform: translateX(5px);
+}
+
+.arrow-blue { color: #00d2ff; }
+.arrow-green { color: #00e676; }
+.arrow-purple { color: #b388ff; }
+.arrow-gold { color: #ffd54f; }
+
+/* ==========================
+   FOOTER
+========================== */
+
+.home-footer {
+    margin-top: 25px;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:992px) {
+    .hero-title {
+        font-size: 46px;
+    }
+    .hero-brand {
+        font-size: 22px;
+    }
+    .hero-description {
+        font-size: 15px;
+    }
+    .cards-glass-box {
+        padding: 20px;
+    }
+}
+
+@media(max-width:576px) {
+    .hero-title {
+        font-size: 34px;
+    }
+    .hero-brand {
+        font-size: 18px;
+    }
+    .hero-subtitle {
+        font-size: 11px;
+    }
+    .hero-line {
+        width: 30px;
+    }
+    .btn-login-gold {
+        width: 100%;
+    }
+}
+
+
