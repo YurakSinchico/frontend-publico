@@ -1,36 +1,55 @@
 @model Frontend.Publico.MVC.ViewModels.DashboardViewModel
 
 @{
-    ViewData["Title"] = "Mi Panel";
+    ViewData["Title"] = "Inicio / Dashboard";
 }
 
 <link rel="stylesheet" href="~/css/dashboard-premium.css" />
 
-<div class="container-fluid py-2">
+<div class="container-fluid py-3">
 
-    <!-- HERO DE BIENVENIDA MUNDIALISTA -->
-    <div class="hero-dashboard-box mb-4">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="hero-dashboard-title">
-                    👋 ¡Bienvenido, @(!string.IsNullOrEmpty(User.Identity?.Name) ? User.Identity.Name : (Context.Session.GetString("Nombre") ?? "Usuario"))!
-                </h1>
-                <p class="hero-dashboard-subtitle">
-                    Vive la emoción del Mundial FIFA 2026 y administra tus predicciones en tiempo real.
-                </p>
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Dashboard</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-white border rounded-pill px-3 py-1 shadow-sm d-flex align-items-center gap-2">
+                <span class="fs-6">🪙</span>
+                <span class="small text-muted fw-bold">Saldo:</span>
+                <strong class="text-cyan fw-bold">@Model.Wallet?.Balance.ToString("N2") UTNGolCoin</strong>
             </div>
-            <div class="col-lg-4 text-end d-none d-lg-block">
-                <span class="badge bg-gold-glow px-4 py-3 fs-6 rounded-pill">
-                    🏆 UTNGOL MUNDIAL 2026
-                </span>
+            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+            </a>
+            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
+                U
             </div>
         </div>
     </div>
 
-    <!-- TARJETAS ESTADÍSTICAS -->
-    <div class="row g-4 mb-4">
+    <!-- HERO DASHBOARD BANNER (SCREENSHOT 1) -->
+    <div class="hero-dashboard-box bg-white p-5 rounded-4 border mb-4 shadow-sm position-relative overflow-hidden">
+        <div class="mb-3">
+            <span class="badge bg-info bg-opacity-10 text-cyan px-3 py-2 rounded-pill fw-bold small">
+                🌐 USA • MÉXICO • CANADÁ 2026
+            </span>
+        </div>
+        <h1 class="display-5 fw-extrabold text-dark mb-3" style="letter-spacing: -1px;">
+            Make Predictions Simple & Win <span style="color: #06b6d4;">UTNGolCoins!</span>
+        </h1>
+        <p class="text-muted fs-6 mb-4 col-lg-9">
+            Plataforma oficial académica de pronósticos deportivos con 48 selecciones y 104 partidos. Recibe tus 10 UTNGolCoins de bienvenida y escala al primer lugar del ranking global.
+        </p>
+        <div>
+            <a asp-controller="Predicciones" asp-action="Create" class="btn text-white px-4 py-3 fw-bold rounded-3 shadow-sm d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);">
+                <i class="bi bi-magic fs-5"></i> Hacer Predicción 1X2
+            </a>
+        </div>
+    </div>
 
-        <!-- SALDO -->
+    <!-- TARJETAS ESTADÍSTICAS DEL USUARIO -->
+    <div class="row g-4 mb-4">
         <div class="col-xl-3 col-md-6">
             <div class="stat-card-box border-gold-glow">
                 <div class="stat-icon-wrapper stat-icon-gold">
@@ -44,7 +63,6 @@
             </div>
         </div>
 
-        <!-- TOTAL PREDICCIONES -->
         <div class="col-xl-3 col-md-6">
             <div class="stat-card-box">
                 <div class="stat-icon-wrapper stat-icon-cyan">
@@ -58,8 +76,7 @@
             </div>
         </div>
 
-        <!-- GANADAS -->
-        <div class="col-xl-2 col-md-4">
+        <div class="col-xl-3 col-md-6">
             <div class="stat-card-box">
                 <div class="stat-icon-wrapper stat-icon-green">
                     <i class="bi bi-trophy"></i>
@@ -72,8 +89,7 @@
             </div>
         </div>
 
-        <!-- PENDIENTES -->
-        <div class="col-xl-2 col-md-4">
+        <div class="col-xl-3 col-md-6">
             <div class="stat-card-box">
                 <div class="stat-icon-wrapper stat-icon-amber">
                     <i class="bi bi-hourglass-split"></i>
@@ -85,135 +101,10 @@
                 <span class="stat-card-unit">En Juego</span>
             </div>
         </div>
-
-        <!-- PERDIDAS -->
-        <div class="col-xl-2 col-md-4">
-            <div class="stat-card-box">
-                <div class="stat-icon-wrapper stat-icon-red">
-                    <i class="bi bi-x-circle"></i>
-                </div>
-                <div class="stat-card-label">Perdidas</div>
-                <h2 class="stat-card-value text-danger">
-                    @Model.LostPredictions
-                </h2>
-                <span class="stat-card-unit">Fallidas</span>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- SECCIÓN DOS COLUMNAS TABLAS -->
-    <div class="row g-4">
-
-        <!-- PREDICCIONES -->
-        <div class="col-lg-7">
-            <div class="panel-glass-card">
-                <h3 class="panel-header-title">
-                    <i class="bi bi-lightning-charge-fill text-cyan"></i> Últimas Predicciones
-                </h3>
-
-                @if (Model.Predictions.Any())
-                {
-                    <div class="table-responsive">
-                        <table class="table table-custom-dark align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Partido</th>
-                                    <th>Resultado</th>
-                                    <th>Monto</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var p in Model.Predictions.Take(5))
-                                {
-                                    <tr>
-                                        <td class="fw-bold">#@p.MatchId</td>
-                                        <td>@p.PredictedResult</td>
-                                        <td><span class="text-gold fw-bold">@p.Amount Coins</span></td>
-                                        <td>
-                                            @if (p.Status == "Ganada")
-                                            {
-                                                <span class="badge-ganada">Ganada</span>
-                                            }
-                                            else if (p.Status == "Perdida")
-                                            {
-                                                <span class="badge-perdida">Perdida</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="badge-pendiente">Pendiente</span>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
-                else
-                {
-                    <div class="empty-state-box">
-                        <i class="bi bi-inbox fs-1 d-block mb-2 text-muted"></i>
-                        Aún no has realizado ninguna predicción.
-                    </div>
-                }
-            </div>
-        </div>
-
-        <!-- MOVIMIENTOS -->
-        <div class="col-lg-5">
-            <div class="panel-glass-card">
-                <h3 class="panel-header-title">
-                    <i class="bi bi-clock-history text-gold"></i> Últimos Movimientos
-                </h3>
-
-                @if (Model.Transactions.Any())
-                {
-                    <div class="table-responsive">
-                        <table class="table table-custom-dark align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Tipo</th>
-                                    <th>Monto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var t in Model.Transactions.Take(5))
-                                {
-                                    <tr>
-                                        <td>@t.Date.ToString("dd/MM")</td>
-                                        <td>@t.Type</td>
-                                        <td>
-                                            @if (t.Amount > 0)
-                                            {
-                                                <span class="text-success fw-bold">+@t.Amount</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="text-danger fw-bold">@t.Amount</span>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
-                else
-                {
-                    <div class="empty-state-box">
-                        <i class="bi bi-wallet-fill fs-1 d-block mb-2 text-muted"></i>
-                        No existen movimientos registrados.
-                    </div>
-                }
-            </div>
-        </div>
-
     </div>
 
 </div>
+
 >
 
 

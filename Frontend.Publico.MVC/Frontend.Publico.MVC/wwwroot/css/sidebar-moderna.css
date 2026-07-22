@@ -3,31 +3,42 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #050a14;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #ecfeff 100%);
+    background-attachment: fixed;
     font-family: 'Poppins', sans-serif;
-    color: #ffffff;
+    color: #0f172a;
+    min-height: 100vh;
 }
 
-/* Sidebar fijo a la izquierda */
+/* Sidebar fijo expansible (88px -> 260px) */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 270px;
+    width: 88px;
     height: 100vh;
-    background: #091124;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(6, 182, 212, 0.2);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 0 25px rgba(6, 182, 212, 0.08);
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.sidebar:hover {
+    width: 260px;
+    box-shadow: 10px 0 35px rgba(6, 182, 212, 0.15);
 }
 
 .sidebar-container {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 24px 18px;
+    padding: 20px 14px;
     justify-content: space-between;
 }
 
@@ -36,40 +47,53 @@ body {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+    white-space: nowrap;
 }
 
 .logo-icon-badge {
+    min-width: 44px;
     width: 44px;
     height: 44px;
-    background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
-    color: #091124;
+    background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+    color: #ffffff;
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 22px;
-    box-shadow: 0 6px 16px rgba(255, 213, 79, 0.3);
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.3);
+}
+
+.logo-text-box {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sidebar:hover .logo-text-box {
+    opacity: 1;
+    visibility: visible;
 }
 
 .logo-text-box h4 {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 800;
-    color: #ffffff;
+    color: #0f172a;
     margin: 0;
     letter-spacing: -0.5px;
 }
 
 .logo-text-box span {
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
-    color: #64748b;
+    color: #0284c7;
     letter-spacing: 2px;
 }
 
 .text-cyan {
-    color: #00d4b4 !important;
+    color: #06b6d4 !important;
 }
 
 /* Tarjeta Perfil */
@@ -77,35 +101,45 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 12px 14px;
+    background: rgba(224, 242, 254, 0.4);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    padding: 10px;
     border-radius: 16px;
-    margin-top: 18px;
-    margin-bottom: 24px;
+    margin-top: 14px;
+    margin-bottom: 20px;
+    white-space: nowrap;
 }
 
 .user-avatar-glow {
+    min-width: 40px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-    color: #091124;
+    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
 }
 
 .user-details {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
     overflow: hidden;
 }
 
+.sidebar:hover .user-details {
+    opacity: 1;
+    visibility: visible;
+}
+
 .user-name {
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 700;
-    color: #ffffff;
+    color: #0f172a;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -114,7 +148,7 @@ body {
 
 .user-email {
     font-size: 11px;
-    color: #94a3b8;
+    color: #64748b;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -127,13 +161,22 @@ body {
 }
 
 .menu-header-label {
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 800;
-    color: #475569;
+    color: #94a3b8;
     letter-spacing: 1.5px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: block;
-    padding-left: 10px;
+    padding-left: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    white-space: nowrap;
+}
+
+.sidebar:hover .menu-header-label {
+    opacity: 1;
+    visibility: visible;
 }
 
 .sidebar-menu {
@@ -148,46 +191,61 @@ body {
 .nav-item-link {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    color: #94a3b8;
+    gap: 16px;
+    padding: 12px 14px;
+    color: #475569;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     border-radius: 14px;
     transition: all 0.25s ease;
+    white-space: nowrap;
 }
 
 .nav-item-link i {
-    font-size: 18px;
-    transition: transform 0.25s ease;
+    min-width: 24px;
+    font-size: 20px;
+    text-align: center;
+    color: #0891b2;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.nav-item-link span {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sidebar:hover .nav-item-link span {
+    opacity: 1;
+    visibility: visible;
 }
 
 .nav-item-link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateX(4px);
+    color: #0f172a;
+    background: rgba(6, 182, 212, 0.1);
 }
 
 .nav-item-link:hover i {
-    color: #00d4b4;
+    color: #06b6d4;
     transform: scale(1.15);
 }
 
 /* Footer / Logout */
 .sidebar-footer {
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 14px;
+    border-top: 1px solid rgba(6, 182, 212, 0.15);
+    white-space: nowrap;
 }
 
 .logout-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
-    padding: 12px 16px;
-    color: #f87171;
-    background: rgba(239, 68, 68, 0.1);
+    padding: 12px 14px;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
     border: 1px solid rgba(239, 68, 68, 0.2);
     border-radius: 14px;
     text-decoration: none;
@@ -196,20 +254,42 @@ body {
     transition: all 0.25s ease;
 }
 
+.logout-btn i {
+    min-width: 24px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.logout-btn span {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.sidebar:hover .logout-btn span {
+    opacity: 1;
+    visibility: visible;
+}
+
 .logout-btn:hover {
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
+    background: #ef4444;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
     transform: translateY(-2px);
 }
 
-/* Ajuste del contenido principal */
+.logout-btn:hover i {
+    color: #ffffff !important;
+}
+
+/* Ajuste del contenido principal (para sidebar de 88px colapsado) */
 .main-content-wrapper {
-    margin-left: 270px;
-    width: calc(100% - 270px);
+    margin-left: 88px;
+    width: calc(100% - 88px);
     min-height: 100vh;
-    background-color: #050a14;
     padding: 30px;
     box-sizing: border-box;
+    transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-content-full {
@@ -219,12 +299,16 @@ body {
 
 @media(max-width: 992px) {
     .sidebar {
-        width: 220px;
+        width: 80px;
+    }
+    .sidebar:hover {
+        width: 240px;
     }
     .main-content-wrapper {
-        margin-left: 220px;
-        width: calc(100% - 220px);
+        margin-left: 80px;
+        width: calc(100% - 80px);
         padding: 20px;
     }
 }
+
 

@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using Api.Consumer.Config;
 using UTNGOL.Models;
 
@@ -80,6 +80,24 @@ namespace Api.Consumer.Consumers
             return await _httpClient.PostAsJsonAsync(
                 $"{ApiConfig.GolCoin}/Predictions",
                 dto);
+        }
+
+        // ===========================
+        // RANKING / TODAS LAS WALLETS
+        // ===========================
+
+        public async Task<List<WalletDTO>> ObtenerTodasLasWalletsAsync()
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<WalletDTO>>(
+                    $"{ApiConfig.GolCoin}/Wallets")
+                    ?? new List<WalletDTO>();
+            }
+            catch
+            {
+                return new List<WalletDTO>();
+            }
         }
     }
 }

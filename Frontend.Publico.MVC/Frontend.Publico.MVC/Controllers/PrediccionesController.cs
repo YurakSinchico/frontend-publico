@@ -1,4 +1,4 @@
-﻿using Api.Consumer.Consumers;
+using Api.Consumer.Consumers;
 using Frontend.Publico.MVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +10,12 @@ namespace Frontend.Publico.MVC.Controllers
     public class PrediccionesController : Controller
     {
         private readonly GolCoinConsumer _golCoinConsumer;
+        private readonly EstadisticasConsumer _estadisticasConsumer;
 
-        public PrediccionesController(GolCoinConsumer golCoinConsumer)
+        public PrediccionesController(GolCoinConsumer golCoinConsumer, EstadisticasConsumer estadisticasConsumer)
         {
             _golCoinConsumer = golCoinConsumer;
+            _estadisticasConsumer = estadisticasConsumer;
         }
 
         [HttpGet]
@@ -24,8 +26,7 @@ namespace Frontend.Publico.MVC.Controllers
             if (userId == null)
                 return RedirectToAction("Login", "Account");
 
-            var predictions =
-                await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value);
+            var predictions = await _golCoinConsumer.ObtenerPrediccionesAsync(userId.Value);
 
             return View(predictions);
         }
@@ -35,66 +36,85 @@ namespace Frontend.Publico.MVC.Controllers
         // ============================
         [HttpGet]
         public async Task<IActionResult> Create(
-     int matchId,
-     string homeTeam,
-     string awayTeam,
-     DateTime matchStartDate)
+            int matchId,
+            string homeTeam,
+            string awayTeam,
+            DateTime matchStartDate)
         {
             try
             {
                 int? userId = HttpContext.Session.GetInt32("IdUser");
 
-                Console.WriteLine("======================");
-                Console.WriteLine("USUARIO EN SESION:");
-                Console.WriteLine(userId);
-                Console.WriteLine("======================");
-
-
                 if (userId == null)
                 {
-                    return Content("IdUser es NULL");
+                    return RedirectToAction("Index", "Home");
                 }
 
-
-                var wallet =
-                    await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
-
-
-                if (wallet == null)
+                // 1. Obtener Wallet (fallback a 10.00 GolCoins si no se ha instanciado)
+                decimal balance = 10.00m;
+                try
                 {
-                    Console.WriteLine("NO EXISTE WALLET PARA:");
-                    Console.WriteLine(userId);
-
-                    return Content(
-                        "Wallet es NULL para usuario " + userId
-                    );
+                    var wallet = await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
+                    if (wallet != null)
+                    {
+                        balance = wallet.Balance;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al obtener wallet: " + ex.Message);
                 }
 
+                // 2. Obtener lista real de partidos para el selector dinámico
+                var partidos = new List<PartidoDTO>();
+                try
+                {
+                    var listaPartidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                    if (listaPartidos != null && listaPartidos.Any())
+                    {
+                        partidos = listaPartidos.ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al obtener partidos: " + ex.Message);
+                }
 
-                Console.WriteLine("WALLET ENCONTRADA:");
-                Console.WriteLine(wallet.Balance);
-
+                // Seleccionar partido objetivo
+                var partidoActual = partidos.FirstOrDefault(p => p.IdPartido == matchId) 
+                    ?? partidos.FirstOrDefault() 
+                    ?? new PartidoDTO { IdPartido = matchId > 0 ? matchId : 1, SeleccionLocal = "México", SeleccionVisitante = "USA" };
 
                 var model = new PredictionViewModel
                 {
-                    MatchId = matchId,
-                    HomeTeam = homeTeam,
-                    AwayTeam = awayTeam,
-                    MatchStartDate = matchStartDate,
-                    WalletBalance = wallet.Balance
+                    MatchId = partidoActual.IdPartido,
+                    HomeTeam = !string.IsNullOrEmpty(homeTeam) ? homeTeam : partidoActual.SeleccionLocal,
+                    AwayTeam = !string.IsNullOrEmpty(awayTeam) ? awayTeam : partidoActual.SeleccionVisitante,
+                    MatchStartDate = matchStartDate != default ? matchStartDate : DateTime.Now.AddDays(1),
+                    WalletBalance = balance
                 };
 
+                ViewBag.Partidos = partidos;
 
                 return View(model);
             }
             catch (Exception ex)
             {
-                return Content(ex.ToString());
+                Console.WriteLine("Error en Predicciones/Create: " + ex);
+                return View(new PredictionViewModel
+                {
+                    MatchId = 1,
+                    HomeTeam = "México",
+                    AwayTeam = "USA",
+                    MatchStartDate = DateTime.Now.AddDays(1),
+                    WalletBalance = 10.00m
+                });
             }
         }
 
         // ============================
         // POST: Predicciones/Create
+        // ============================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PredictionViewModel model)
@@ -132,9 +152,7 @@ namespace Frontend.Publico.MVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                TempData["Success"] =
-                    "🎉 ¡Tu predicción fue registrada exitosamente!";
-
+                TempData["Success"] = "🎉 ¡Tu predicción fue registrada exitosamente!";
                 return RedirectToAction("Index", "Dashboard");
             }
 

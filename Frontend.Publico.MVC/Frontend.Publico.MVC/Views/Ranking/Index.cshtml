@@ -1,0 +1,59 @@
+@model IEnumerable<Frontend.Publico.MVC.Controllers.RankingItemViewModel>
+
+@{
+    ViewData["Title"] = "Ranking Global";
+}
+
+<link rel="stylesheet" href="~/css/billetera.css" />
+
+<div class="container-fluid py-3">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Ranking Global</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-white border rounded-pill px-3 py-1 shadow-sm d-flex align-items-center gap-2">
+                <span class="fs-6">🪙</span>
+                <span class="small text-muted fw-bold">Saldo:</span>
+                <strong class="text-cyan fw-bold">@(ViewBag.GolCoins ?? 10.00) UTNGolCoin</strong>
+            </div>
+            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+            </a>
+            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
+                U
+            </div>
+        </div>
+    </div>
+
+    <!-- TARJETA PRINCIPAL DEL RANKING -->
+    <div class="panel-glass-card p-4 rounded-4 shadow-sm bg-white border">
+        <h3 class="fw-extrabold text-dark mb-4 d-flex align-items-center gap-2 fs-4">
+            🏆 Ranking Global de Participantes
+        </h3>
+
+        <div class="d-flex flex-column gap-3">
+            @foreach (var item in Model)
+            {
+                <div class="d-flex justify-content-between align-items-center p-3 rounded-4 border @(item.Rank == 1 ? "bg-warning bg-opacity-10 border-warning border-opacity-25" : "bg-light border-light")">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rank-badge rounded-circle d-flex align-items-center justify-content-center fw-bold fs-6"
+                             style="width: 40px; height: 40px; @(item.Rank == 1 ? "background-color: #f59e0b; color: white;" : item.Rank == 2 ? "background-color: #94a3b8; color: white;" : item.Rank == 3 ? "background-color: #b45309; color: white;" : "background-color: #e2e8f0; color: #64748b;")">
+                            @item.Rank
+                        </div>
+                        <div>
+                            <h5 class="m-0 fw-bold text-dark fs-6">@item.Nombre</h5>
+                            <small class="text-muted">@item.Aciertos aciertos</small>
+                        </div>
+                    </div>
+                    <div>
+                        <strong class="text-cyan fs-6">@item.Saldo.ToString("N2") GolCoins</strong>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

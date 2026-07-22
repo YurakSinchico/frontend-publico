@@ -1,232 +1,270 @@
 /*==============================
-        FIFA WORLD CUP 2026
+        FIFA WORLD CUP 2026 - AGUA CLARITO Y BLANCO
 ===============================*/
 
 body {
-    background: #08131f;
-    color: white;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #ecfeff 100%);
+    background-attachment: fixed;
+    color: #0f172a;
 }
 
 .titulo-seccion h1 {
-    color: #FFD54F;
-    font-size: 52px;
+    color: #0f172a;
+    font-size: 42px;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: -0.5px;
 }
 
 .titulo-seccion p {
-    color: #d0d0d0;
-    font-size: 20px;
-}
-
-/*==============================
-          TARJETA
-===============================*/
-
-.match-card {
-    background: rgba(15,25,40,.92);
-    border-radius: 25px;
-    padding: 30px;
-    border: 1px solid rgba(255,255,255,.08);
-    transition: .35s;
-    backdrop-filter: blur(12px);
-    height: 100%;
-    box-shadow: 0 10px 35px rgba(0,0,0,.45);
-}
-
-    .match-card:hover {
-        transform: translateY(-10px);
-        border-color: #FFD54F;
-        box-shadow: 0 25px 50px rgba(0,0,0,.55);
-    }
-
-/*==============================
-            FASE
-===============================*/
-
-.fase {
-    text-align: center;
-    color: #FFD54F;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
+    color: #64748b;
     font-size: 18px;
 }
 
 /*==============================
-          EQUIPOS
+          TARJETA PARTIDO
 ===============================*/
+
+.match-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 22px;
+    padding: 28px;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    transition: all 0.35s ease;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    height: 100%;
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08);
+}
+
+.match-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 18px 40px rgba(6, 182, 212, 0.18);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.fase {
+    text-align: center;
+    color: #0891b2;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    font-size: 16px;
+}
 
 .equipos {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .equipo {
-    width: 220px;
+    width: 200px;
     text-align: center;
 }
 
 .icono {
-    font-size: 55px;
-    margin-bottom: 12px;
+    font-size: 46px;
+    margin-bottom: 10px;
 }
 
 .equipo h3 {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .vs {
-    font-size: 42px;
-    color: #FFD54F;
-    font-weight: bold;
+    font-size: 28px;
+    color: #d97706;
+    font-weight: 900;
 }
-
-/*==============================
-        INFORMACION
-===============================*/
 
 .info {
     display: flex;
     justify-content: space-around;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    color: #d7d7d7;
-    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
 }
-
-/*==============================
-        ESTADO
-===============================*/
 
 .estado {
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .resultado {
-    font-size: 42px;
-    color: #FFD54F;
-    font-weight: bold;
-    margin-top: 12px;
+    font-size: 36px;
+    color: #0f172a;
+    font-weight: 800;
+    margin-top: 10px;
 }
 
-/*==============================
-        BOTONES
-===============================*/
-
+/* BOTONES */
 .acciones {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .btn-detalle {
-    background: #17314d;
-    color: white;
-    border: none;
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid rgba(2, 132, 199, 0.3);
     border-radius: 14px;
-    padding: 12px 24px;
+    padding: 10px 20px;
     text-decoration: none;
-    font-weight: 600;
-    transition: .35s;
+    font-weight: 700;
+    transition: all 0.3s ease;
 }
 
-    .btn-detalle:hover {
-        background: #21476d;
-        color: white;
-        transform: translateY(-3px);
-    }
+.btn-detalle:hover {
+    background: #0284c7;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
+}
 
 .btn-prediccion {
-    background: linear-gradient(135deg,#FFD54F,#FFC107);
-    color: #111;
+    background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+    color: #ffffff;
     border: none;
     border-radius: 14px;
-    padding: 12px 24px;
+    padding: 10px 20px;
     text-decoration: none;
-    font-weight: bold;
-    transition: .35s;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.3);
 }
 
-    .btn-prediccion:hover {
-        color: #111;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 25px rgba(255,193,7,.45);
-    }
-
-.btn-login {
-    background: #495057;
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 12px 24px;
+.btn-prediccion:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(6, 182, 212, 0.45);
 }
 
 .btn-login-guest {
-    background: rgba(0, 212, 180, 0.15);
-    color: #00d4b4;
-    border: 1px solid rgba(0, 212, 180, 0.3);
+    background: rgba(6, 182, 212, 0.1);
+    color: #0891b2;
+    border: 1px solid rgba(6, 182, 212, 0.3);
     border-radius: 14px;
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-login-guest:hover {
-    background: #00d4b4;
-    color: #0b1329;
-    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.4);
+    background: #06b6d4;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(6, 182, 212, 0.35);
     transform: translateY(-2px);
 }
 
 .btn-cerrado {
-    background: #b02a37;
-    color: white;
-    border: none;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.2);
     border-radius: 14px;
-    padding: 12px 24px;
+    padding: 10px 20px;
+    font-weight: 600;
 }
 
-/*==============================
-        BADGES
-===============================*/
-
-.badge {
-    font-size: 15px;
-    padding: 10px 18px;
-    border-radius: 25px;
+/* VISTA DETALLE DETALLE-CARD */
+.detalle-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 26px;
+    padding: 40px;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 15px 40px rgba(6, 182, 212, 0.12);
+    max-width: 850px;
+    margin: auto;
 }
 
-/*==============================
-        RESPONSIVE
-===============================*/
-
-@media(max-width:992px) {
-
-    .equipos {
-        flex-direction: column;
-        gap: 25px;
-    }
-
-    .info {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .acciones {
-        flex-direction: column;
-    }
-
-    .equipo {
-        width: 100%;
-    }
+.badge-fase {
+    display: inline-block;
+    background: rgba(6, 182, 212, 0.12);
+    color: #0891b2;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
 }
+
+.titulo-detalle {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+}
+
+.equipos-detalle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 35px 0;
+}
+
+.equipo-detalle {
+    text-align: center;
+}
+
+.equipo-detalle h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.balon-detalle {
+    font-size: 56px;
+    margin-bottom: 10px;
+}
+
+.vs-detalle {
+    font-size: 36px;
+    font-weight: 900;
+    color: #d97706;
+}
+
+.datos-partido {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(240, 253, 250, 0.6);
+    border: 1px solid rgba(6, 182, 212, 0.15);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.dato h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.dato p {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.acciones-detalle {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+

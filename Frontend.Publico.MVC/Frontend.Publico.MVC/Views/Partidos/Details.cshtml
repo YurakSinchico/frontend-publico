@@ -1,4 +1,4 @@
-﻿@model UTNGOL.Models.PartidoDTO
+@model UTNGOL.Models.PartidoDTO
 
 @{
     ViewData["Title"] = "Detalle del Partido";
@@ -17,150 +17,80 @@
     }
 }
 
-<div class="container py-5">
+<div class="container py-4">
 
     <div class="detalle-card">
 
-        <div class="text-center">
-
+        <div class="text-center mb-4">
             <div class="badge-fase">
-
                 @(Model.Fase ?? "Fase de Grupos")
-
             </div>
-
             <h1 class="titulo-detalle">
-
-                FIFA WORLD CUP 2026
-
+                🏆 FIFA WORLD CUP 2026
             </h1>
-
         </div>
 
         <div class="equipos-detalle">
-
             <div class="equipo-detalle">
-
-                <div class="balon-detalle">
-
-                    ⚽
-
-                </div>
-
-                <h2>
-
-                    @Model.SeleccionLocal
-
-                </h2>
-
+                <div class="balon-detalle">⚽</div>
+                <h2>@Model.SeleccionLocal</h2>
             </div>
 
             <div class="vs-detalle">
-
                 @if (Model.Estado == "FINALIZADO")
                 {
-                    <span>
-
+                    <span class="badge bg-danger fs-3">
                         @Model.GolesLocal - @Model.GolesVisitante
-
                     </span>
                 }
                 else
                 {
-                    <span>
-
-                        VS
-
-                    </span>
+                    <span class="text-gold">VS</span>
                 }
-
             </div>
 
             <div class="equipo-detalle">
-
-                <div class="balon-detalle">
-
-                    ⚽
-
-                </div>
-
-                <h2>
-
-                    @Model.SeleccionVisitante
-
-                </h2>
-
+                <div class="balon-detalle">⚽</div>
+                <h2>@Model.SeleccionVisitante</h2>
             </div>
-
         </div>
 
         <div class="datos-partido">
-
             <div class="dato">
-
                 <h5>📅 Fecha</h5>
-
-                <p>
-
-                    @(fecha?.ToString("dd MMMM yyyy") ?? "Sin programar")
-
-                </p>
-
+                <p>@(fecha?.ToString("dd MMMM yyyy") ?? "Sin programar")</p>
             </div>
 
             <div class="dato">
-
                 <h5>🕒 Hora</h5>
-
-                <p>
-
-                    @(fecha?.ToString("HH:mm") ?? "--:--")
-
-                </p>
-
+                <p>@(fecha?.ToString("HH:mm") ?? "--:--")</p>
             </div>
 
             <div class="dato">
-
                 <h5>🏆 Grupo</h5>
-
-                <p>
-
-                    @(Model.Grupo ?? "-")
-
-                </p>
-
+                <p>@(Model.Grupo ?? "-")</p>
             </div>
-
         </div>
 
-        <div class="estado-partido">
-
+        <div class="text-center mb-4">
             @if (Model.Estado == "PROGRAMADO")
             {
-                <span class="badge bg-success fs-5">
-
+                <span class="badge bg-success fs-6 px-4 py-2 rounded-pill">
                     🟢 PROGRAMADO
-
                 </span>
             }
             else if (Model.Estado == "FINALIZADO")
             {
-                <span class="badge bg-danger fs-5">
-
+                <span class="badge bg-danger fs-6 px-4 py-2 rounded-pill">
                     🔴 FINALIZADO
-
                 </span>
             }
             else
             {
-                <span class="badge bg-warning text-dark fs-5">
-
+                <span class="badge bg-warning text-dark fs-6 px-4 py-2 rounded-pill">
                     @Model.Estado
-
                 </span>
             }
-
         </div>
 
         @{
@@ -172,7 +102,6 @@
         }
 
         <div class="acciones-detalle">
-
             @if (puedePredecir)
             {
                 <a asp-controller="Predicciones"
@@ -181,28 +110,22 @@
                    asp-route-homeTeam="@Model.SeleccionLocal"
                    asp-route-awayTeam="@Model.SeleccionVisitante"
                    asp-route-matchStartDate="@fecha"
-                   class="btn btn-warning btn-lg">
-
+                   class="btn btn-prediccion">
                     🎯 Realizar Predicción
-
                 </a>
             }
             else
             {
-                <button class="btn btn-secondary btn-lg" disabled>
+                <button class="btn btn-cerrado" disabled>
                     🔒 Predicciones cerradas
                 </button>
             }
 
-            <a asp-action="Index"
-               class="btn btn-outline-light btn-lg">
-
-                ← Volver
-
+            <a asp-action="Index" class="btn btn-detalle">
+                ← Volver al Calendario
             </a>
-
         </div>
 
     </div>
 
-</div>
+</div>

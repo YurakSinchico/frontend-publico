@@ -1,60 +1,55 @@
 @model Frontend.Publico.MVC.ViewModels.PredictionViewModel
 
 @{
-    ViewData["Title"] = "Nueva Predicción";
+    ViewData["Title"] = "Realizar Predicción 1X2";
 }
 
 <link rel="stylesheet" href="~/css/predicciones.css" />
 
-<div class="container py-4">
+<div class="container-fluid py-3">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Predicciones 1X2</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-white border rounded-pill px-3 py-1 shadow-sm d-flex align-items-center gap-2">
+                <span class="fs-6">🪙</span>
+                <span class="small text-muted fw-bold">Saldo:</span>
+                <strong class="text-cyan fw-bold">@Model.WalletBalance.ToString("N2") UTNGolCoin</strong>
+            </div>
+            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+            </a>
+            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
+                U
+            </div>
+        </div>
+    </div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success shadow-lg border-0 rounded-4 text-center mb-4">
+        <div class="alert alert-success shadow-sm border-0 rounded-4 text-center mb-4">
             <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
         </div>
     }
 
-    <div asp-validation-summary="All" class="alert alert-danger shadow-lg border-0 rounded-4 mb-4" style="display: none;"></div>
+    <div asp-validation-summary="All" class="alert alert-danger shadow-sm border-0 rounded-4 mb-4" style="display: none;"></div>
 
-    <div class="prediction-card mx-auto">
+    <!-- MAIN FORM CARD (SCREENSHOT 3) -->
+    <div class="bg-white p-4 p-md-5 rounded-4 border shadow-sm mx-auto col-lg-10">
 
-        <!-- Encabezado -->
-        <div class="text-center mb-4">
-            <div class="predict-badge mx-auto mb-2">
-                <i class="bi bi-bullseye"></i>
-            </div>
-            <h2 class="fw-extrabold text-white mb-1">REALIZAR PREDICCIÓN</h2>
-            <p class="text-muted small">Selecciona tu pronóstico 1X2 e ingresa el monto en GolCoins</p>
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+            <h3 class="fw-bold text-dark m-0 d-flex align-items-center gap-2 fs-4">
+                ✨ Realizar Predicción 1X2
+            </h3>
+            <span class="badge bg-info bg-opacity-10 text-cyan px-3 py-2 rounded-pill fw-bold">
+                Saldo: @Model.WalletBalance.ToString("N2") UTNGolCoin
+            </span>
         </div>
 
-        <!-- Enfrentamiento -->
-        <div class="match-box p-4 rounded-4 mb-4">
-            <div class="team text-center">
-                <div class="team-icon mb-2">⚽</div>
-                <h4 class="fw-bold text-white m-0">@Model.HomeTeam</h4>
-                <small class="text-cyan">LOCAL</small>
-            </div>
-
-            <div class="vs-badge">
-                VS
-            </div>
-
-            <div class="team text-center">
-                <div class="team-icon mb-2">⚽</div>
-                <h4 class="fw-bold text-white m-0">@Model.AwayTeam</h4>
-                <small class="text-cyan">VISITANTE</small>
-            </div>
-        </div>
-
-        <!-- Saldo Disponible -->
-        <div class="wallet-badge-box text-center p-3 rounded-4 mb-4">
-            <span class="text-muted text-uppercase fw-bold fs-7">SALDO DISPONIBLE:</span>
-            <span class="text-warning fw-extrabold fs-5 ms-2">💰 @Model.WalletBalance UTNGolCoin</span>
-        </div>
-
-        <!-- Formulario -->
-        <form asp-action="Create" method="post">
+        <form asp-action="Create" method="post" id="predictionForm">
             @Html.AntiForgeryToken()
 
             <input asp-for="MatchId" type="hidden" />
@@ -62,44 +57,129 @@
             <input asp-for="HomeTeam" type="hidden" />
             <input asp-for="AwayTeam" type="hidden" />
             <input asp-for="WalletBalance" type="hidden" />
+            <input asp-for="PredictedResult" type="hidden" id="predictedResultInput" />
 
+            <!-- SELECCIONAR PARTIDO -->
             <div class="mb-4">
-                <label class="form-label text-cyan fw-bold fs-7 mb-2">
-                    <i class="bi bi-trophy me-1"></i> PRONÓSTICO (RESULTADO ESPERADO)
-                </label>
-                <select asp-for="PredictedResult" class="form-select predict-input">
-                    <option value="">Seleccione un resultado...</option>
-                    <option value="1">1 - Gana @Model.HomeTeam (Local)</option>
-                    <option value="X">X - Empate</option>
-                    <option value="2">2 - Gana @Model.AwayTeam (Visitante)</option>
-                </select>
-                <span asp-validation-for="PredictedResult" class="text-danger small"></span>
+                <label class="form-label fw-bold text-dark mb-2">Seleccionar Partido:</label>
+                <div class="input-group">
+                    <select id="matchSelect" class="form-select py-3 px-3 rounded-3 border-secondary border-opacity-25 bg-light text-dark fw-semibold fs-6" style="appearance: auto;">
+                        @if (ViewBag.Partidos != null && ((IEnumerable<UTNGOL.Models.PartidoDTO>)ViewBag.Partidos).Any())
+                        {
+                            foreach (var p in (IEnumerable<UTNGOL.Models.PartidoDTO>)ViewBag.Partidos)
+                            {
+                                bool isSelected = p.IdPartido == Model.MatchId;
+                                <option value="@p.IdPartido" data-home="@p.SeleccionLocal" data-away="@p.SeleccionVisitante" selected="@(isSelected ? "selected" : null)">
+                                    @p.SeleccionLocal vs @p.SeleccionVisitante (@(p.Fase ?? "Fase de Grupos"))
+                                </option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected value="@Model.MatchId">@Model.HomeTeam vs @Model.AwayTeam (11 Jun - Estadio Azteca)</option>
+                        }
+                    </select>
+                </div>
             </div>
 
+            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS - SCREENSHOT 3) -->
             <div class="mb-4">
-                <label class="form-label text-cyan fw-bold fs-7 mb-2">
-                    <i class="bi bi-coin me-1"></i> CANTIDAD DE GOLCOINS A APOSTAR
-                </label>
+                <label class="form-label fw-bold text-dark mb-2">Pronóstico 1X2:</label>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-option-1x2 active w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="1" id="btnLocal">
+                            Local (1.8x)
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-option-1x2 w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="X" id="btnEmpate">
+                            Empate (3.2x)
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-option-1x2 w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="2" id="btnVisitante">
+                            Visitante (2.5x)
+                        </button>
+                    </div>
+                </div>
+                <span asp-validation-for="PredictedResult" class="text-danger small mt-1 d-block"></span>
+            </div>
+
+            <!-- MONTO A APOSTAR -->
+            <div class="mb-4">
+                <label class="form-label fw-bold text-dark mb-2">Monto a apostar (UTNGolCoin):</label>
                 <input asp-for="Amount"
                        type="number"
                        step="1"
                        min="1"
                        max="@Model.WalletBalance"
-                       class="form-control predict-input"
-                       placeholder="Ej. 5"
+                       class="form-control py-3 px-3 rounded-3 border-secondary border-opacity-25 text-dark fw-semibold fs-6"
+                       value="2"
                        required />
-                <span asp-validation-for="Amount" class="text-danger small"></span>
+                <span asp-validation-for="Amount" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <button type="submit" class="btn btn-predict-submit w-100 fw-bold py-3 mt-2">
-                <i class="bi bi-check2-circle me-2"></i> CONFIRMAR PREDICCIÓN
-            </button>
+            <!-- BOTÓN CONFIRMAR -->
+            <div class="mt-4">
+                <button type="submit" class="btn text-white w-100 py-3 fw-bold fs-6 rounded-3 shadow-sm d-flex justify-content-center align-items-center gap-2" style="background: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);">
+                    <i class="bi bi-check-circle-fill fs-5"></i> Confirmar Predicción
+                </button>
+            </div>
+
         </form>
 
     </div>
 
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".btn-option-1x2");
+        const hiddenInput = document.getElementById("predictedResultInput");
+        const matchSelect = document.getElementById("matchSelect");
+        const matchIdInput = document.querySelector('input[name="MatchId"]');
+        const homeTeamInput = document.querySelector('input[name="HomeTeam"]');
+        const awayTeamInput = document.querySelector('input[name="AwayTeam"]');
+
+        // Default to Local (1)
+        hiddenInput.value = "1";
+
+        if (matchSelect) {
+            matchSelect.addEventListener("change", function () {
+                const opt = this.options[this.selectedIndex];
+                if (opt) {
+                    const id = opt.value;
+                    const home = opt.getAttribute("data-home") || "Local";
+                    const away = opt.getAttribute("data-away") || "Visitante";
+                    
+                    if (matchIdInput) matchIdInput.value = id;
+                    if (homeTeamInput) homeTeamInput.value = home;
+                    if (awayTeamInput) awayTeamInput.value = away;
+                }
+            });
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                buttons.forEach(b => {
+                    b.classList.remove("active");
+                    b.style.backgroundColor = "#ffffff";
+                    b.style.borderColor = "#dee2e6";
+                    b.style.color = "#0f172a";
+                });
+
+                this.classList.add("active");
+                this.style.backgroundColor = "#e0f2fe";
+                this.style.borderColor = "#06b6d4";
+                this.style.color = "#0891b2";
+                
+                hiddenInput.value = this.getAttribute("data-val");
+            });
+        });
+    });
+</script>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}
+
