@@ -77,9 +77,20 @@ namespace Api.Consumer.Consumers
 
         public async Task<HttpResponseMessage> CrearPrediccionAsync(CreatePredictionDTO dto)
         {
-            return await _httpClient.PostAsJsonAsync(
-                $"{ApiConfig.GolCoin}/Predictions",
-                dto);
+            try
+            {
+                return await _httpClient.PostAsJsonAsync(
+                    $"{ApiConfig.GolCoin}/Predictions",
+                    dto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Excepción HTTP en CrearPrediccionAsync: " + ex.Message);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.ServiceUnavailable)
+                {
+                    Content = new StringContent("No se pudo conectar con la API backend de GolCoin (" + ApiConfig.GolCoin + "). Verifique que el servicio esté ejecutándose.")
+                };
+            }
         }
 
         // ===========================

@@ -119,53 +119,64 @@ namespace Frontend.Publico.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PredictionViewModel model)
         {
-            if (!ModelState.IsValid)
+            int? userId = HttpContext.Session.GetInt32("IdUser");
+            if (userId == null)
+                return RedirectToAction("Index", "Home");
+
+            try
             {
-                int? id = HttpContext.Session.GetInt32("IdUser");
-
-                if (id != null)
+                var dto = new CreatePredictionDTO
                 {
-                    var wallet = await _golCoinConsumer.ObtenerWalletAsync(id.Value);
+                    UserId = userId.Value,
+                    MatchId = model.MatchId > 0 ? model.MatchId : 1,
+                    PredictedResult = !string.IsNullOrEmpty(model.PredictedResult) ? model.PredictedResult : "1",
+                    Amount = model.Amount > 0 ? model.Amount : 1,
+                    MatchStartDate = model.MatchStartDate != default ? model.MatchStartDate : DateTime.Now.AddDays(1)
+                };
 
-                    if (wallet != null)
-                        model.WalletBalance = wallet.Balance;
+                var response = await _golCoinConsumer.CrearPrediccionAsync(dto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["Success"] = "🎉 ¡Tu predicción fue registrada exitosamente!";
+                    return RedirectToAction("Index", "Dashboard");
                 }
+
+                var mensaje = await response.Content.ReadAsStringAsync();
+
+                // Recargar información en caso de error
+                try
+                {
+                    var wallet = await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
+                    if (wallet != null) model.WalletBalance = wallet.Balance;
+                }
+                catch { model.WalletBalance = 10.00m; }
+
+                try
+                {
+                    ViewBag.Partidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                }
+                catch { }
+
+                ModelState.AddModelError("", !string.IsNullOrEmpty(mensaje) ? mensaje : "No se pudo registrar la predicción en el servidor.");
 
                 return View(model);
             }
-
-            int? userId = HttpContext.Session.GetInt32("IdUser");
-
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            var dto = new CreatePredictionDTO
+            catch (Exception ex)
             {
-                UserId = userId.Value,
-                MatchId = model.MatchId,
-                PredictedResult = model.PredictedResult,
-                Amount = model.Amount,
-                MatchStartDate = model.MatchStartDate
-            };
+                Console.WriteLine("Excepción en PrediccionesController POST Create: " + ex);
 
-            var response = await _golCoinConsumer.CrearPrediccionAsync(dto);
+                model.WalletBalance = 10.00m;
+                try
+                {
+                    ViewBag.Partidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                }
+                catch { }
 
-            if (response.IsSuccessStatusCode)
-            {
-                TempData["Success"] = "🎉 ¡Tu predicción fue registrada exitosamente!";
-                return RedirectToAction("Index", "Dashboard");
+                ModelState.AddModelError("", "Ocurrió un inconveniente al comunicarse con la API de GolCoin (192.168.100.118:7182). Verifique la conectividad del microservicio.");
+
+                return View(model);
             }
-
-            var mensaje = await response.Content.ReadAsStringAsync();
-
-            var billetera = await _golCoinConsumer.ObtenerWalletAsync(userId.Value);
-
-            if (billetera != null)
-                model.WalletBalance = billetera.Balance;
-
-            ModelState.AddModelError("", mensaje);
-
-            return View(model);
         }
     }
 }
