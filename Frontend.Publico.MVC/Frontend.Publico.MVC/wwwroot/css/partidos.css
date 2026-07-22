@@ -268,3 +268,27 @@ body {
     margin-top: 30px;
 }
 
+/* FILTROS DE PARTIDOS */
+.btn-filter {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    transition: all 0.25s ease;
+}
+
+.btn-filter:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.btn-filter.active, .btn-cyan {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+    color: #ffffff !important;
+    border-color: #06b6d4 !important;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+.text-amber {
+    color: #d97706;
+}
+

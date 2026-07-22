@@ -52,7 +52,7 @@ namespace Frontend.Publico.MVC.Controllers
                 Console.WriteLine("Error al cargar ranking desde API backend: " + ex.Message);
             }
 
-            // Fallback en caso de que la API aún no devuelva registros
+           
             if (!ranking.Any())
             {
                 ranking = new List<RankingItemViewModel>

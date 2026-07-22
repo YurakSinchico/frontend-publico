@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="~/css/billetera.css" />
 
-<div class="container-fluid py-3">
+<div class="container-fluid py-4">
 
     <!-- HEADER / BREADCRUMB -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
@@ -17,55 +17,77 @@
             <div class="bg-white border rounded-pill px-3 py-1 shadow-sm d-flex align-items-center gap-2">
                 <span class="fs-6">🪙</span>
                 <span class="small text-muted fw-bold">Saldo:</span>
-                <strong class="text-cyan fw-bold">@Model.Wallet?.Balance.ToString("N2") UTNGolCoin</strong>
+                <strong class="text-cyan fw-bold">@((Model.Wallet?.Balance ?? 10.00m).ToString("N2")) UTNGolCoin</strong>
             </div>
-            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
-                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
-            </a>
-            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
-                U
-            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                    <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+                </a>
+            }
         </div>
     </div>
 
-    <!-- MAIN BILLETERA CONTAINER (SCREENSHOT 5) -->
+    <!-- MAIN BILLETERA CONTAINER -->
     <div class="bg-white p-4 p-md-5 rounded-4 border shadow-sm mx-auto col-lg-10">
 
         <!-- ENCABEZADO -->
-        <h3 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2 fs-4">
-            <i class="bi bi-wallet2 text-cyan"></i> Mi Billetera UTNGolCoin
-        </h3>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-dark m-0 d-flex align-items-center gap-2 fs-4">
+                <i class="bi bi-wallet2 text-cyan"></i> Billetera UTNGolCoin
+            </h3>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold">
+                <i class="bi bi-shield-check me-1"></i> Sistema Oficial Activo
+            </span>
+        </div>
 
-        <!-- HEROCARD TEAL DEL SALDO (SCREENSHOT 5) -->
-        <div class="p-4 p-md-5 rounded-4 text-white mb-5 shadow-sm d-flex justify-content-between align-items-center"
+        <!-- HEROCARD DEL SALDO -->
+        <div class="p-4 p-md-5 rounded-4 text-white mb-5 shadow-sm d-flex justify-content-between align-items-center position-relative overflow-hidden"
              style="background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);">
             <div>
-                <small class="text-uppercase fw-bold opacity-75 letter-spacing-1 d-block mb-1">SALDO ACTUAL</small>
-                <h1 class="display-4 fw-extrabold m-0">@Model.Wallet?.Balance.ToString("N2") UTNGolCoin</h1>
+                <small class="text-uppercase fw-bold opacity-75 letter-spacing-1 d-block mb-1">SALDO ACTUAL DISPONIBLE</small>
+                <h1 class="display-4 fw-extrabold m-0">@((Model.Wallet?.Balance ?? 10.00m).ToString("N2")) <span class="fs-4">UTNGolCoin</span></h1>
+                <small class="opacity-75 mt-2 d-block"><i class="bi bi-info-circle me-1"></i> Utiliza tus coins para realizar predicciones en el Mundial 2026.</small>
             </div>
-            <div class="d-none d-sm-flex bg-white bg-opacity-20 rounded-4 p-3 fs-1 align-items-center justify-content-center" style="width: 70px; height: 70px;">
+            <div class="d-none d-sm-flex bg-white bg-opacity-20 rounded-4 p-3 fs-1 align-items-center justify-content-center shadow" style="width: 80px; height: 80px;">
                 🪙
             </div>
         </div>
 
-        <!-- HISTORIAL DE TRANSACCIONES (LEDGER INMUTABLE) -->
-        <h4 class="fw-bold text-dark mb-3 fs-5">Historial de Transacciones (Ledger Inmutable)</h4>
+        <!-- HISTORIAL DE TRANSACCIONES -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold text-dark m-0 fs-5">
+                <i class="bi bi-clock-history text-primary me-2"></i> Historial de Transacciones (Ledger Inmutable)
+            </h4>
+            <span class="badge bg-light text-muted border px-3 py-2 rounded-pill small">
+                @Model.Transactions.Count() movimientos
+            </span>
+        </div>
 
         @if (!Model.Transactions.Any())
         {
-            <div class="p-4 rounded-4 border bg-light d-flex justify-content-between align-items-center">
+            <!-- ESTADO POR DEFECTO / BONO DE BIENVENIDA -->
+            <div class="p-4 rounded-4 border bg-light d-flex justify-content-between align-items-center mb-3 shadow-sm">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-flex align-items-center justify-content-center" style="width: 46px; height: 46px;">
+                    <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         🎁
                     </div>
                     <div>
-                        <h6 class="m-0 fw-bold text-dark">Bono de Bienvenida</h6>
-                        <small class="text-muted">Acreditación automática al registrarse</small>
+                        <span class="badge bg-info bg-opacity-10 text-cyan mb-1 rounded-pill fw-bold">Bono de Bienvenida</span>
+                        <h6 class="m-0 fw-bold text-dark">Acreditación Inicial de Registro</h6>
+                        <small class="text-muted">Crédito inicial para nuevos usuarios registrados</small>
                     </div>
                 </div>
-                <div>
-                    <strong class="text-cyan fs-5">+10.00 GolCoins</strong>
+                <div class="text-end">
+                    <strong class="text-cyan fs-5 d-block">+10.00 GolCoins</strong>
+                    <small class="text-muted">Acreditado</small>
                 </div>
+            </div>
+
+            <div class="p-5 text-center bg-light rounded-4 border border-dashed">
+                <i class="bi bi-receipt text-muted fs-1 d-block mb-3"></i>
+                <h6 class="fw-bold text-dark">Sin movimientos adicionales registrados</h6>
+                <p class="text-muted small mb-0">Tus apuestas, premios y bonificaciones aparecerán aquí automáticamente.</p>
             </div>
         }
         else
@@ -73,24 +95,36 @@
             <div class="d-flex flex-column gap-3">
                 @foreach (var t in Model.Transactions)
                 {
-                    <div class="p-3 p-md-4 rounded-4 border bg-light d-flex justify-content-between align-items-center">
+                    var isPositive = t.Amount > 0;
+                    var typeLabel = t.Type ?? (isPositive ? "Bono de bienvenida" : "Predicción");
+                    
+                    <div class="p-3 p-md-4 rounded-4 border bg-light d-flex justify-content-between align-items-center hover-shadow transition-all">
                         <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-flex align-items-center justify-content-center" style="width: 46px; height: 46px;">
-                                @(t.Amount > 0 ? "🎁" : "🎯")
+                            <div class="rounded-circle @(isPositive ? "bg-success bg-opacity-10 text-success" : "bg-danger bg-opacity-10 text-danger") d-flex align-items-center justify-content-center fw-bold fs-5" style="width: 48px; height: 48px;">
+                                @(isPositive ? "🎁" : "🎯")
                             </div>
                             <div>
-                                <h6 class="m-0 fw-bold text-dark">@t.Type</h6>
-                                <small class="text-muted">@t.Date.ToString("dd/MM/yyyy HH:mm")</small>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge @(isPositive ? "bg-success bg-opacity-10 text-success" : "bg-danger bg-opacity-10 text-danger") rounded-pill fw-bold small">
+                                        @typeLabel
+                                    </span>
+                                    <small class="text-muted"><i class="bi bi-calendar-event me-1"></i>@t.Date.ToString("dd/MM/yyyy HH:mm")</small>
+                                </div>
+                                <h6 class="m-0 fw-bold text-dark mt-1">
+                                    @(isPositive ? "Acreditación de saldo GolCoins" : (t.PredictionId.HasValue ? $"Predicción realizada en partido #{t.PredictionId}" : "Movimiento de saldo"))
+                                </h6>
                             </div>
                         </div>
-                        <div>
-                            @if (t.Amount > 0)
+                        <div class="text-end">
+                            @if (isPositive)
                             {
-                                <strong class="text-cyan fs-5">+@t.Amount.ToString("N2") GolCoins</strong>
+                                <strong class="text-cyan fs-5 d-block">+@t.Amount.ToString("N2") GolCoins</strong>
+                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill small">Entrada</span>
                             }
                             else
                             {
-                                <strong class="text-danger fs-5">@t.Amount.ToString("N2") GolCoins</strong>
+                                <strong class="text-danger fs-5 d-block">@t.Amount.ToString("N2") GolCoins</strong>
+                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill small">Salida</span>
                             }
                         </div>
                     </div>
@@ -101,4 +135,4 @@
     </div>
 
 </div>
-
+

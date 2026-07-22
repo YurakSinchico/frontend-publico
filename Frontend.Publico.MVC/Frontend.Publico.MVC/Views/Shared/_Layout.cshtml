@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -20,15 +20,19 @@
         <div class="sidebar">
             <partial name="_Sidebar" />
         </div>
+
+        <main class="main-content-wrapper">
+            @RenderBody()
+        </main>
     }
-
-    <main class="main-content-wrapper @(!(User.Identity?.IsAuthenticated ?? false) ? "main-content-full" : "")">
-        @RenderBody()
-    </main>
-
-    @if (!(User.Identity?.IsAuthenticated ?? false))
+    else
     {
+        <main class="main-content-wrapper main-content-full">
+            @RenderBody()
+        </main>
+
         <partial name="_LoginForm" />
+
         <partial name="_RegisterForm"
                  model="new Frontend.Publico.MVC.ViewModels.RegisterViewModel()" />
     }

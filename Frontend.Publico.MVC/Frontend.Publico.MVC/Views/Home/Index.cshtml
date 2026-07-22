@@ -7,8 +7,8 @@
 @if (Context.Request.Query.ContainsKey("error"))
 {
     <div class="container mt-3 position-relative z-3">
-        <div class="alert alert-danger text-center shadow-lg">
-            @Context.Request.Query["error"]
+        <div class="alert alert-danger text-center shadow-lg rounded-4 border-0">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @Context.Request.Query["error"]
         </div>
     </div>
 }
@@ -23,12 +23,12 @@
             <h1 class="hero-title">WORLD CUP 2026</h1>
             <div class="hero-subtitle-wrapper">
                 <span class="hero-line"></span>
-                <span class="hero-subtitle">UNITED BY FOOTBALL</span>
+                <span class="hero-subtitle">UNITED BY FOOTBALL • USA - MEX - CAN</span>
                 <span class="hero-line"></span>
             </div>
             <p class="hero-description">
-                Vive la emoción del Mundial, consulta resultados, estadísticas,<br class="d-none d-md-inline" />
-                grupos y realiza tus predicciones.
+                Vive la pasión del torneo más grande del mundo. Consulta el calendario oficial de 104 partidos,<br class="d-none d-md-inline" />
+                revisa la tabla de grupos, analiza las estadísticas y gana con tus predicciones 1X2.
             </p>
 
             @if (!User.Identity?.IsAuthenticated ?? true)
@@ -64,7 +64,7 @@
                                 <i class="bi bi-calendar-event"></i>
                             </div>
                             <h3>Calendario</h3>
-                            <p>Consulta todos los partidos del Mundial.</p>
+                            <p>Consulta los 104 partidos del Mundial 2026.</p>
                             <div class="arrow-box arrow-blue">
                                 <i class="bi bi-arrow-right"></i>
                             </div>
@@ -81,7 +81,7 @@
                                 <i class="bi bi-bar-chart-line"></i>
                             </div>
                             <h3>Estadísticas</h3>
-                            <p>Rendimiento de selecciones y jugadores.</p>
+                            <p>Análisis de goles, rendimiento y datos.</p>
                             <div class="arrow-box arrow-green">
                                 <i class="bi bi-arrow-right"></i>
                             </div>
@@ -98,7 +98,7 @@
                                 <i class="bi bi-dribbble"></i>
                             </div>
                             <h3>Selecciones</h3>
-                            <p>Conoce todos los equipos participantes.</p>
+                            <p>Conoce las 48 selecciones clasificadas.</p>
                             <div class="arrow-box arrow-purple">
                                 <i class="bi bi-arrow-right"></i>
                             </div>
@@ -115,7 +115,7 @@
                                 <i class="bi bi-trophy"></i>
                             </div>
                             <h3>Grupos</h3>
-                            <p>Consulta la clasificación oficial.</p>
+                            <p>Tabla de posiciones oficiales de grupos.</p>
                             <div class="arrow-box arrow-gold">
                                 <i class="bi bi-arrow-right"></i>
                             </div>
@@ -125,8 +125,8 @@
             </div>
         </div>
 
-        <footer class="home-footer text-center">
-            <p>© 2026 UTN GOL - Todos los derechos reservados.</p>
+        <footer class="home-footer text-center mt-4">
+            <p>© 2026 UTN GOL MUNDIAL - Plataforma Oficial de Pronósticos.</p>
         </footer>
     </div>
 </div>

@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="~/css/dashboard-premium.css" />
 
-<div class="container-fluid py-3">
+<div class="container-fluid py-4">
 
     <!-- HEADER / BREADCRUMB -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
@@ -17,33 +17,36 @@
             <div class="bg-white border rounded-pill px-3 py-1 shadow-sm d-flex align-items-center gap-2">
                 <span class="fs-6">🪙</span>
                 <span class="small text-muted fw-bold">Saldo:</span>
-                <strong class="text-cyan fw-bold">@Model.Wallet?.Balance.ToString("N2") UTNGolCoin</strong>
+                <strong class="text-cyan fw-bold">@((Model.Wallet?.Balance ?? 10.00m).ToString("N2")) UTNGolCoin</strong>
             </div>
-            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
-                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
-            </a>
-            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
-                U
-            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                    <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+                </a>
+            }
         </div>
     </div>
 
-    <!-- HERO DASHBOARD BANNER (SCREENSHOT 1) -->
-    <div class="hero-dashboard-box bg-white p-5 rounded-4 border mb-4 shadow-sm position-relative overflow-hidden">
+    <!-- HERO DASHBOARD BANNER -->
+    <div class="hero-dashboard-box bg-white p-4 p-md-5 rounded-4 border mb-4 shadow-sm position-relative overflow-hidden">
         <div class="mb-3">
             <span class="badge bg-info bg-opacity-10 text-cyan px-3 py-2 rounded-pill fw-bold small">
                 🌐 USA • MÉXICO • CANADÁ 2026
             </span>
         </div>
         <h1 class="display-5 fw-extrabold text-dark mb-3" style="letter-spacing: -1px;">
-            Make Predictions Simple & Win <span style="color: #06b6d4;">UTNGolCoins!</span>
+            Pronósticos Deportivos <span style="color: #06b6d4;">UTNGolCoin</span>
         </h1>
         <p class="text-muted fs-6 mb-4 col-lg-9">
             Plataforma oficial académica de pronósticos deportivos con 48 selecciones y 104 partidos. Recibe tus 10 UTNGolCoins de bienvenida y escala al primer lugar del ranking global.
         </p>
-        <div>
+        <div class="d-flex flex-wrap gap-3">
             <a asp-controller="Predicciones" asp-action="Create" class="btn text-white px-4 py-3 fw-bold rounded-3 shadow-sm d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);">
                 <i class="bi bi-magic fs-5"></i> Hacer Predicción 1X2
+            </a>
+            <a asp-controller="Partidos" asp-action="Index" class="btn btn-outline-secondary px-4 py-3 fw-bold rounded-3 d-inline-flex align-items-center gap-2">
+                <i class="bi bi-calendar-event fs-5"></i> Ver Calendario
             </a>
         </div>
     </div>
@@ -51,66 +54,126 @@
     <!-- TARJETAS ESTADÍSTICAS DEL USUARIO -->
     <div class="row g-4 mb-4">
         <div class="col-xl-3 col-md-6">
-            <div class="stat-card-box border-gold-glow">
-                <div class="stat-icon-wrapper stat-icon-gold">
+            <div class="stat-card-box border-gold-glow bg-white p-4 rounded-4 border shadow-sm">
+                <div class="stat-icon-wrapper stat-icon-gold mb-3">
                     <i class="bi bi-coin"></i>
                 </div>
-                <div class="stat-card-label">Saldo Disponible</div>
-                <h2 class="stat-card-value text-warning">
-                    @Model.Wallet?.Balance.ToString("N2")
+                <div class="stat-card-label text-muted small fw-bold text-uppercase">Saldo Disponible</div>
+                <h2 class="stat-card-value text-warning fw-extrabold m-0">
+                    @((Model.Wallet?.Balance ?? 10.00m).ToString("N2"))
                 </h2>
-                <span class="stat-card-unit">UTNGolCoin</span>
+                <span class="stat-card-unit text-muted small">UTNGolCoin</span>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6">
-            <div class="stat-card-box">
-                <div class="stat-icon-wrapper stat-icon-cyan">
+            <div class="stat-card-box bg-white p-4 rounded-4 border shadow-sm">
+                <div class="stat-icon-wrapper stat-icon-cyan mb-3">
                     <i class="bi bi-bullseye"></i>
                 </div>
-                <div class="stat-card-label">Total Predicciones</div>
-                <h2 class="stat-card-value text-cyan">
+                <div class="stat-card-label text-muted small fw-bold text-uppercase">Total Predicciones</div>
+                <h2 class="stat-card-value text-cyan fw-extrabold m-0">
                     @Model.TotalPredictions
                 </h2>
-                <span class="stat-card-unit">Registradas</span>
+                <span class="stat-card-unit text-muted small">Registradas</span>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6">
-            <div class="stat-card-box">
-                <div class="stat-icon-wrapper stat-icon-green">
+            <div class="stat-card-box bg-white p-4 rounded-4 border shadow-sm">
+                <div class="stat-icon-wrapper stat-icon-green mb-3">
                     <i class="bi bi-trophy"></i>
                 </div>
-                <div class="stat-card-label">Ganadas</div>
-                <h2 class="stat-card-value text-success">
+                <div class="stat-card-label text-muted small fw-bold text-uppercase">Ganadas</div>
+                <h2 class="stat-card-value text-success fw-extrabold m-0">
                     @Model.WonPredictions
                 </h2>
-                <span class="stat-card-unit">Aciertos</span>
+                <span class="stat-card-unit text-muted small">Aciertos</span>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6">
-            <div class="stat-card-box">
-                <div class="stat-icon-wrapper stat-icon-amber">
+            <div class="stat-card-box bg-white p-4 rounded-4 border shadow-sm">
+                <div class="stat-icon-wrapper stat-icon-amber mb-3">
                     <i class="bi bi-hourglass-split"></i>
                 </div>
-                <div class="stat-card-label">Pendientes</div>
-                <h2 class="stat-card-value text-warning">
+                <div class="stat-card-label text-muted small fw-bold text-uppercase">Pendientes</div>
+                <h2 class="stat-card-value text-warning fw-extrabold m-0">
                     @Model.PendingPredictions
                 </h2>
-                <span class="stat-card-unit">En Juego</span>
+                <span class="stat-card-unit text-muted small">En Juego</span>
             </div>
         </div>
     </div>
 
-</div>
+    <!-- ACCESOS RÁPIDOS Y VISTAS RESUMEN -->
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark m-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-wallet2 text-cyan"></i> Resumen de Billetera
+                    </h5>
+                    <a asp-controller="Billetera" asp-action="Index" class="btn btn-sm btn-outline-cyan rounded-pill">Ver Todo</a>
+                </div>
+                <p class="text-muted small mb-3">Administra tus UTNGolCoins y revisa el historial completo de transacciones.</p>
+                <div class="p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted small d-block">Saldo Actual</span>
+                        <strong class="text-cyan fs-5">@((Model.Wallet?.Balance ?? 10.00m).ToString("N2")) GolCoins</strong>
+                    </div>
+                    <a asp-controller="Billetera" asp-action="Index" class="btn btn-cyan-action btn-sm rounded-pill px-3">Ir a Billetera</a>
+                </div>
+            </div>
+        </div>
 
->
+        <div class="col-lg-6">
 
+            <div class="bg-white p-4 rounded-4 border shadow-sm h-100 dashboard-card-link"
+                 onclick="location.href='@Url.Action("Index", "Billetera")'">
 
+                <div class="d-flex justify-content-between align-items-center mb-3">
 
+                    <h5 class="fw-bold text-dark m-0">
+                        <i class="bi bi-wallet2 text-cyan"></i>
+                        Resumen de Billetera
+                    </h5>
+
+                    <span class="text-cyan fw-bold">
+                        Ver Billetera →
+                    </span>
+
+                </div>
+
+                <p class="text-muted small mb-3">
+                    Administra tus UTNGolCoins y revisa el historial completo de transacciones.
+                </p>
+
+                <div class="p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <span class="text-muted small">
+                            Saldo Actual
+                        </span>
+
+                        <br />
+
+                        <strong class="text-cyan fs-4">
+                            @((Model.Wallet?.Balance ?? 10.00m).ToString("N2"))
+                            UTNGolCoin
+                        </strong>
+
+                    </div>
+
+                    <i class="bi bi-arrow-right-circle-fill text-cyan fs-1"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+        
     </div>
-
-
 
 </div>

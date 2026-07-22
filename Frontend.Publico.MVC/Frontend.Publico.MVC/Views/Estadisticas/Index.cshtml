@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UTNGOL.Models.PosicionDTO>
+@model IEnumerable<UTNGOL.Models.PosicionDTO>
 
 @{
     ViewData["Title"] = "Centro de Estadísticas";
@@ -11,183 +11,113 @@
 
 <link rel="stylesheet" href="~/css/estadisticas.css" />
 
-<div class="container-fluid py-5">
+<div class="container-fluid py-4">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Estadísticas</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fw-bold">
+                <i class="bi bi-bar-chart-line me-1"></i> Análisis Oficial
+            </span>
+        </div>
+    </div>
 
     <div class="text-center mb-5">
-
-        <h1 class="titulo-estadisticas">
-
+        <h1 class="fw-extrabold text-dark mb-2 fs-2">
             📊 CENTRO DE ESTADÍSTICAS
-
         </h1>
-
-        <p class="subtitulo-estadisticas">
-
-            FIFA WORLD CUP 2026 • UTN GOL
-
+        <p class="text-muted">
+            FIFA WORLD CUP 2026 • Rendimiento General de Selecciones
         </p>
-
     </div>
 
     <div class="row g-4 mb-5">
 
-        <div class="col-lg-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">🏆</div>
-
-                <h5>Líder</h5>
-
-                <h3>@lider?.Nombre</h3>
-
-                <span>@lider?.Puntos pts</span>
-
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm text-center h-100 hover-shadow transition-all">
+                <div class="fs-1 mb-2">🏆</div>
+                <span class="text-muted small fw-bold text-uppercase d-block mb-1">Líder del Torneo</span>
+                <h4 class="fw-extrabold text-dark m-0">@(lider?.Nombre ?? "Por definir")</h4>
+                <span class="badge bg-warning bg-opacity-15 text-warning-emphasis rounded-pill mt-2 px-3 py-1 fw-bold">@(lider?.Puntos ?? 0) pts</span>
             </div>
-
         </div>
 
-        <div class="col-lg-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">⚽</div>
-
-                <h5>Más Goles</h5>
-
-                <h3>@goleador?.Nombre</h3>
-
-                <span>@goleador?.GolesFavor goles</span>
-
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm text-center h-100 hover-shadow transition-all">
+                <div class="fs-1 mb-2">⚽</div>
+                <span class="text-muted small fw-bold text-uppercase d-block mb-1">Más Goles a Favor</span>
+                <h4 class="fw-extrabold text-dark m-0">@(goleador?.Nombre ?? "Por definir")</h4>
+                <span class="badge bg-success bg-opacity-15 text-success rounded-pill mt-2 px-3 py-1 fw-bold">@(goleador?.GolesFavor ?? 0) goles</span>
             </div>
-
         </div>
 
-        <div class="col-lg-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">🛡</div>
-
-                <h5>Mejor Defensa</h5>
-
-                <h3>@defensa?.Nombre</h3>
-
-                <span>@defensa?.GolesContra recibidos</span>
-
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm text-center h-100 hover-shadow transition-all">
+                <div class="fs-1 mb-2">🛡️</div>
+                <span class="text-muted small fw-bold text-uppercase d-block mb-1">Mejor Defensa</span>
+                <h4 class="fw-extrabold text-dark m-0">@(defensa?.Nombre ?? "Por definir")</h4>
+                <span class="badge bg-cyan bg-opacity-15 text-cyan rounded-pill mt-2 px-3 py-1 fw-bold">@(defensa?.GolesContra ?? 0) recibidos</span>
             </div>
-
         </div>
 
-        <div class="col-lg-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">📈</div>
-
-                <h5>Mejor Diferencia</h5>
-
-                <h3>@diferencia?.Nombre</h3>
-
-                <span>@diferencia?.DiferenciaGoles</span>
-
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm text-center h-100 hover-shadow transition-all">
+                <div class="fs-1 mb-2">📈</div>
+                <span class="text-muted small fw-bold text-uppercase d-block mb-1">Mejor Diferencia</span>
+                <h4 class="fw-extrabold text-dark m-0">@(diferencia?.Nombre ?? "Por definir")</h4>
+                <span class="badge bg-info bg-opacity-15 text-info rounded-pill mt-2 px-3 py-1 fw-bold">+@(diferencia?.DiferenciaGoles ?? 0) DG</span>
             </div>
-
         </div>
 
     </div>
 
-    <div class="tabla-card">
-
-        <table class="table table-dark align-middle mb-0">
-
-            <thead>
-
-                <tr>
-
-                    <th>#</th>
-                    <th>Selección</th>
-                    <th>Pts</th>
-                    <th>PJ</th>
-                    <th>PG</th>
-                    <th>PE</th>
-                    <th>PP</th>
-                    <th>GF</th>
-                    <th>GC</th>
-                    <th>DG</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @{
-                    int pos = 1;
-                }
-
-                @foreach (var item in Model.OrderByDescending(x => x.Puntos).ThenByDescending(x => x.DiferenciaGoles))
-                {
-
+    <div class="bg-white p-4 rounded-4 border shadow-sm col-lg-11 mx-auto mb-5">
+        <h5 class="fw-bold text-dark mb-3">Tabla Completa de Métricas</h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
                     <tr>
-
-                        <td>
-
-                            @if (pos == 1)
-                            {
-                                <span class="oro">@pos</span>
-                            }
-                            else if (pos == 2)
-                            {
-                                <span class="plata">@pos</span>
-                            }
-                            else if (pos == 3)
-                            {
-                                <span class="bronce">@pos</span>
-                            }
-                            else
-                            {
-                                @pos
-                            }
-
-                        </td>
-
-                        <td>
-
-                            ⚽ @item.Nombre
-
-                        </td>
-
-                        <td>
-
-                            <strong>@item.Puntos</strong>
-
-                        </td>
-
-                        <td>@item.PartidosJugados</td>
-
-                        <td>@item.Victorias</td>
-
-                        <td>@item.Empates</td>
-
-                        <td>@item.Derrotas</td>
-
-                        <td>@item.GolesFavor</td>
-
-                        <td>@item.GolesContra</td>
-
-                        <td>@item.DiferenciaGoles</td>
-
+                        <th style="width: 50px;">#</th>
+                        <th>Selección</th>
+                        <th class="text-center">PTS</th>
+                        <th class="text-center">PJ</th>
+                        <th class="text-center">PG</th>
+                        <th class="text-center">PE</th>
+                        <th class="text-center">PP</th>
+                        <th class="text-center">GF</th>
+                        <th class="text-center">GC</th>
+                        <th class="text-center">DG</th>
                     </tr>
-
-                    pos++;
-
-                }
-
-            </tbody>
-
-        </table>
-
+                </thead>
+                <tbody>
+                    @{ int pos = 1; }
+                    @foreach (var item in Model.OrderByDescending(x => x.Puntos).ThenByDescending(x => x.DiferenciaGoles))
+                    {
+                        <tr>
+                            <td class="fw-bold">
+                                @if (pos == 1) { <span class="badge bg-warning text-dark rounded-circle">1</span> }
+                                else if (pos == 2) { <span class="badge bg-secondary text-white rounded-circle">2</span> }
+                                else if (pos == 3) { <span class="badge bg-amber text-white rounded-circle" style="background-color: #b45309;">3</span> }
+                                else { <span class="text-muted">@pos</span> }
+                            </td>
+                            <td><strong class="text-dark">⚽ @item.Nombre</strong></td>
+                            <td class="text-center fw-extrabold text-cyan fs-6">@item.Puntos</td>
+                            <td class="text-center">@item.PartidosJugados</td>
+                            <td class="text-center text-success fw-semibold">@item.Victorias</td>
+                            <td class="text-center text-secondary fw-semibold">@item.Empates</td>
+                            <td class="text-center text-danger fw-semibold">@item.Derrotas</td>
+                            <td class="text-center text-success">@item.GolesFavor</td>
+                            <td class="text-center text-danger">@item.GolesContra</td>
+                            <td class="text-center fw-bold">@(item.DiferenciaGoles > 0 ? "+" + item.DiferenciaGoles : item.DiferenciaGoles.ToString())</td>
+                        </tr>
+                        pos++;
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

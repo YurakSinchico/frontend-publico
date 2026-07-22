@@ -6,19 +6,46 @@
 
 <link rel="stylesheet" href="~/css/partidos.css" />
 
-<div class="container-fluid py-5">
+<div class="container-fluid py-4">
 
-    <div class="titulo-seccion text-center mb-5">
-
+    <div class="titulo-seccion text-center mb-4">
         <h1>🏆 FIFA WORLD CUP 2026</h1>
-
-        <p>
-            Calendario Oficial de Partidos
-        </p>
-
+        <p>Calendario Oficial de Partidos • USA - MÉXICO - CANADÁ</p>
     </div>
 
-    <div class="row g-4">
+    <!-- BARRA DE FILTROS SUPERIOR -->
+    <div class="card p-3 p-md-4 rounded-4 shadow-sm border mb-4 bg-white">
+        <div class="row g-3 align-items-center justify-content-between">
+            <div class="col-lg-7 d-flex flex-wrap gap-2 align-items-center">
+                <span class="fw-bold text-dark me-2 d-flex align-items-center gap-1">
+                    <i class="bi bi-funnel-fill text-cyan"></i> Filtrar Estado:
+                </span>
+                <button type="button" class="btn btn-filter active px-3 py-2 rounded-pill fw-semibold small" data-filter="ALL">
+                    Todos (@Model.Count())
+                </button>
+                <button type="button" class="btn btn-filter px-3 py-2 rounded-pill fw-semibold small" data-filter="PROGRAMADO">
+                    🟢 Programados (@Model.Count(m => m.Estado == "PROGRAMADO"))
+                </button>
+                
+                <button type="button" class="btn btn-filter px-3 py-2 rounded-pill fw-semibold small" data-filter="FINALIZADO">
+                    🔴 Finalizados (@Model.Count(m => m.Estado == "FINALIZADO"))
+                </button>
+            </div>
+
+            <div class="col-lg-5 d-flex align-items-center gap-2 justify-content-lg-end">
+                <label for="dateFilter" class="form-label mb-0 fw-bold small text-dark text-nowrap">
+                    <i class="bi bi-calendar3 text-cyan"></i> Fecha:
+                </label>
+                <input type="date" id="dateFilter" class="form-control form-control-sm rounded-3 py-2 px-3 border-secondary border-opacity-25" style="max-width: 200px;" />
+                <button type="button" id="btnClearDate" class="btn btn-outline-secondary btn-sm rounded-3 px-3 py-2 fw-semibold" title="Limpiar fecha">
+                    <i class="bi bi-x-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID DE PARTIDOS -->
+    <div class="row g-4" id="matchesContainer">
 
         @foreach (var item in Model)
         {
@@ -36,83 +63,88 @@
                     .UtcDateTime;
             }
 
-            <div class="col-lg-6">
+            var estadoUpper = (item.Estado ?? "PROGRAMADO").ToUpper().Replace(" ", "_");
+            var fechaIso = fechaLocal?.ToString("yyyy-MM-dd") ?? "";
+
+            <div class="col-lg-6 match-item-col" data-status="@estadoUpper" data-date="@fechaIso">
 
                 <div class="match-card">
 
-                    <div class="fase">
-                        @(item.Fase ?? "Fase de Grupos")
-                    </div>
-
-                    <div class="equipos">
-
-                        <div class="equipo">
-                            <div class="icono">⚽</div>
-                            <h3>@item.SeleccionLocal</h3>
-                        </div>
-
-                        <div class="vs">
-                            VS
-                        </div>
-
-                        <div class="equipo">
-                            <div class="icono">⚽</div>
-                            <h3>@item.SeleccionVisitante</h3>
-                        </div>
-
-                    </div>
-
-                    <div class="info">
-
-                        <div>
-                            📅 @(fechaLocal?.ToString("dd/MM/yyyy") ?? "-")
-                        </div>
-
-                        <div>
-                            🕓 @(fechaLocal?.ToString("HH:mm") ?? "-")
-                        </div>
-
-                        <div>
+                    <div class="fase d-flex justify-content-between align-items-center">
+                        <span class="badge bg-info bg-opacity-10 text-cyan px-3 py-2 rounded-pill fw-bold">
+                            @(item.Fase ?? "Fase de Grupos")
+                        </span>
+                        <span class="small fw-bold text-muted">
                             🏆 Grupo @(item.Grupo ?? "-")
+                        </span>
+                    </div>
+
+                    <div class="equipos my-3">
+
+                        <div class="equipo">
+                            <div class="icono">⚽</div>
+                            <h3 class="fw-bold fs-5 text-dark m-0">@item.SeleccionLocal</h3>
+                        </div>
+
+                        <div class="vs text-center">
+                            @if (item.Estado == "FINALIZADO")
+                            {
+                                <span class="badge bg-danger fs-5 px-3 py-2 rounded-3 shadow-sm text-white">
+                                    @item.GolesLocal - @item.GolesVisitante
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-amber fs-3 fw-extrabold">VS</span>
+                            }
+                        </div>
+
+                        <div class="equipo">
+                            <div class="icono">⚽</div>
+                            <h3 class="fw-bold fs-5 text-dark m-0">@item.SeleccionVisitante</h3>
                         </div>
 
                     </div>
 
-                    <div class="estado">
+                    <!-- ESTADIO / SEDE & FECHA / HORA -->
+                    <div class="info bg-light p-3 rounded-4 mb-3 border border-light">
+                        <div class="d-flex align-items-center gap-2 text-dark fw-semibold small">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            <span>@(string.IsNullOrEmpty(item.Estadio) ? "Sede Oficial FIFA" : item.Estadio)</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 text-secondary fw-semibold small">
+                            <span>📅 @(fechaLocal?.ToString("dd/MM/yyyy") ?? "-")</span>
+                            <span>🕓 @(fechaLocal?.ToString("HH:mm") ?? "-")</span>
+                        </div>
+                    </div>
 
-                        @if (item.Estado == "PROGRAMADO")
+                    <div class="estado text-center mb-3">
+                        @if ((item.Estado ?? "").ToUpper() == "PROGRAMADO")
                         {
-                            <span class="badge bg-success">
+                            <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-bold fs-6 shadow-sm">
                                 PROGRAMADO
                             </span>
                         }
-                        else if (item.Estado == "FINALIZADO")
+                        else if ((item.Estado ?? "").ToUpper() == "FINALIZADO")
                         {
-                            <span class="badge bg-danger">
+                            <span class="badge bg-danger text-white px-3 py-2 rounded-pill fw-bold fs-6 shadow-sm">
                                 FINALIZADO
                             </span>
-
-                            <div class="resultado">
-                                @item.GolesLocal - @item.GolesVisitante
-                            </div>
                         }
                         else
                         {
-                            <span class="badge bg-warning text-dark">
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold fs-6 shadow-sm">
                                 @item.Estado
                             </span>
                         }
-
                     </div>
 
-                    <div class="acciones">
+                    <div class="acciones d-flex justify-content-center gap-2">
 
                         <a asp-action="Details"
                            asp-route-id="@item.IdPartido"
                            class="btn btn-detalle">
-
                             👁 Ver Partido
-
                         </a>
 
                         @if (item.Estado == "PROGRAMADO")
@@ -126,9 +158,7 @@
                                    asp-route-awayTeam="@item.SeleccionVisitante"
                                    asp-route-matchStartDate="@fechaUtc.ToString("o")"
                                    class="btn btn-prediccion">
-
                                     🎯 Realizar Predicción
-
                                 </a>
                             }
                             else
@@ -143,9 +173,7 @@
                         else
                         {
                             <button class="btn btn-cerrado" disabled>
-
                                 ⛔ Predicción Cerrada
-
                             </button>
                         }
 
@@ -158,4 +186,90 @@
 
     </div>
 
+    <!-- MENSAJE SIN RESULTADOS -->
+    <div id="noMatchesMsg" class="text-center py-5 d-none">
+        <div class="p-5 bg-white rounded-4 border shadow-sm mx-auto" style="max-width: 500px;">
+            <i class="bi bi-calendar-x fs-1 text-muted d-block mb-3"></i>
+            <h5 class="fw-bold text-dark">No se encontraron partidos</h5>
+            <p class="text-muted small m-0">Intenta cambiar los filtros de estado o fecha seleccionada.</p>
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterBtns = document.querySelectorAll(".btn-filter");
+            const dateInput = document.getElementById("dateFilter");
+            const btnClearDate = document.getElementById("btnClearDate");
+            const matchCols = document.querySelectorAll(".match-item-col");
+            const noMatchesMsg = document.getElementById("noMatchesMsg");
+
+            let currentStatus = "ALL";
+
+            function filterMatches() {
+                const selectedDate = dateInput ? dateInput.value : "";
+                let visibleCount = 0;
+
+                matchCols.forEach(col => {
+                    const colStatus = col.getAttribute("data-status") || "";
+                    const colDate = col.getAttribute("data-date") || "";
+
+                    let matchStatus = false;
+                    if (currentStatus === "ALL") {
+                        matchStatus = true;
+                    } else if (currentStatus === "EN_JUEGO") {
+                        matchStatus = colStatus === "EN_JUEGO" || colStatus === "EN_PROCESO" || colStatus === "EN JUEGO";
+                    } else {
+                        matchStatus = colStatus === currentStatus;
+                    }
+
+                    let matchDate = true;
+                    if (selectedDate) {
+                        matchDate = colDate === selectedDate;
+                    }
+
+                    if (matchStatus && matchDate) {
+                        col.style.display = "block";
+                        visibleCount++;
+                    } else {
+                        col.style.display = "none";
+                    }
+                });
+
+                if (noMatchesMsg) {
+                    if (visibleCount === 0) {
+                        noMatchesMsg.classList.remove("d-none");
+                    } else {
+                        noMatchesMsg.classList.add("d-none");
+                    }
+                }
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", function () {
+                    filterBtns.forEach(b => {
+                        b.classList.remove("active", "btn-cyan");
+                        b.classList.add("btn-outline-secondary");
+                    });
+                    this.classList.remove("btn-outline-secondary");
+                    this.classList.add("active", "btn-cyan");
+                    currentStatus = this.getAttribute("data-filter");
+                    filterMatches();
+                });
+            });
+
+            if (dateInput) {
+                dateInput.addEventListener("change", filterMatches);
+            }
+
+            if (btnClearDate) {
+                btnClearDate.addEventListener("click", function () {
+                    if (dateInput) dateInput.value = "";
+                    filterMatches();
+                });
+            }
+        });
+    </script>
+}

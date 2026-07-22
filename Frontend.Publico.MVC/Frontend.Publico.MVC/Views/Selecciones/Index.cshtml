@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UTNGOL.Models.SeleccionDTO>
+@model IEnumerable<UTNGOL.Models.SeleccionDTO>
 
 @{
     ViewData["Title"] = "Selecciones";
@@ -6,89 +6,63 @@
 
 <link rel="stylesheet" href="~/css/selecciones.css" />
 
-<div class="container py-5">
+<div class="container-fluid py-4">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Selecciones</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fw-bold">
+                🌍 48 Equipos Clasificados
+            </span>
+        </div>
+    </div>
 
     <div class="text-center mb-5">
-
-        <h1 class="titulo-selecciones">
-
+        <h1 class="fw-extrabold text-dark mb-2 fs-2">
             🌍 SELECCIONES CLASIFICADAS
-
         </h1>
-
-        <p class="subtitulo-selecciones">
-
-            FIFA WORLD CUP 2026
-
+        <p class="text-muted">
+            FIFA WORLD CUP 2026 • USA - MÉXICO - CANADÁ
         </p>
-
     </div>
 
     <div class="row g-4">
-
         @foreach (var item in Model)
         {
             <div class="col-lg-3 col-md-6">
+                <div class="bg-white p-4 rounded-4 border shadow-sm text-center h-100 d-flex flex-column justify-content-between hover-shadow transition-all">
+                    <div>
+                        <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <span class="fs-2">⚽</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1 fs-5">@item.Nombre</h4>
+                        <span class="badge bg-light text-muted border px-3 py-1 rounded-pill small mb-3">
+                            Código: @item.CodigoFifa
+                        </span>
 
-                <div class="team-card">
-
-                    <div class="team-icon">
-
-                        ⚽
-
+                        <div class="bg-light p-3 rounded-3 border mb-3 text-start small">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="text-muted">Grupo:</span>
+                                <strong class="text-dark">Grupo @(item.Grupo ?? "-")</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Confederación:</span>
+                                <strong class="text-cyan">@(item.Confederacion ?? "FIFA")</strong>
+                            </div>
+                        </div>
                     </div>
-
-                    <h3>
-
-                        @item.Nombre
-
-                    </h3>
-
-                    <hr />
-
-                    <p>
-
-                        <strong>Código FIFA</strong>
-
-                        <br />
-
-                        @item.CodigoFifa
-
-                    </p>
-
-                    <p>
-
-                        <strong>Grupo</strong>
-
-                        <br />
-
-                        @item.Grupo
-
-                    </p>
-
-                    <p>
-
-                        <strong>Confederación</strong>
-
-                        <br />
-
-                        @item.Confederacion
-
-                    </p>
 
                     <a asp-action="Details"
                        asp-route-id="@item.IdSeleccion"
-                       class="btn btn-warning w-100">
-
+                       class="btn btn-outline-cyan w-100 rounded-pill fw-bold py-2 text-decoration-none">
                         👁 Ver Detalles
-
                     </a>
-
                 </div>
-
             </div>
         }
-
     </div>
 
 </div>

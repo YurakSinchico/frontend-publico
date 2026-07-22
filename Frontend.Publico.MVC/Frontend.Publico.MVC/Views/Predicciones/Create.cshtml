@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="~/css/predicciones.css" />
 
-<div class="container-fluid py-3">
+<div class="container-fluid py-4">
 
     <!-- HEADER / BREADCRUMB -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
@@ -19,25 +19,40 @@
                 <span class="small text-muted fw-bold">Saldo:</span>
                 <strong class="text-cyan fw-bold">@Model.WalletBalance.ToString("N2") UTNGolCoin</strong>
             </div>
-            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
-                <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
-            </a>
-            <div class="text-white fw-bold d-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 38px; height: 38px; background-color: #06b6d4;">
-                U
-            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-bold d-flex align-items-center gap-1 text-decoration-none shadow-sm">
+                    <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Cerrar Sesión</span>
+                </a>
+            }
         </div>
     </div>
 
+    <!-- ALERTAS DE BOOTSTRAP PARA NOTIFICACIONES -->
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success shadow-sm border-0 rounded-4 text-center mb-4">
-            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-4 text-center mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2 fs-5"></i> <strong>Operación realizada con éxito:</strong> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 rounded-4 text-center mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div id="clientValidationAlert" class="alert alert-warning alert-dismissible fade show shadow-sm border-0 rounded-4 text-center mb-4 d-none" role="alert">
+        <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> <span id="clientValidationText">Monto inválido. Ingrese un número mayor a cero.</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div asp-validation-summary="All" class="alert alert-danger shadow-sm border-0 rounded-4 mb-4" style="display: none;"></div>
 
-    <!-- MAIN FORM CARD (SCREENSHOT 3) -->
+    <!-- MAIN FORM CARD -->
     <div class="bg-white p-4 p-md-5 rounded-4 border shadow-sm mx-auto col-lg-10">
 
         <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
@@ -76,13 +91,13 @@
                         }
                         else
                         {
-                            <option selected value="@Model.MatchId">@Model.HomeTeam vs @Model.AwayTeam (11 Jun - Estadio Azteca)</option>
+                            <option selected value="@Model.MatchId">@Model.HomeTeam vs @Model.AwayTeam (Estadio Azteca)</option>
                         }
                     </select>
                 </div>
             </div>
 
-            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS - SCREENSHOT 3) -->
+            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS) -->
             <div class="mb-4">
                 <label class="form-label fw-bold text-dark mb-2">Pronóstico 1X2:</label>
                 <div class="row g-3">
@@ -109,6 +124,7 @@
             <div class="mb-4">
                 <label class="form-label fw-bold text-dark mb-2">Monto a apostar (UTNGolCoin):</label>
                 <input asp-for="Amount"
+                       id="amountInput"
                        type="number"
                        step="1"
                        min="1"
@@ -117,6 +133,9 @@
                        value="2"
                        required />
                 <span asp-validation-for="Amount" class="text-danger small mt-1 d-block"></span>
+                <small class="text-muted mt-1 d-block">
+                    <i class="bi bi-info-circle me-1"></i> El monto debe ser mayor a 0 y no exceder tu saldo disponible (@Model.WalletBalance.ToString("N2") Coins).
+                </small>
             </div>
 
             <!-- BOTÓN CONFIRMAR -->
@@ -140,6 +159,10 @@
         const matchIdInput = document.querySelector('input[name="MatchId"]');
         const homeTeamInput = document.querySelector('input[name="HomeTeam"]');
         const awayTeamInput = document.querySelector('input[name="AwayTeam"]');
+        const amountInput = document.getElementById("amountInput");
+        const predictionForm = document.getElementById("predictionForm");
+        const alertBox = document.getElementById("clientValidationAlert");
+        const alertText = document.getElementById("clientValidationText");
 
         // Default to Local (1)
         hiddenInput.value = "1";
@@ -176,10 +199,33 @@
                 hiddenInput.value = this.getAttribute("data-val");
             });
         });
+
+        // VALIDACIÓN DE MONTO CLIENTE (NO PERMITIR <= 0, LETRAS O NÚMEROS INVÁLIDOS)
+        if (amountInput) {
+            amountInput.addEventListener("keydown", function (e) {
+                if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === "E") {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        if (predictionForm) {
+            predictionForm.addEventListener("submit", function (e) {
+                const val = parseFloat(amountInput.value);
+                if (isNaN(val) || val <= 0) {
+                    e.preventDefault();
+                    if (alertBox && alertText) {
+                        alertText.innerText = "Error: El monto a apostar debe ser mayor a 0 y no puede contener símbolos ni letras.";
+                        alertBox.classList.remove("d-none");
+                    }
+                    amountInput.focus();
+                }
+            });
+        }
     });
 </script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
+

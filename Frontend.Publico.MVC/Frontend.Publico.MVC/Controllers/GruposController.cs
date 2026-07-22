@@ -1,4 +1,4 @@
-﻿using Api.Consumer.Consumers;
+using Api.Consumer.Consumers;
 using Microsoft.AspNetCore.Mvc;
 using UTNGOL.Models;
 
@@ -32,10 +32,26 @@ namespace Frontend.Publico.MVC.Controllers
             }
         }
 
-        // GET: Grupos/Details/5
-        public IActionResult Details(int id)
+        // GET: Grupos/Details/A
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            try
+            {
+                var selecciones = await _consumer.ObtenerSeleccionesAsync();
+                var grupoKey = string.IsNullOrEmpty(id) ? "A" : id.Trim().ToUpper();
+
+                var grupo = selecciones
+                    .Where(s => (s.Grupo ?? "").Equals(grupoKey, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(s => s.Puntos);
+
+                ViewBag.GrupoKey = grupoKey;
+                return View(grupo);
+            }
+            catch
+            {
+                ViewBag.GrupoKey = id ?? "A";
+                return View(Enumerable.Empty<SeleccionDTO>());
+            }
         }
 
         // GET: Grupos/Create

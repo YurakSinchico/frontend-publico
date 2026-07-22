@@ -7,22 +7,36 @@
 <link rel="stylesheet" href="~/css/estadisticas.css" />
 
 <div class="container-fluid py-4">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Tabla de Posiciones</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill fw-bold">
+                <i class="bi bi-trophy me-1"></i> Clasificación Oficial
+            </span>
+        </div>
+    </div>
+
     <div class="text-center mb-5">
-        <h1 class="titulo-estadisticas">
+        <h1 class="fw-extrabold text-dark mb-2 fs-2">
             <i class="bi bi-graph-up-arrow text-warning me-2"></i> TABLA DE POSICIONES
         </h1>
-        <p class="subtitulo-estadisticas">
-            Clasificación general de selecciones • Mundial 2026
+        <p class="text-muted">
+            Clasificación general de selecciones • FIFA World Cup 2026
         </p>
     </div>
 
-    <div class="tabla-card shadow-sm p-4 mb-5 rounded-4">
+    <div class="bg-white p-4 rounded-4 border shadow-sm col-lg-11 mx-auto mb-5">
         @if (Model != null && Model.Any())
         {
             <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead>
+                <table class="table table-hover align-middle m-0">
+                    <thead class="table-light">
                         <tr>
+                            <th style="width: 50px;">#</th>
                             <th>Selección</th>
                             <th class="text-center">PJ</th>
                             <th class="text-center">V</th>
@@ -33,20 +47,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{ int index = 1; }
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td class="fw-bold text-muted">@index</td>
                                 <td>
-                                    <strong>⚽ @item.Nombre</strong>
+                                    <strong class="text-dark">⚽ @item.Nombre</strong>
                                     <small class="text-muted d-block">(@item.CodigoFifa)</small>
                                 </td>
-                                <td class="text-center">@item.PartidosJugados</td>
-                                <td class="text-center">@item.Victorias</td>
-                                <td class="text-center">@item.Empates</td>
-                                <td class="text-center">@item.Derrotas</td>
-                                <td class="text-center">@item.DiferenciaGoles</td>
-                                <td class="text-center text-gold fw-bold fs-5">@item.Puntos</td>
+                                <td class="text-center fw-semibold">@item.PartidosJugados</td>
+                                <td class="text-center text-success fw-semibold">@item.Victorias</td>
+                                <td class="text-center text-secondary fw-semibold">@item.Empates</td>
+                                <td class="text-center text-danger fw-semibold">@item.Derrotas</td>
+                                <td class="text-center fw-bold">@(item.DiferenciaGoles > 0 ? "+" + item.DiferenciaGoles : item.DiferenciaGoles.ToString())</td>
+                                <td class="text-center">
+                                    <span class="badge bg-warning bg-opacity-15 text-warning-emphasis border border-warning border-opacity-25 fs-6 px-3 py-2 rounded-pill fw-extrabold">
+                                        @item.Puntos pts
+                                    </span>
+                                </td>
                             </tr>
+                            index++;
                         }
                     </tbody>
                 </table>

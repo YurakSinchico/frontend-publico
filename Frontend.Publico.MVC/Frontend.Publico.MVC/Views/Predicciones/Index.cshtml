@@ -6,74 +6,99 @@
 
 <link rel="stylesheet" href="~/css/mis-predicciones.css" />
 
-<div class="container py-4">
+<div class="container-fluid py-4">
+
+    <!-- HEADER / BREADCRUMB -->
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+            <span>Home</span> / <span class="fw-bold text-dark">Mis Predicciones</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <a asp-action="Create" class="btn btn-cyan-action btn-sm rounded-pill px-3 py-2 fw-bold text-decoration-none shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Nueva Predicción
+            </a>
+        </div>
+    </div>
 
     <div class="text-center mb-5">
-        <h1 class="page-title text-white fw-extrabold mb-2">
-            🎯 Mis Predicciones
+        <h1 class="fw-extrabold text-dark mb-2 fs-2">
+            🎯 Mis Predicciones 1X2
         </h1>
         <p class="text-muted">
-            Historial completo de tus apuestas deportivas registradas en UTNGolCoin.
+            Historial completo de tus pronósticos y apuestas deportivas registradas en UTNGolCoin.
         </p>
     </div>
 
     @if (!Model.Any())
     {
-        <div class="empty-state-card text-center p-5 mx-auto">
-            <i class="bi bi-inbox fs-1 text-cyan mb-3 d-block"></i>
-            <h5 class="text-white fw-bold">Todavía no has realizado ninguna predicción.</h5>
-            <p class="text-muted mb-4">Explora el calendario de partidos y realiza tu primer pronóstico.</p>
-            <a asp-controller="Partidos" asp-action="Index" class="btn btn-cyan-action px-4 py-2 fw-bold text-decoration-none">
-                <i class="bi bi-calendar-event me-2"></i> Ver Calendario de Partidos
-            </a>
+        <div class="bg-white text-center p-5 rounded-4 border shadow-sm mx-auto col-lg-8">
+            <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                <i class="bi bi-inbox fs-2"></i>
+            </div>
+            <h5 class="text-dark fw-bold mb-2">Todavía no has realizado ninguna predicción.</h5>
+            <p class="text-muted mb-4">Explora el calendario de partidos y realiza tu primer pronóstico deportivo.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a asp-controller="Partidos" asp-action="Index" class="btn btn-outline-cyan rounded-pill px-4 py-2 fw-bold text-decoration-none">
+                    <i class="bi bi-calendar-event me-2"></i> Ver Calendario
+                </a>
+                <a asp-action="Create" class="btn btn-cyan-action rounded-pill px-4 py-2 fw-bold text-decoration-none">
+                    <i class="bi bi-magic me-2"></i> Crear Predicción
+                </a>
+            </div>
         </div>
     }
     else
     {
-        <div class="row g-4">
+        <div class="row g-4 col-lg-10 mx-auto">
             @foreach (var p in Model)
             {
+                var resultText = p.PredictedResult == "1" ? "Local (1)" : p.PredictedResult == "2" ? "Visitante (2)" : p.PredictedResult == "X" ? "Empate (X)" : p.PredictedResult;
+
                 <div class="col-lg-6">
-                    <div class="prediction-history-card">
-                        <div class="card-head d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="m-0 fw-bold text-white fs-5">
-                                <i class="bi bi-trophy text-gold me-2"></i> Partido #@p.MatchId
+                    <div class="bg-white p-4 rounded-4 border shadow-sm h-100 hover-shadow transition-all">
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                            <h4 class="m-0 fw-bold text-dark fs-6 d-flex align-items-center gap-2">
+                                <i class="bi bi-trophy text-warning"></i> Partido #@p.MatchId
                             </h4>
-                            @if (p.Status == "Ganada")
+                            @if (p.Status == "Ganada" || p.Status == "GANADA")
                             {
-                                <span class="badge-ganada"><i class="bi bi-check-circle-fill me-1"></i> Ganada</span>
+                                <span class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-3 py-1 rounded-pill fw-bold">
+                                    🟢 Ganada
+                                </span>
                             }
-                            else if (p.Status == "Perdida")
+                            else if (p.Status == "Perdida" || p.Status == "PERDIDA")
                             {
-                                <span class="badge-perdida"><i class="bi bi-x-circle-fill me-1"></i> Perdida</span>
+                                <span class="badge bg-danger bg-opacity-15 text-danger border border-danger border-opacity-25 px-3 py-1 rounded-pill fw-bold">
+                                    🔴 Perdida
+                                </span>
                             }
                             else
                             {
-                                <span class="badge-pendiente"><i class="bi bi-clock-fill me-1"></i> Pendiente</span>
+                                <span class="badge bg-warning bg-opacity-15 text-warning-emphasis border border-warning border-opacity-25 px-3 py-1 rounded-pill fw-bold">
+                                    🟡 Pendiente
+                                </span>
                             }
                         </div>
 
-                        <hr class="border-secondary opacity-25 my-3" />
-
                         <div class="row g-3 text-start">
                             <div class="col-6">
-                                <span class="detail-label">Pronóstico 1X2</span>
-                                <div class="detail-val text-cyan fw-bold fs-6">@p.PredictedResult</div>
+                                <span class="text-muted small d-block">Resultado Pronosticado</span>
+                                <div class="text-cyan fw-extrabold fs-6">@resultText</div>
                             </div>
 
                             <div class="col-6">
-                                <span class="detail-label">Monto Apostado</span>
-                                <div class="detail-val text-gold fw-bold">💰 @p.Amount Coins</div>
+                                <span class="text-muted small d-block">Monto Apostado</span>
+                                <div class="text-dark fw-bold">🪙 @p.Amount.ToString("N2") Coins</div>
                             </div>
 
                             <div class="col-6">
-                                <span class="detail-label">Cuota Aplicada</span>
-                                <div class="detail-val text-white fw-bold">@p.AppliedOdds</div>
+                                <span class="text-muted small d-block">Cuota Aplicada</span>
+                                <div class="text-secondary fw-bold">@p.AppliedOdds x</div>
                             </div>
 
                             <div class="col-6">
-                                <span class="detail-label">Fecha de Registro</span>
-                                <div class="detail-val text-muted small">@p.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</div>
+                                <span class="text-muted small d-block">Fecha de Registro</span>
+                                <div class="text-muted small fw-semibold">@p.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</div>
                             </div>
                         </div>
                     </div>
@@ -82,4 +107,4 @@
         </div>
     }
 
-</div>
+</div>

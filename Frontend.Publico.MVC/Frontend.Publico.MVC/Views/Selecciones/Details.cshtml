@@ -1,4 +1,4 @@
-﻿@model UTNGOL.Models.SeleccionDTO
+@model UTNGOL.Models.SeleccionDTO
 
 @{
     ViewData["Title"] = Model.Nombre;
@@ -6,99 +6,46 @@
 
 <link rel="stylesheet" href="~/css/selecciones.css" />
 
-<div class="container py-5">
+<div class="container-fluid py-4">
 
-    <div class="detalle-seleccion">
+    <div class="bg-white p-4 p-md-5 rounded-4 border shadow-sm mx-auto col-lg-8 text-center">
 
-        <div class="text-center">
-
-            <div class="team-icon">
-
-                ⚽
-
-            </div>
-
-            <h1>
-
-                @Model.Nombre
-
-            </h1>
-
+        <div class="rounded-circle bg-info bg-opacity-10 text-cyan d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+            <span class="fs-1">⚽</span>
         </div>
 
-        <div class="row mt-5">
+        <h1 class="fw-extrabold text-dark mb-2 fs-2">
+            @Model.Nombre
+        </h1>
+        <p class="text-muted mb-4">Detalles oficiales de la selección clasificada</p>
 
+        <div class="row g-4 mb-4">
             <div class="col-md-4">
-
-                <div class="info-box">
-
-                    <h5>
-
-                        Código FIFA
-
-                    </h5>
-
-                    <p>
-
-                        @Model.CodigoFifa
-
-                    </p>
-
+                <div class="bg-light p-4 rounded-4 border">
+                    <span class="text-muted small fw-bold text-uppercase d-block mb-1">Código FIFA</span>
+                    <h4 class="fw-bold text-dark m-0">@Model.CodigoFifa</h4>
                 </div>
-
             </div>
 
             <div class="col-md-4">
-
-                <div class="info-box">
-
-                    <h5>
-
-                        Grupo
-
-                    </h5>
-
-                    <p>
-
-                        @Model.Grupo
-
-                    </p>
-
+                <div class="bg-light p-4 rounded-4 border">
+                    <span class="text-muted small fw-bold text-uppercase d-block mb-1">Grupo</span>
+                    <h4 class="fw-bold text-cyan m-0">Grupo @(Model.Grupo ?? "-")</h4>
                 </div>
-
             </div>
 
             <div class="col-md-4">
-
-                <div class="info-box">
-
-                    <h5>
-
-                        Confederación
-
-                    </h5>
-
-                    <p>
-
-                        @Model.Confederacion
-
-                    </p>
-
+                <div class="bg-light p-4 rounded-4 border">
+                    <span class="text-muted small fw-bold text-uppercase d-block mb-1">Confederación</span>
+                    <h4 class="fw-bold text-primary m-0">@(Model.Confederacion ?? "FIFA")</h4>
                 </div>
-
             </div>
-
         </div>
 
-        <div class="text-center mt-5">
-
-            <a asp-action="Index"
-               class="btn btn-outline-light btn-lg">
-
-                ← Volver
-
+        <div>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold text-decoration-none">
+                ← Volver a Selecciones
             </a>
-
         </div>
 
     </div>
