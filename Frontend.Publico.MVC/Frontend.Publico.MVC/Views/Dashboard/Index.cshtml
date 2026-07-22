@@ -1,4 +1,4 @@
-﻿@model Frontend.Publico.MVC.ViewModels.DashboardViewModel
+@model Frontend.Publico.MVC.ViewModels.DashboardViewModel
 
 @{
     ViewData["Title"] = "Mi Panel";
@@ -6,487 +6,215 @@
 
 <link rel="stylesheet" href="~/css/dashboard-premium.css" />
 
+<div class="container-fluid py-2">
 
-<div class="container-fluid py-4">
-
-
-    <!-- CABECERA -->
-    <div class="hero-dashboard">
-
-        <div class="hero-text">
-
-            <h1>
-                👋 ¡Bienvenido, @User.Identity!.Name!
-            </h1>
-
-            <p>
-                Vive la emoción del Mundial FIFA 2026 y administra tus predicciones desde un solo lugar.
-            </p>
-
+    <!-- HERO DE BIENVENIDA MUNDIALISTA -->
+    <div class="hero-dashboard-box mb-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="hero-dashboard-title">
+                    👋 ¡Bienvenido, @(!string.IsNullOrEmpty(User.Identity?.Name) ? User.Identity.Name : (Context.Session.GetString("Nombre") ?? "Usuario"))!
+                </h1>
+                <p class="hero-dashboard-subtitle">
+                    Vive la emoción del Mundial FIFA 2026 y administra tus predicciones en tiempo real.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end d-none d-lg-block">
+                <span class="badge bg-gold-glow px-4 py-3 fs-6 rounded-pill">
+                    🏆 UTNGOL MUNDIAL 2026
+                </span>
+            </div>
         </div>
-
     </div>
 
-
-
-    <!-- TARJETAS -->
-    <div class="row g-4 mt-2">
-
+    <!-- TARJETAS ESTADÍSTICAS -->
+    <div class="row g-4 mb-4">
 
         <!-- SALDO -->
         <div class="col-xl-3 col-md-6">
-
-            <div class="stat-card balance">
-
-
-                <div class="icono">
-                    💰
+            <div class="stat-card-box border-gold-glow">
+                <div class="stat-icon-wrapper stat-icon-gold">
+                    <i class="bi bi-coin"></i>
                 </div>
-
-
-                <h6>
-                    Saldo Disponible
-                </h6>
-
-
-                <h2>
+                <div class="stat-card-label">Saldo Disponible</div>
+                <h2 class="stat-card-value text-warning">
                     @Model.Wallet?.Balance.ToString("N2")
                 </h2>
-
-
-                <span>
-                    UTNGolCoin
-                </span>
-
-
-                <!-- PRUEBA WALLET -->
-                <hr />
-
-                <div style="font-size:18px; margin-top:10px;">
-
-                    🪙 GolCoins desde ViewBag:
-
-                    <strong>
-                        @ViewBag.GolCoins
-                    </strong>
-
-                </div>
-
-
+                <span class="stat-card-unit">UTNGolCoin</span>
             </div>
-
         </div>
-
-
 
         <!-- TOTAL PREDICCIONES -->
         <div class="col-xl-3 col-md-6">
-
-            <div class="stat-card">
-
-
-                <div class="icono">
-                    🎯
+            <div class="stat-card-box">
+                <div class="stat-icon-wrapper stat-icon-cyan">
+                    <i class="bi bi-bullseye"></i>
                 </div>
-
-
-                <h6>
-                    Total Predicciones
-                </h6>
-
-
-                <h2>
+                <div class="stat-card-label">Total Predicciones</div>
+                <h2 class="stat-card-value text-cyan">
                     @Model.TotalPredictions
                 </h2>
-
-
+                <span class="stat-card-unit">Registradas</span>
             </div>
-
         </div>
-
-
-
 
         <!-- GANADAS -->
         <div class="col-xl-2 col-md-4">
-
-            <div class="stat-card success">
-
-
-                <div class="icono">
-                    🟢
+            <div class="stat-card-box">
+                <div class="stat-icon-wrapper stat-icon-green">
+                    <i class="bi bi-trophy"></i>
                 </div>
-
-
-                <h6>
-                    Ganadas
-                </h6>
-
-
-                <h2>
+                <div class="stat-card-label">Ganadas</div>
+                <h2 class="stat-card-value text-success">
                     @Model.WonPredictions
                 </h2>
-
-
+                <span class="stat-card-unit">Aciertos</span>
             </div>
-
         </div>
-
-
-
-
 
         <!-- PENDIENTES -->
         <div class="col-xl-2 col-md-4">
-
-            <div class="stat-card warning">
-
-
-                <div class="icono">
-                    🟡
+            <div class="stat-card-box">
+                <div class="stat-icon-wrapper stat-icon-amber">
+                    <i class="bi bi-hourglass-split"></i>
                 </div>
-
-
-                <h6>
-                    Pendientes
-                </h6>
-
-
-                <h2>
+                <div class="stat-card-label">Pendientes</div>
+                <h2 class="stat-card-value text-warning">
                     @Model.PendingPredictions
                 </h2>
-
-
+                <span class="stat-card-unit">En Juego</span>
             </div>
-
         </div>
-
-
-
-
 
         <!-- PERDIDAS -->
         <div class="col-xl-2 col-md-4">
-
-            <div class="stat-card danger">
-
-
-                <div class="icono">
-                    🔴
+            <div class="stat-card-box">
+                <div class="stat-icon-wrapper stat-icon-red">
+                    <i class="bi bi-x-circle"></i>
                 </div>
-
-
-                <h6>
-                    Perdidas
-                </h6>
-
-
-                <h2>
+                <div class="stat-card-label">Perdidas</div>
+                <h2 class="stat-card-value text-danger">
                     @Model.LostPredictions
                 </h2>
-
-
+                <span class="stat-card-unit">Fallidas</span>
             </div>
-
         </div>
-
 
     </div>
 
-
-
-
-
-
-    <!-- DOS COLUMNAS -->
-
-    <div class="row mt-5">
-
-
+    <!-- SECCIÓN DOS COLUMNAS TABLAS -->
+    <div class="row g-4">
 
         <!-- PREDICCIONES -->
-
         <div class="col-lg-7">
-
-
-            <div class="panel-card">
-
-
-                <h3 class="mb-4">
-                    🎯 Últimas Predicciones
+            <div class="panel-glass-card">
+                <h3 class="panel-header-title">
+                    <i class="bi bi-lightning-charge-fill text-cyan"></i> Últimas Predicciones
                 </h3>
-
-
 
                 @if (Model.Predictions.Any())
                 {
-
-
-                    <table class="table table-dark table-hover align-middle">
-
-
-                        <thead>
-
-
-                            <tr>
-
-                                <th>
-                                    Partido
-                                </th>
-
-
-                                <th>
-                                    Resultado
-                                </th>
-
-
-                                <th>
-                                    Monto
-                                </th>
-
-
-                                <th>
-                                    Estado
-                                </th>
-
-
-                            </tr>
-
-
-                        </thead>
-
-
-
-                        <tbody>
-
-
-
-                            @foreach (var p in Model.Predictions.Take(5))
-                            {
-
-
+                    <div class="table-responsive">
+                        <table class="table table-custom-dark align-middle">
+                            <thead>
                                 <tr>
-
-
-                                    <td>
-                                        #@p.MatchId
-                                    </td>
-
-
-                                    <td>
-                                        @p.PredictedResult
-                                    </td>
-
-
-                                    <td>
-                                        @p.Amount Coins
-                                    </td>
-
-
-                                    <td>
-
-
-                                        @if (p.Status == "Ganada")
-                                        {
-
-                                            <span class="badge bg-success">
-                                                Ganada
-                                            </span>
-
-                                        }
-                                        else if (p.Status == "Perdida")
-                                        {
-
-                                            <span class="badge bg-danger">
-                                                Perdida
-                                            </span>
-
-                                        }
-                                        else
-                                        {
-
-                                            <span class="badge bg-warning text-dark">
-                                                Pendiente
-                                            </span>
-
-                                        }
-
-
-                                    </td>
-
-
+                                    <th>Partido</th>
+                                    <th>Resultado</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
                                 </tr>
-
-
-                            }
-
-
-
-                        </tbody>
-
-
-                    </table>
-
-
+                            </thead>
+                            <tbody>
+                                @foreach (var p in Model.Predictions.Take(5))
+                                {
+                                    <tr>
+                                        <td class="fw-bold">#@p.MatchId</td>
+                                        <td>@p.PredictedResult</td>
+                                        <td><span class="text-gold fw-bold">@p.Amount Coins</span></td>
+                                        <td>
+                                            @if (p.Status == "Ganada")
+                                            {
+                                                <span class="badge-ganada">Ganada</span>
+                                            }
+                                            else if (p.Status == "Perdida")
+                                            {
+                                                <span class="badge-perdida">Perdida</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge-pendiente">Pendiente</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 {
-
-
-                    <div class="empty-box">
-
+                    <div class="empty-state-box">
+                        <i class="bi bi-inbox fs-1 d-block mb-2 text-muted"></i>
                         Aún no has realizado ninguna predicción.
-
                     </div>
-
-
                 }
-
-
-
             </div>
-
-
         </div>
 
-
-
-
-
-
         <!-- MOVIMIENTOS -->
-
-
         <div class="col-lg-5">
-
-
-            <div class="panel-card">
-
-
-
-                <h3 class="mb-4">
-
-                    💳 Últimos Movimientos
-
+            <div class="panel-glass-card">
+                <h3 class="panel-header-title">
+                    <i class="bi bi-clock-history text-gold"></i> Últimos Movimientos
                 </h3>
-
-
-
-
 
                 @if (Model.Transactions.Any())
                 {
-
-
-                    <table class="table table-dark align-middle">
-
-
-                        <thead>
-
-
-                            <tr>
-
-                                <th>
-                                    Fecha
-                                </th>
-
-
-                                <th>
-                                    Tipo
-                                </th>
-
-
-                                <th>
-                                    Monto
-                                </th>
-
-
-                            </tr>
-
-
-                        </thead>
-
-
-
-                        <tbody>
-
-
-
-                            @foreach (var t in Model.Transactions.Take(5))
-                            {
-
-
+                    <div class="table-responsive">
+                        <table class="table table-custom-dark align-middle">
+                            <thead>
                                 <tr>
-
-
-                                    <td>
-                                        @t.Date.ToString("dd/MM")
-                                    </td>
-
-
-                                    <td>
-                                        @t.Type
-                                    </td>
-
-
-                                    <td>
-
-
-                                        @if (t.Amount > 0)
-                                        {
-
-                                            <span class="text-success fw-bold">
-                                                +@t.Amount
-                                            </span>
-
-                                        }
-                                        else
-                                        {
-
-                                            <span class="text-danger fw-bold">
-                                                @t.Amount
-                                            </span>
-
-                                        }
-
-
-                                    </td>
-
-
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Monto</th>
                                 </tr>
-
-
-                            }
-
-
-
-                        </tbody>
-
-
-                    </table>
-
-
+                            </thead>
+                            <tbody>
+                                @foreach (var t in Model.Transactions.Take(5))
+                                {
+                                    <tr>
+                                        <td>@t.Date.ToString("dd/MM")</td>
+                                        <td>@t.Type</td>
+                                        <td>
+                                            @if (t.Amount > 0)
+                                            {
+                                                <span class="text-success fw-bold">+@t.Amount</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-danger fw-bold">@t.Amount</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 {
-
-
-                    <div class="empty-box">
-
+                    <div class="empty-state-box">
+                        <i class="bi bi-wallet-fill fs-1 d-block mb-2 text-muted"></i>
                         No existen movimientos registrados.
-
                     </div>
-
-
                 }
-
-
-
-
             </div>
-
-
         </div>
+
+    </div>
+
+</div>
+>
 
 
 

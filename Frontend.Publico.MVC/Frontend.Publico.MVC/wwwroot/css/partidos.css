@@ -1,4 +1,4 @@
-﻿/*==============================
+/*==============================
         FIFA WORLD CUP 2026
 ===============================*/
 
@@ -167,6 +167,24 @@ body {
     border: none;
     border-radius: 14px;
     padding: 12px 24px;
+}
+
+.btn-login-guest {
+    background: rgba(0, 212, 180, 0.15);
+    color: #00d4b4;
+    border: 1px solid rgba(0, 212, 180, 0.3);
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-login-guest:hover {
+    background: #00d4b4;
+    color: #0b1329;
+    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-cerrado {

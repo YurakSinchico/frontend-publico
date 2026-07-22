@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UTNGOL.Models.PartidoDTO>
+@model IEnumerable<UTNGOL.Models.PartidoDTO>
 
 @{
     ViewData["Title"] = "Calendario Oficial";
@@ -133,10 +133,10 @@
                             }
                             else
                             {
-                                <button class="btn btn-login" disabled>
-
+                                <button class="btn btn-login-guest"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#loginModal">
                                     🔒 Inicia sesión para predecir
-
                                 </button>
                             }
                         }

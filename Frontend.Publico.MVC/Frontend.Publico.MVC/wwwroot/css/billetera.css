@@ -1,15 +1,72 @@
-﻿.wallet-card {
-    background: linear-gradient(135deg,#0b132b,#1c2541);
-    border-radius: 25px;
-    padding: 40px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    background: #050a14;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
 }
 
-.saldo {
-    font-size: 55px;
-    color: #ffd700;
-    font-weight: bold;
-    margin-top: 25px;
+.wallet-glass-card {
+    background: linear-gradient(135deg, rgba(13, 27, 62, 0.85) 0%, rgba(9, 17, 36, 0.95) 100%);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 213, 79, 0.25);
+    border-radius: 24px;
+    padding: 30px 35px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
+
+.wallet-icon-badge {
+    width: 54px;
+    height: 54px;
+    background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+    color: #091124;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 8px 20px rgba(255, 213, 79, 0.35);
+}
+
+.balance-display-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 14px 22px;
+    display: inline-block;
+}
+
+.balance-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 1px;
+    display: block;
+}
+
+.balance-amount {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 2px 0;
+}
+
+.balance-unit {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.text-cyan {
+    color: #00d4b4 !important;
+}
+
+.badge-type {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    padding: 5px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+

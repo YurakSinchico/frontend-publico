@@ -1,20 +1,93 @@
-﻿.titulo {
-    color: white;
-    font-weight: bold;
-    font-size: 42px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    background: #050a14;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
 }
 
-.prediction-card {
-    background: rgba(255,255,255,.08);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 30px;
-    color: white;
-    transition: .3s;
+.prediction-history-card {
+    background: rgba(13, 24, 48, 0.65);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    padding: 26px 28px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
     height: 100%;
-    box-shadow: 0 12px 30px rgba(0,0,0,.3);
 }
 
-    .prediction-card:hover {
-        transform: translateY(-8px);
-    }
+.prediction-history-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.detail-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.detail-val {
+    font-size: 14px;
+}
+
+.text-cyan {
+    color: #00d4b4 !important;
+}
+
+.text-gold {
+    color: #ffd54f !important;
+}
+
+.badge-ganada {
+    background: rgba(0, 230, 118, 0.15);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.badge-perdida {
+    background: rgba(255, 82, 82, 0.15);
+    color: #ff5252;
+    border: 1px solid rgba(255, 82, 82, 0.3);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.badge-pendiente {
+    background: rgba(255, 179, 0, 0.15);
+    color: #ffb300;
+    border: 1px solid rgba(255, 179, 0, 0.3);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.empty-state-card {
+    max-width: 550px;
+    background: rgba(13, 24, 48, 0.65);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+}
+
+.btn-cyan-action {
+    background: linear-gradient(135deg, #00d4b4 0%, #00e676 100%) !important;
+    color: #0b1329 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.35) !important;
+}
+

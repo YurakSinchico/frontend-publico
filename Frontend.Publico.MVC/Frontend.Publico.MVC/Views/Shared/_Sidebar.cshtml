@@ -1,109 +1,99 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
+
+@{
+    var nombreUsuario = !string.IsNullOrEmpty(User.Identity?.Name) 
+        ? User.Identity.Name 
+        : (Context.Session.GetString("Nombre") ?? "Usuario");
+    var emailUsuario = Context.Session.GetString("Email") ?? "usuario@utngol.com";
+}
 
 <div class="sidebar-container">
 
-    <!-- Logo -->
+    <!-- Logo Mundialista -->
     <div class="sidebar-logo">
-
-        <div class="logo-icon">
-            ⚽
+        <div class="logo-icon-badge">
+            <i class="bi bi-trophy-fill"></i>
         </div>
-
-        <div>
-            <h4>UTN GOL</h4>
-            <span>WORLD CUP</span>
+        <div class="logo-text-box">
+            <h4>UTN<span class="text-cyan">GOL</span></h4>
+            <span>WORLD CUP 2026</span>
         </div>
-
     </div>
 
-    <!-- Usuario -->
-    <div class="user-card">
-
-        <div class="avatar">
-
+    <!-- Perfil del Usuario Autenticado -->
+    <div class="sidebar-user-card">
+        <div class="user-avatar-glow">
             <i class="bi bi-person-fill"></i>
-
         </div>
-
-        <div class="user-info">
-
-            <h6>@Context.Session.GetString("UserName")</h6>
-
-            <small>@Context.Session.GetString("Email")</small>
-
+        <div class="user-details">
+            <h6 class="user-name">@nombreUsuario</h6>
+            <small class="user-email">@emailUsuario</small>
         </div>
-
     </div>
 
-    <!-- Menú -->
+    <!-- Menú de Navegación -->
+    <div class="sidebar-menu-wrapper">
+        <span class="menu-header-label">MENÚ PRINCIPAL</span>
+        <ul class="sidebar-menu">
+            <li>
+                <a asp-controller="Dashboard" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Mi Panel</span>
+                </a>
+            </li>
 
-    <ul class="sidebar-menu">
+            <li>
+                <a asp-controller="Partidos" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Calendario</span>
+                </a>
+            </li>
 
-        <li>
-            <a asp-controller="Home" asp-action="Index">
-                <i class="bi bi-house-door-fill"></i>
-                <span>Inicio</span>
-            </a>
-        </li>
+            <li>
+                <a asp-controller="Estadisticas" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                    <span>Estadísticas</span>
+                </a>
+            </li>
 
-        <li>
-            <a asp-controller="Partidos" asp-action="Index">
-                <i class="bi bi-calendar-event-fill"></i>
-                <span>Calendario</span>
-            </a>
-        </li>
+            <li>
+                <a asp-controller="Grupos" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                    <span>Grupos</span>
+                </a>
+            </li>
 
-        <li>
-            <a asp-controller="Estadisticas" asp-action="Index">
-                <i class="bi bi-bar-chart-fill"></i>
-                <span>Estadísticas</span>
-            </a>
-        </li>
+            <li>
+                <a asp-controller="Predicciones" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-bullseye"></i>
+                    <span>Mis Predicciones</span>
+                </a>
+            </li>
 
-        <li>
-            <a asp-controller="Grupos" asp-action="Index">
-                <i class="bi bi-grid-3x3-gap-fill"></i>
-                <span>Grupos</span>
-            </a>
+            <li>
+                <a asp-controller="Billetera" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-wallet2"></i>
+                    <span>Mi Billetera</span>
+                </a>
+            </li>
 
-        </li>
+            <li>
+                <a asp-controller="Home" asp-action="Index" class="nav-item-link">
+                    <i class="bi bi-house-door-fill"></i>
+                    <span>Inicio Público</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-        <li class="mb-1">
-            <a asp-controller="Predicciones"
-               asp-action="Index"
-               class="nav-link text-white">
-
-                <i class="bi bi-bullseye me-2"></i>
-
-                Mis Predicciones
-
-            </a>
-        </li>
-
-        <li>
-            <a asp-controller="Dashboard" asp-action="Index">
-                <i class="bi bi-trophy-fill"></i>
-                <span>Mi Panel</span>
-            </a>
-        </li>
-
-
-    </ul>
-
-    <!-- Footer -->
-
+    <!-- Footer Logout -->
     <div class="sidebar-footer">
-
         <a asp-controller="Account"
            asp-action="Logout"
            class="logout-btn">
-
             <i class="bi bi-box-arrow-right"></i>
-
-            Cerrar Sesión
-
+            <span>Cerrar Sesión</span>
         </a>
-
     </div>
 
-</div>
+</div>

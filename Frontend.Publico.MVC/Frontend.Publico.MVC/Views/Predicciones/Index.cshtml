@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UTNGOL.Models.PredictionDTO>
+@model IEnumerable<UTNGOL.Models.PredictionDTO>
 
 @{
     ViewData["Title"] = "Mis Predicciones";
@@ -6,115 +6,80 @@
 
 <link rel="stylesheet" href="~/css/mis-predicciones.css" />
 
-<div class="container py-5">
+<div class="container py-4">
 
     <div class="text-center mb-5">
-
-        <h1 class="titulo">
-
+        <h1 class="page-title text-white fw-extrabold mb-2">
             🎯 Mis Predicciones
-
         </h1>
-
-        <p>
-
-            Historial completo de tus apuestas deportivas.
-
+        <p class="text-muted">
+            Historial completo de tus apuestas deportivas registradas en UTNGolCoin.
         </p>
-
     </div>
 
     @if (!Model.Any())
     {
-        <div class="alert alert-warning text-center">
-
-            Todavía no has realizado ninguna predicción.
-
+        <div class="empty-state-card text-center p-5 mx-auto">
+            <i class="bi bi-inbox fs-1 text-cyan mb-3 d-block"></i>
+            <h5 class="text-white fw-bold">Todavía no has realizado ninguna predicción.</h5>
+            <p class="text-muted mb-4">Explora el calendario de partidos y realiza tu primer pronóstico.</p>
+            <a asp-controller="Partidos" asp-action="Index" class="btn btn-cyan-action px-4 py-2 fw-bold text-decoration-none">
+                <i class="bi bi-calendar-event me-2"></i> Ver Calendario de Partidos
+            </a>
         </div>
     }
     else
     {
-        <div class="row">
-
+        <div class="row g-4">
             @foreach (var p in Model)
             {
+                <div class="col-lg-6">
+                    <div class="prediction-history-card">
+                        <div class="card-head d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="m-0 fw-bold text-white fs-5">
+                                <i class="bi bi-trophy text-gold me-2"></i> Partido #@p.MatchId
+                            </h4>
+                            @if (p.Status == "Ganada")
+                            {
+                                <span class="badge-ganada"><i class="bi bi-check-circle-fill me-1"></i> Ganada</span>
+                            }
+                            else if (p.Status == "Perdida")
+                            {
+                                <span class="badge-perdida"><i class="bi bi-x-circle-fill me-1"></i> Perdida</span>
+                            }
+                            else
+                            {
+                                <span class="badge-pendiente"><i class="bi bi-clock-fill me-1"></i> Pendiente</span>
+                            }
+                        </div>
 
-                <div class="col-lg-6 mb-4">
+                        <hr class="border-secondary opacity-25 my-3" />
 
-                    <div class="prediction-card">
+                        <div class="row g-3 text-start">
+                            <div class="col-6">
+                                <span class="detail-label">Pronóstico 1X2</span>
+                                <div class="detail-val text-cyan fw-bold fs-6">@p.PredictedResult</div>
+                            </div>
 
-                        <h4>
+                            <div class="col-6">
+                                <span class="detail-label">Monto Apostado</span>
+                                <div class="detail-val text-gold fw-bold">💰 @p.Amount Coins</div>
+                            </div>
 
-                            Partido #@p.MatchId
+                            <div class="col-6">
+                                <span class="detail-label">Cuota Aplicada</span>
+                                <div class="detail-val text-white fw-bold">@p.AppliedOdds</div>
+                            </div>
 
-                        </h4>
-
-                        <hr />
-
-                        <p>
-
-                            <strong>Resultado elegido:</strong>
-
-                            @p.PredictedResult
-
-                        </p>
-
-                        <p>
-
-                            <strong>Monto:</strong>
-
-                            @p.Amount Coins
-
-                        </p>
-
-                        <p>
-
-                            <strong>Cuota:</strong>
-
-                            @p.AppliedOdds
-
-                        </p>
-
-                        <p>
-
-                            <strong>Fecha:</strong>
-
-                            @p.RegistrationDate.ToString("dd/MM/yyyy HH:mm")
-
-                        </p>
-
-                        @if (p.Status == "Ganada")
-                        {
-                            <span class="badge bg-success">
-
-                                🟢 Ganada
-
-                            </span>
-                        }
-                        else if (p.Status == "Perdida")
-                        {
-                            <span class="badge bg-danger">
-
-                                🔴 Perdida
-
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning text-dark">
-
-                                🟡 Pendiente
-
-                            </span>
-                        }
-
+                            <div class="col-6">
+                                <span class="detail-label">Fecha de Registro</span>
+                                <div class="detail-val text-muted small">@p.RegistrationDate.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
             }
-
         </div>
     }
 
-</div>
+</div>
