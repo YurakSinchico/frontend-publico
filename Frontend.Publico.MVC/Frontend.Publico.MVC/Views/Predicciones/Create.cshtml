@@ -72,6 +72,7 @@
             <input asp-for="HomeTeam" type="hidden" />
             <input asp-for="AwayTeam" type="hidden" />
             <input asp-for="WalletBalance" type="hidden" />
+            <input asp-for="AppliedOdds" type="hidden" id="appliedOddsInput" />
             <input asp-for="PredictedResult" type="hidden" id="predictedResultInput" />
 
             <!-- SELECCIONAR PARTIDO -->
@@ -81,10 +82,19 @@
                     <select id="matchSelect" class="form-select py-3 px-3 rounded-3 border-secondary border-opacity-25 bg-light text-dark fw-semibold fs-6" style="appearance: auto;">
                         @if (ViewBag.Partidos != null && ((IEnumerable<UTNGOL.Models.PartidoDTO>)ViewBag.Partidos).Any())
                         {
-                            foreach (var p in (IEnumerable<UTNGOL.Models.PartidoDTO>)ViewBag.Partidos)
+                            var partidosProgramados = ((IEnumerable<UTNGOL.Models.PartidoDTO>)ViewBag.Partidos)
+                                .Where(p => (p.Estado ?? "").Trim().ToUpper() != "FINALIZADO");
+
+                            foreach (var p in partidosProgramados)
                             {
                                 bool isSelected = p.IdPartido == Model.MatchId;
-                                <option value="@p.IdPartido" data-home="@p.SeleccionLocal" data-away="@p.SeleccionVisitante" selected="@(isSelected ? "selected" : null)">
+                                <option value="@p.IdPartido"
+                                        data-home="@p.SeleccionLocal"
+                                        data-away="@p.SeleccionVisitante"
+                                        data-home-odds="@p.GetHomeOdds().ToString("0.0#")"
+                                        data-draw-odds="@p.GetDrawOdds().ToString("0.0#")"
+                                        data-away-odds="@p.GetAwayOdds().ToString("0.0#")"
+                                        selected="@(isSelected ? "selected" : null)">
                                     @p.SeleccionLocal vs @p.SeleccionVisitante (@(p.Fase ?? "Fase de Grupos"))
                                 </option>
                             }
@@ -97,23 +107,23 @@
                 </div>
             </div>
 
-            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS) -->
+            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS CON CUOTAS DINÁMICAS) -->
             <div class="mb-4">
                 <label class="form-label fw-bold text-dark mb-2">Pronóstico 1X2:</label>
                 <div class="row g-3">
                     <div class="col-md-4">
                         <button type="button" class="btn btn-option-1x2 active w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="1" id="btnLocal">
-                            Local (1.8x)
+                            Local (<span id="lblOddsLocal">@Model.HomeOdds.ToString("0.0#")x</span>)
                         </button>
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-option-1x2 w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="X" id="btnEmpate">
-                            Empate (3.2x)
+                            Empate (<span id="lblOddsDraw">@Model.DrawOdds.ToString("0.0#")x</span>)
                         </button>
                     </div>
                     <div class="col-md-4">
                         <button type="button" class="btn btn-option-1x2 w-100 py-3 rounded-3 fw-bold border text-dark d-flex justify-content-center align-items-center" data-val="2" id="btnVisitante">
-                            Visitante (2.5x)
+                            Visitante (<span id="lblOddsAway">@Model.AwayOdds.ToString("0.0#")x</span>)
                         </button>
                     </div>
                 </div>
@@ -155,6 +165,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         const buttons = document.querySelectorAll(".btn-option-1x2");
         const hiddenInput = document.getElementById("predictedResultInput");
+        const appliedOddsInput = document.getElementById("appliedOddsInput");
         const matchSelect = document.getElementById("matchSelect");
         const matchIdInput = document.querySelector('input[name="MatchId"]');
         const homeTeamInput = document.querySelector('input[name="HomeTeam"]');
@@ -164,22 +175,47 @@
         const alertBox = document.getElementById("clientValidationAlert");
         const alertText = document.getElementById("clientValidationText");
 
+        const lblOddsLocal = document.getElementById("lblOddsLocal");
+        const lblOddsDraw = document.getElementById("lblOddsDraw");
+        const lblOddsAway = document.getElementById("lblOddsAway");
+
+        // Object to hold current odds
+        let currentOdds = { '1': 1.8, 'X': 3.2, '2': 2.5 };
+
         // Default to Local (1)
         hiddenInput.value = "1";
 
+        function updateOddsFromSelectedOption() {
+            if (!matchSelect) return;
+            const opt = matchSelect.options[matchSelect.selectedIndex];
+            if (opt) {
+                const id = opt.value;
+                const home = opt.getAttribute("data-home") || "Local";
+                const away = opt.getAttribute("data-away") || "Visitante";
+                const hOdds = opt.getAttribute("data-home-odds") || "1.8";
+                const dOdds = opt.getAttribute("data-draw-odds") || "3.2";
+                const aOdds = opt.getAttribute("data-away-odds") || "2.5";
+
+                if (matchIdInput) matchIdInput.value = id;
+                if (homeTeamInput) homeTeamInput.value = home;
+                if (awayTeamInput) awayTeamInput.value = away;
+
+                if (lblOddsLocal) lblOddsLocal.innerText = hOdds + "x";
+                if (lblOddsDraw) lblOddsDraw.innerText = dOdds + "x";
+                if (lblOddsAway) lblOddsAway.innerText = aOdds + "x";
+
+                currentOdds['1'] = hOdds.replace(',', '.');
+                currentOdds['X'] = dOdds.replace(',', '.');
+                currentOdds['2'] = aOdds.replace(',', '.');
+
+                // Update applied odds input based on currently selected result
+                if (appliedOddsInput) appliedOddsInput.value = currentOdds[hiddenInput.value];
+            }
+        }
+
         if (matchSelect) {
-            matchSelect.addEventListener("change", function () {
-                const opt = this.options[this.selectedIndex];
-                if (opt) {
-                    const id = opt.value;
-                    const home = opt.getAttribute("data-home") || "Local";
-                    const away = opt.getAttribute("data-away") || "Visitante";
-                    
-                    if (matchIdInput) matchIdInput.value = id;
-                    if (homeTeamInput) homeTeamInput.value = home;
-                    if (awayTeamInput) awayTeamInput.value = away;
-                }
-            });
+            matchSelect.addEventListener("change", updateOddsFromSelectedOption);
+            updateOddsFromSelectedOption();
         }
 
         buttons.forEach(btn => {
@@ -195,12 +231,13 @@
                 this.style.backgroundColor = "#e0f2fe";
                 this.style.borderColor = "#06b6d4";
                 this.style.color = "#0891b2";
-                
+
                 hiddenInput.value = this.getAttribute("data-val");
+                if (appliedOddsInput) appliedOddsInput.value = currentOdds[hiddenInput.value];
             });
         });
 
-        // VALIDACIÓN DE MONTO CLIENTE (NO PERMITIR <= 0, LETRAS O NÚMEROS INVÁLIDOS)
+        // VALIDACIÓN DE MONTO CLIENTE
         if (amountInput) {
             amountInput.addEventListener("keydown", function (e) {
                 if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === "E") {

@@ -1,4 +1,5 @@
 using Api.Consumer.Consumers;
+using System.Globalization;
 
 namespace Frontend.Publico.MVC
 {
@@ -47,6 +48,9 @@ namespace Frontend.Publico.MVC
 
             builder.Services.AddHttpClient<PredictionConsumer>();
 
+            var cultureInfo = System.Globalization.CultureInfo.InvariantCulture;
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())

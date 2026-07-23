@@ -14,6 +14,8 @@ namespace Api.Consumer.Config
             "http://192.168.3.83:8080/estadisticas-backend/api";
 
         public const string GolCoin =
-            "http://192.168.51.41:57782/api";
+         "http://localhost:57781/api";
+
+
     }
 }

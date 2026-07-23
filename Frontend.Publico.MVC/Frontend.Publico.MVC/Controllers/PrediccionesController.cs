@@ -70,14 +70,16 @@ namespace Frontend.Publico.MVC.Controllers
                     Console.WriteLine("Error al obtener wallet: " + ex.Message);
                 }
 
-                // 2. Obtener lista real de partidos para el selector dinámico
+                // 2. Obtener lista real de partidos para el selector dinámico (solo programados/no finalizados)
                 var partidos = new List<PartidoDTO>();
                 try
                 {
                     var listaPartidos = await _estadisticasConsumer.ObtenerPartidosAsync();
                     if (listaPartidos != null && listaPartidos.Any())
                     {
-                        partidos = listaPartidos.ToList();
+                        partidos = listaPartidos
+                            .Where(p => (p.Estado ?? "").Trim().ToUpper() != "FINALIZADO")
+                            .ToList();
                     }
                 }
                 catch (Exception ex)
@@ -86,9 +88,30 @@ namespace Frontend.Publico.MVC.Controllers
                 }
 
                 // Seleccionar partido objetivo
-                var partidoActual = partidos.FirstOrDefault(p => p.IdPartido == matchId) 
-                    ?? partidos.FirstOrDefault() 
-                    ?? new PartidoDTO { IdPartido = matchId > 0 ? matchId : 1, SeleccionLocal = "México", SeleccionVisitante = "USA" };
+                var partidoActual = partidos.FirstOrDefault(p => p.IdPartido == matchId);
+
+                if (matchId > 0)
+                {
+                    try
+                    {
+                        var partidoDetalle = await _estadisticasConsumer.ObtenerPartidoPorIdAsync(matchId);
+                        if (partidoDetalle != null)
+                        {
+                            partidoActual = partidoDetalle;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error al obtener detalle del partido por ID: " + ex.Message);
+                    }
+                }
+
+                if (partidoActual == null)
+                {
+                    partidoActual = partidos.FirstOrDefault() 
+                        ?? new PartidoDTO { IdPartido = matchId > 0 ? matchId : 1, SeleccionLocal = "México", SeleccionVisitante = "USA" };
+                }
+
 
                 var model = new PredictionViewModel
                 {
@@ -96,7 +119,10 @@ namespace Frontend.Publico.MVC.Controllers
                     HomeTeam = !string.IsNullOrEmpty(homeTeam) ? homeTeam : partidoActual.SeleccionLocal,
                     AwayTeam = !string.IsNullOrEmpty(awayTeam) ? awayTeam : partidoActual.SeleccionVisitante,
                     MatchStartDate = matchStartDate != default ? matchStartDate : DateTime.Now.AddDays(1),
-                    WalletBalance = balance
+                    WalletBalance = balance,
+                    HomeOdds = partidoActual.GetHomeOdds(),
+                    DrawOdds = partidoActual.GetDrawOdds(),
+                    AwayOdds = partidoActual.GetAwayOdds()
                 };
 
                 ViewBag.Partidos = partidos;
@@ -112,7 +138,10 @@ namespace Frontend.Publico.MVC.Controllers
                     HomeTeam = "México",
                     AwayTeam = "USA",
                     MatchStartDate = DateTime.Now.AddDays(1),
-                    WalletBalance = 10.00m
+                    WalletBalance = 10.00m,
+                    HomeOdds = 1.80m,
+                    DrawOdds = 3.20m,
+                    AwayOdds = 2.50m
                 });
             }
         }
@@ -136,7 +165,8 @@ namespace Frontend.Publico.MVC.Controllers
                     MatchId = model.MatchId > 0 ? model.MatchId : 1,
                     PredictedResult = !string.IsNullOrEmpty(model.PredictedResult) ? model.PredictedResult : "1",
                     Amount = model.Amount > 0 ? model.Amount : 1,
-                    MatchStartDate = model.MatchStartDate != default ? model.MatchStartDate : DateTime.Now.AddDays(1)
+                    MatchStartDate = model.MatchStartDate != default ? model.MatchStartDate : DateTime.Now.AddDays(1),
+                    AppliedOdds = model.AppliedOdds // <--- ¡Asegúrate de incluir esto aquí!
                 };
 
                 var response = await _golCoinConsumer.CrearPrediccionAsync(dto);
@@ -159,7 +189,8 @@ namespace Frontend.Publico.MVC.Controllers
 
                 try
                 {
-                    ViewBag.Partidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                    var listaPartidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                    ViewBag.Partidos = listaPartidos?.Where(p => (p.Estado ?? "").Trim().ToUpper() != "FINALIZADO").ToList();
                 }
                 catch { }
 
@@ -174,7 +205,8 @@ namespace Frontend.Publico.MVC.Controllers
                 model.WalletBalance = 10.00m;
                 try
                 {
-                    ViewBag.Partidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                    var listaPartidos = await _estadisticasConsumer.ObtenerPartidosAsync();
+                    ViewBag.Partidos = listaPartidos?.Where(p => (p.Estado ?? "").Trim().ToUpper() != "FINALIZADO").ToList();
                 }
                 catch { }
 

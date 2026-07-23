@@ -13,5 +13,6 @@ namespace UTNGOL.Models
         public decimal Amount { get; set; }
 
         public DateTime MatchStartDate { get; set; }
+        public decimal AppliedOdds { get; set; }
     }
 }

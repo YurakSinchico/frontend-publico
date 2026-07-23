@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Frontend.Publico.MVC.ViewModels
@@ -23,5 +23,11 @@ namespace Frontend.Publico.MVC.ViewModels
         [Required(ErrorMessage = "Ingrese un monto.")]
         [Range(1, 100000, ErrorMessage = "Monto inválido.")]
         public decimal Amount { get; set; }
+
+        public decimal HomeOdds { get; set; } = 1.80m;
+        public decimal DrawOdds { get; set; } = 3.20m;
+        public decimal AwayOdds { get; set; } = 2.50m;
+
+        public decimal AppliedOdds { get; set; }
     }
 }
