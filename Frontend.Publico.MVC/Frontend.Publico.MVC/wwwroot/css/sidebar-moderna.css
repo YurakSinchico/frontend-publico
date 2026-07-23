@@ -3,10 +3,10 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #ecfeff 100%);
+    background: radial-gradient(circle at 50% 20%, rgba(11, 94, 60, 0.45) 0%, rgba(17, 24, 39, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%);
     background-attachment: fixed;
     font-family: 'Poppins', sans-serif;
-    color: #0f172a;
+    color: #ffffff;
     min-height: 100vh;
 }
 
@@ -17,21 +17,21 @@ body {
     left: 0;
     width: 88px;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(17, 24, 39, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(6, 182, 212, 0.2);
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    box-shadow: 5px 0 25px rgba(6, 182, 212, 0.08);
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
     transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
 }
 
 .sidebar:hover {
     width: 260px;
-    box-shadow: 10px 0 35px rgba(6, 182, 212, 0.15);
+    box-shadow: 10px 0 35px rgba(11, 94, 60, 0.4);
 }
 
 .sidebar-container {
@@ -48,7 +48,7 @@ body {
     align-items: center;
     gap: 14px;
     padding-bottom: 16px;
-    border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     white-space: nowrap;
 }
 
@@ -56,14 +56,15 @@ body {
     min-width: 44px;
     width: 44px;
     height: 44px;
-    background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, #0B5E3C 0%, #16A34A 100%);
+    color: #F4C430;
+    border: 1px solid rgba(244, 196, 48, 0.4);
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 22px;
-    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 6px 16px rgba(11, 94, 60, 0.4);
 }
 
 .logo-text-box {
@@ -80,7 +81,7 @@ body {
 .logo-text-box h4 {
     font-size: 18px;
     font-weight: 800;
-    color: #0f172a;
+    color: #ffffff;
     margin: 0;
     letter-spacing: -0.5px;
 }
@@ -88,12 +89,12 @@ body {
 .logo-text-box span {
     font-size: 9.5px;
     font-weight: 700;
-    color: #0284c7;
+    color: #F4C430;
     letter-spacing: 2px;
 }
 
 .text-cyan {
-    color: #06b6d4 !important;
+    color: #F4C430 !important;
 }
 
 /* Tarjeta Perfil */
@@ -101,8 +102,8 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(224, 242, 254, 0.4);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    background: rgba(31, 41, 55, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     padding: 10px;
     border-radius: 16px;
     margin-top: 14px;
@@ -115,13 +116,14 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, #0B5E3C 0%, #16A34A 100%);
+    color: #F4C430;
+    border: 1px solid #F4C430;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 12px rgba(244, 196, 48, 0.3);
 }
 
 .user-details {
@@ -139,7 +141,7 @@ body {
 .user-name {
     font-size: 13.5px;
     font-weight: 700;
-    color: #0f172a;
+    color: #ffffff;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -148,7 +150,7 @@ body {
 
 .user-email {
     font-size: 11px;
-    color: #64748b;
+    color: #F4C430;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -193,7 +195,7 @@ body {
     align-items: center;
     gap: 16px;
     padding: 12px 14px;
-    color: #475569;
+    color: #cbd5e1;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -206,7 +208,7 @@ body {
     min-width: 24px;
     font-size: 20px;
     text-align: center;
-    color: #0891b2;
+    color: #16A34A;
     transition: transform 0.25s ease, color 0.25s ease;
 }
 
@@ -222,19 +224,20 @@ body {
 }
 
 .nav-item-link:hover {
-    color: #0f172a;
-    background: rgba(6, 182, 212, 0.1);
+    color: #ffffff;
+    background: rgba(22, 163, 74, 0.2);
+    border: 1px solid rgba(244, 196, 48, 0.3);
 }
 
 .nav-item-link:hover i {
-    color: #06b6d4;
+    color: #F4C430;
     transform: scale(1.15);
 }
 
 /* Footer / Logout */
 .sidebar-footer {
     padding-top: 14px;
-    border-top: 1px solid rgba(6, 182, 212, 0.15);
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
     white-space: nowrap;
 }
 
@@ -244,9 +247,9 @@ body {
     gap: 16px;
     width: 100%;
     padding: 12px 14px;
-    color: #dc2626;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #DC2626;
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid rgba(220, 38, 38, 0.35);
     border-radius: 14px;
     text-decoration: none;
     font-size: 14px;
@@ -259,7 +262,7 @@ body {
     min-width: 24px;
     font-size: 20px;
     text-align: center;
-    color: #dc2626;
+    color: #DC2626;
 }
 
 .logout-btn span {
@@ -274,9 +277,9 @@ body {
 }
 
 .logout-btn:hover {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #b91c1c 0%, #DC2626 100%);
     color: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
     transform: translateY(-2px);
 }
 
@@ -285,26 +288,26 @@ body {
 }
 
 .sidebar-login-btn {
-    color: #0284c7;
-    background: rgba(6, 182, 212, 0.1);
-    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: #F4C430;
+    background: rgba(11, 94, 60, 0.3);
+    border: 1px solid rgba(244, 196, 48, 0.4);
 }
 
 .sidebar-login-btn i {
-    color: #0284c7;
+    color: #F4C430;
 }
 
 .sidebar-login-btn:hover {
-    background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+    background: linear-gradient(135deg, #0B5E3C 0%, #16A34A 100%);
     color: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
 }
 
 .sidebar-login-btn:hover i {
     color: #ffffff !important;
 }
 
-/* Ajuste del contenido principal (para sidebar de 88px colapsado) */
+/* Ajuste del contenido principal */
 .main-content-wrapper {
     margin-left: 88px;
     width: calc(100% - 88px);
@@ -346,5 +349,6 @@ body {
         padding: 12px;
     }
 }
+
 
 

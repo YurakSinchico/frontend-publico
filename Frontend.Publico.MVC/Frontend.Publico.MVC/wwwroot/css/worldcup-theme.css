@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* =========================================================
+   PALETA OFICIAL UTN GOL MUNDIAL 2026 (VERDE, DORADO & NEGRO)
+   ========================================================= */
+
+:root {
+    --wc-verde-principal: #0B5E3C;
+    --wc-verde-secundario: #16A34A;
+    --wc-dorado: #F4C430;
+    --wc-dorado-oscuro: #D4AF37;
+    --wc-fondo-principal: #0F172A;
+    --wc-fondo-secundario: #111827;
+    --wc-gris-oscuro: #1F2937;
+    --wc-blanco: #FFFFFF;
+    --wc-alerta-rojo: #DC2626;
+
+    /* Aliases para compatibilidad */
+    --wc-bg-dark: var(--wc-fondo-principal);
+    --wc-bg-emerald-dark: var(--wc-fondo-secundario);
+    --wc-bg-pitch: var(--wc-verde-principal);
+    --wc-green-primary: var(--wc-verde-principal);
+    --wc-green-light: var(--wc-verde-secundario);
+    --wc-green-accent: var(--wc-verde-secundario);
+    --wc-gold-primary: var(--wc-dorado);
+    --wc-gold-bright: var(--wc-dorado);
+    --wc-gold-dark: var(--wc-dorado-oscuro);
+    --wc-text-white: var(--wc-blanco);
+    --wc-text-muted: #94a3b8;
+}
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: var(--wc-fondo-principal) !important;
+    background-image: radial-gradient(circle at 50% 20%, rgba(11, 94, 60, 0.45) 0%, rgba(17, 24, 39, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%),
+                      url('../images/fifa.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    color: var(--wc-blanco) !important;
+    min-height: 100vh;
+}
+
+/* NAVBAR & BRANDING */
+.wc-navbar-brand {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--wc-blanco);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wc-navbar-brand span {
+    color: var(--wc-dorado);
+}
+
+/* TITULOS Y TEXTOS */
+.wc-title-hero {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--wc-blanco);
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.wc-title-gold {
+    color: var(--wc-dorado) !important;
+    text-shadow: 0 0 25px rgba(244, 196, 48, 0.4);
+}
+
+.wc-section-header {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--wc-blanco);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wc-section-header::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(244, 196, 48, 0.6) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* BOTONES INSPIRED BY MOCKUP */
+.btn-wc-green, .btn-primary {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-verde-secundario) 100%) !important;
+    color: var(--wc-blanco) !important;
+    font-weight: 800 !important;
+    border: 1px solid rgba(244, 196, 48, 0.3) !important;
+    border-radius: 50px !important;
+    padding: 12px 32px !important;
+    box-shadow: 0 6px 20px rgba(11, 94, 60, 0.5) !important;
+    transition: all 0.3s ease !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-wc-green:hover, .btn-primary:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+    background: linear-gradient(135deg, var(--wc-verde-secundario) 0%, #15803d 100%) !important;
+    box-shadow: 0 10px 25px rgba(22, 163, 74, 0.6), 0 0 15px rgba(244, 196, 48, 0.3) !important;
+    border-color: var(--wc-dorado) !important;
+    color: var(--wc-blanco) !important;
+}
+
+.btn-wc-gold, .btn-warning {
+    background: linear-gradient(135deg, var(--wc-dorado) 0%, var(--wc-dorado-oscuro) 100%) !important;
+    color: var(--wc-fondo-secundario) !important;
+    font-weight: 800 !important;
+    border: 1px solid var(--wc-dorado) !important;
+    border-radius: 50px !important;
+    padding: 12px 32px !important;
+    box-shadow: 0 6px 20px rgba(244, 196, 48, 0.4) !important;
+    transition: all 0.3s ease !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-wc-gold:hover, .btn-warning:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+    background: linear-gradient(135deg, #fde047 0%, var(--wc-dorado) 100%) !important;
+    color: #000000 !important;
+    box-shadow: 0 10px 25px rgba(244, 196, 48, 0.7) !important;
+}
+
+/* TARJETAS OSCURAS CON BORDE DORADO */
+.wc-card-dark, .card, .wc-card-white {
+    background: linear-gradient(145deg, rgba(11, 94, 60, 0.85) 0%, rgba(31, 41, 55, 0.95) 100%) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.35) !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+    color: var(--wc-blanco) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+    transition: all 0.35s ease !important;
+}
+
+.wc-card-dark:hover, .card:hover, .wc-card-white:hover {
+    transform: translateY(-6px) !important;
+    border-color: var(--wc-dorado) !important;
+    box-shadow: 0 15px 40px rgba(22, 163, 74, 0.35), 0 0 20px rgba(244, 196, 48, 0.25) !important;
+}
+
+/* CONTADOR DE ESTADÍSTICAS BAR */
+.wc-stats-bar {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-gris-oscuro) 50%, var(--wc-fondo-secundario) 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.5) !important;
+    border-radius: 22px !important;
+    padding: 20px 30px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.wc-stats-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.wc-stats-icon {
+    font-size: 36px;
+    color: var(--wc-dorado);
+}
+
+.wc-stats-val {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--wc-blanco);
+    line-height: 1;
+}
+
+.wc-stats-lbl {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--wc-dorado);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* TABLA DE POSICIONES MUNDIALISTA */
+.table, .wc-table {
+    color: var(--wc-blanco) !important;
+    border-color: rgba(244, 196, 48, 0.15) !important;
+}
+
+.table thead, .wc-table-header {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-verde-secundario) 100%) !important;
+    color: var(--wc-dorado) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.table th, .wc-table-header th {
+    color: var(--wc-dorado) !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    padding: 14px !important;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.4) !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+}
+
+.table tbody tr, .wc-table-row {
+    background: rgba(31, 41, 55, 0.7) !important;
+    color: var(--wc-blanco) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.25s ease !important;
+}
+
+.table tbody tr:hover, .wc-table-row:hover {
+    background: rgba(22, 163, 74, 0.3) !important;
+    color: var(--wc-blanco) !important;
+}
+
+.table td {
+    color: var(--wc-blanco) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background: transparent !important;
+}
+
+/* FORMULARIOS E INPUTS BOOTSTRAP OVERRIDES */
+.form-control, .form-select {
+    background-color: var(--wc-fondo-secundario) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    color: var(--wc-blanco) !important;
+    border-radius: 12px !important;
+    padding: 10px 16px !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--wc-gris-oscuro) !important;
+    border-color: var(--wc-dorado) !important;
+    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.3) !important;
+    color: var(--wc-blanco) !important;
+}
+
+.form-control::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* BADGES & ALERTS */
+.badge {
+    padding: 6px 14px !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+}
+
+.bg-danger, .badge-danger, .alert-danger {
+    background-color: var(--wc-alerta-rojo) !important;
+    color: var(--wc-blanco) !important;
+    border: 1px solid rgba(220, 38, 38, 0.4) !important;
+}
+
+.bg-success, .badge-success {
+    background-color: var(--wc-verde-secundario) !important;
+    color: var(--wc-blanco) !important;
+    border: 1px solid rgba(244, 196, 48, 0.3) !important;
+}
+
+.bg-warning, .badge-warning {
+    background-color: var(--wc-dorado) !important;
+    color: var(--wc-fondo-secundario) !important;
+}
+
+/* FILTROS TABS */
+.btn-wc-filter {
+    background: rgba(31, 41, 55, 0.8) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    color: var(--wc-blanco) !important;
+    border-radius: 50px !important;
+    padding: 8px 24px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-wc-filter.active,
+.btn-wc-filter:hover {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-verde-secundario) 100%) !important;
+    border-color: var(--wc-dorado) !important;
+    color: var(--wc-dorado) !important;
+    box-shadow: 0 4px 15px rgba(22, 163, 74, 0.5) !important;
+}
+
+/* MODALES GLOBAL OVERRIDES */
+.modal-content {
+    background-color: var(--wc-fondo-secundario) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    border-radius: 24px !important;
+    color: var(--wc-blanco) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+.modal-header, .modal-footer {
+    border-color: rgba(244, 196, 48, 0.2) !important;
+}
+
+/* PAGINACION GLOBAL */
+.pagination .page-link {
+    background-color: var(--wc-gris-oscuro) !important;
+    border-color: rgba(212, 175, 55, 0.2) !important;
+    color: var(--wc-blanco) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-verde-secundario) 100%) !important;
+    border-color: var(--wc-dorado) !important;
+    color: var(--wc-dorado) !important;
+}
+
+/* BOOTSTRAP UTILITY OVERRIDES PARA ELIMINAR ZONAS BLANCAS Y AZULES */
+.bg-white, .bg-light {
+    background-color: var(--wc-fondo-secundario) !important;
+    color: var(--wc-blanco) !important;
+    border-color: rgba(244, 196, 48, 0.3) !important;
+}
+
+.text-dark {
+    color: var(--wc-blanco) !important;
+}
+
+.text-muted, .text-secondary {
+    color: #cbd5e1 !important;
+}
+
+.text-cyan {
+    color: var(--wc-dorado) !important;
+}
+
+.text-info {
+    color: var(--wc-verde-secundario) !important;
+}
+
+.bg-info {
+    background-color: rgba(22, 163, 74, 0.2) !important;
+}
+
+.bg-opacity-10, .bg-opacity-20 {
+    background-color: rgba(11, 94, 60, 0.3) !important;
+}
+
+.border-secondary, .border-opacity-25 {
+    border-color: rgba(244, 196, 48, 0.3) !important;
+}
+
+/* OVERRIDES PARA ESTILOS EN LÍNEA ANTERIORES EN VISTAS */
+[style*="#06b6d4"], [style*="#0284c7"], [style*="#0d9488"], [style*="#0d6efd"] {
+    background: linear-gradient(135deg, var(--wc-verde-principal) 0%, var(--wc-verde-secundario) 100%) !important;
+    border-color: var(--wc-dorado) !important;
+    color: var(--wc-blanco) !important;
+}
+
+[style*="#f59e0b"] {
+    background: linear-gradient(135deg, var(--wc-dorado) 0%, var(--wc-dorado-oscuro) 100%) !important;
+    color: #0F172A !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .wc-title-hero {
+        font-size: 38px;
+    }
+}
+
+

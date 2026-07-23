@@ -3,57 +3,59 @@
    ========================================== */
 
 .modal-ecumex-card {
-    background-color: #ffffff !important;
+    background-color: #111827 !important;
     border-radius: 28px !important;
-    border: none !important;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8) !important;
     overflow: hidden;
+    color: #ffffff;
 }
 
 .register-header-dark {
-    background-color: #0b1329 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #0F172A !important;
+    border-bottom: 1px solid rgba(244, 196, 48, 0.2);
 }
 
 .ecumex-icon-badge {
     width: 58px;
     height: 58px;
-    background: #00d4b4;
+    background: linear-gradient(135deg, #0B5E3C 0%, #16A34A 100%);
     border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0b1329;
+    color: #F4C430;
     font-size: 28px;
-    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.35);
+    border: 1px solid rgba(244, 196, 48, 0.4);
+    box-shadow: 0 8px 20px rgba(11, 94, 60, 0.5);
 }
 
 .ecumex-title {
-    color: #0f172a;
+    color: #ffffff;
     font-weight: 800;
     letter-spacing: -0.5px;
 }
 
 .text-cyan {
-    color: #00d4b4 !important;
+    color: #F4C430 !important;
 }
 
 .ecumex-subtitle {
-    color: #64748b;
+    color: #F4C430;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 1.5px;
 }
 
 .ecumex-subtitle-light {
-    color: #94a3b8;
+    color: #cbd5e1;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 1.5px;
 }
 
 .ecumex-label {
-    color: #64748b;
+    color: #cbd5e1;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -61,68 +63,71 @@
 }
 
 .ecumex-input {
-    background-color: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
+    background-color: #1F2937 !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
     border-radius: 12px !important;
     padding: 12px 16px !important;
     font-size: 0.95rem !important;
-    color: #1e293b !important;
+    color: #ffffff !important;
     transition: all 0.25s ease !important;
 }
 
 .ecumex-input:focus {
-    background-color: #ffffff !important;
-    border-color: #00d4b4 !important;
-    box-shadow: 0 0 0 4px rgba(0, 212, 180, 0.15) !important;
+    background-color: #111827 !important;
+    border-color: #F4C430 !important;
+    box-shadow: 0 0 0 4px rgba(244, 196, 48, 0.25) !important;
     outline: none !important;
+    color: #ffffff !important;
 }
 
-/* Botón Cian brillante para Login */
+/* Botón Verde/Dorado para Login */
 .btn-cyan-ecumex {
-    background-color: #00d4b4 !important;
-    color: #0b1329 !important;
-    border: none !important;
+    background: linear-gradient(135deg, #0B5E3C 0%, #16A34A 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(244, 196, 48, 0.4) !important;
     border-radius: 14px !important;
     padding: 14px 20px !important;
     font-size: 0.95rem !important;
     font-weight: 800 !important;
     letter-spacing: 0.5px !important;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-    box-shadow: 0 8px 20px rgba(0, 212, 180, 0.35) !important;
+    box-shadow: 0 8px 20px rgba(11, 94, 60, 0.5) !important;
 }
 
 .btn-cyan-ecumex:hover {
-    background-color: #00c0a3 !important;
-    color: #0b1329 !important;
+    background: linear-gradient(135deg, #16A34A 0%, #15803d 100%) !important;
+    color: #ffffff !important;
+    border-color: #F4C430 !important;
     transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(0, 212, 180, 0.45) !important;
+    box-shadow: 0 12px 25px rgba(22, 163, 74, 0.6), 0 0 15px rgba(244, 196, 48, 0.3) !important;
 }
 
-/* Botón Oscuro Navy para Registro */
+/* Botón Dorado para Registro */
 .btn-dark-ecumex {
-    background-color: #0b1329 !important;
-    color: #ffffff !important;
-    border: none !important;
+    background: linear-gradient(135deg, #F4C430 0%, #D4AF37 100%) !important;
+    color: #0F172A !important;
+    border: 1px solid #F4C430 !important;
     border-radius: 14px !important;
     padding: 14px 20px !important;
     font-size: 0.95rem !important;
+    font-weight: 800 !important;
     letter-spacing: 0.5px !important;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-    box-shadow: 0 8px 20px rgba(11, 19, 41, 0.3) !important;
+    box-shadow: 0 8px 20px rgba(244, 196, 48, 0.4) !important;
 }
 
 .btn-dark-ecumex:hover {
-    background-color: #1a233d !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, #fde047 0%, #F4C430 100%) !important;
+    color: #000000 !important;
     transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(11, 19, 41, 0.4) !important;
+    box-shadow: 0 12px 25px rgba(244, 196, 48, 0.6) !important;
 }
 
 /* Botón Claro para Volver */
 .btn-light-ecumex {
-    background-color: #f1f5f9 !important;
-    color: #475569 !important;
-    border: none !important;
+    background-color: #1F2937 !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
     border-radius: 14px !important;
     padding: 14px 20px !important;
     font-size: 0.9rem !important;
@@ -131,8 +136,9 @@
 }
 
 .btn-light-ecumex:hover {
-    background-color: #e2e8f0 !important;
-    color: #1e293b !important;
+    background-color: #0B5E3C !important;
+    color: #ffffff !important;
+    border-color: #F4C430 !important;
 }
 
 .section-title-wrapper {
@@ -144,31 +150,32 @@
 .accent-bar {
     width: 4px;
     height: 16px;
-    background-color: #00d4b4;
+    background-color: #F4C430;
     border-radius: 2px;
     display: inline-block;
 }
 
 .ecumex-section-title {
-    color: #0f172a;
+    color: #ffffff;
     font-size: 0.85rem;
     letter-spacing: 0.5px;
 }
 
 .ecumex-footer-text {
-    color: #64748b;
+    color: #94a3b8;
     font-size: 0.8rem;
     font-weight: 600;
 }
 
 .text-cyan-link {
-    color: #00d4b4 !important;
+    color: #F4C430 !important;
     font-size: 0.8rem;
     transition: color 0.2s ease;
 }
 
 .text-cyan-link:hover {
-    color: #00b398 !important;
+    color: #ffffff !important;
 }
+
 
 

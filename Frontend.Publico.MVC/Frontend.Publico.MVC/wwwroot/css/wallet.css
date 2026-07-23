@@ -1,58 +1,62 @@
-﻿body {
-    background: #071421;
+body {
+    background: radial-gradient(circle at 50% 20%, rgba(11, 94, 60, 0.45) 0%, rgba(17, 24, 39, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%);
 }
 
 .wallet-banner {
-    background: linear-gradient(135deg,#0b2744,#0f4d7a);
+    background: linear-gradient(135deg, #0B5E3C 0%, #111827 70%, #1F2937 100%);
+    border: 1px solid rgba(244, 196, 48, 0.4);
     border-radius: 30px;
     padding: 50px;
     text-align: center;
     color: white;
-    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(244, 196, 48, 0.2);
 }
 
-    .wallet-banner h1 {
-        font-size: 45px;
-        color: #FFD54F;
-        font-weight: bold;
-    }
+.wallet-banner h1 {
+    font-size: 45px;
+    color: #F4C430;
+    font-weight: 800;
+}
 
-    .wallet-banner p {
-        color: #d6d6d6;
-        font-size: 18px;
-    }
+.wallet-banner p {
+    color: #cbd5e1;
+    font-size: 18px;
+}
 
 .wallet-balance {
     font-size: 70px;
-    font-weight: bold;
+    font-weight: 800;
     margin-top: 20px;
     color: white;
 }
 
 .wallet-banner span {
-    color: #FFD54F;
+    color: #F4C430;
     font-size: 22px;
 }
 
 .resume-card {
-    background: #10263b;
+    background: linear-gradient(145deg, rgba(11, 94, 60, 0.85) 0%, rgba(31, 41, 55, 0.95) 100%);
+    border: 1px solid rgba(244, 196, 48, 0.35);
     border-radius: 25px;
     color: white;
     padding: 35px;
     text-align: center;
-    transition: .4s;
+    transition: all 0.35s ease;
     height: 100%;
 }
 
-    .resume-card:hover {
-        transform: translateY(-8px);
-        background: #15436a;
-    }
+.resume-card:hover {
+    transform: translateY(-8px);
+    border-color: #F4C430;
+    box-shadow: 0 15px 35px rgba(22, 163, 74, 0.35);
+}
 
-    .resume-card h3 {
-        font-size: 50px;
-        color: #FFD54F;
-    }
+.resume-card h3 {
+    font-size: 50px;
+    color: #F4C430;
+    font-weight: 800;
+}
 
 .emoji {
     font-size: 50px;
@@ -60,35 +64,40 @@
 }
 
 .history {
-    background: #10263b;
+    background: linear-gradient(145deg, rgba(11, 94, 60, 0.85) 0%, rgba(31, 41, 55, 0.95) 100%);
+    border: 1px solid rgba(244, 196, 48, 0.35);
     border-radius: 25px;
     padding: 35px;
     color: white;
 }
 
-    .history h2 {
-        color: #FFD54F;
-        margin-bottom: 30px;
-    }
+.history h2 {
+    color: #F4C430;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
 
 .movement-card {
     display: flex;
     align-items: center;
-    background: #17344f;
+    background: rgba(31, 41, 55, 0.8);
+    border: 1px solid rgba(244, 196, 48, 0.2);
     padding: 18px;
     border-radius: 20px;
     margin-bottom: 18px;
-    transition: .3s;
+    transition: all 0.3s ease;
 }
 
-    .movement-card:hover {
-        background: #1f507d;
-    }
+.movement-card:hover {
+    background: rgba(22, 163, 74, 0.25);
+    border-color: #F4C430;
+}
 
 .movement-icon {
     font-size: 35px;
     width: 60px;
     text-align: center;
+    color: #F4C430;
 }
 
 .movement-info {
@@ -96,24 +105,26 @@
     padding-left: 20px;
 }
 
-    .movement-info h5 {
-        margin: 0;
-        color: white;
-    }
+.movement-info h5 {
+    margin: 0;
+    color: white;
+    font-weight: 700;
+}
 
-    .movement-info small {
-        color: #cccccc;
-    }
+.movement-info small {
+    color: #cbd5e1;
+}
 
 .movement-amount {
-    color: #FFD54F;
+    color: #F4C430;
     font-size: 24px;
     font-weight: bold;
 }
 
 .empty-wallet {
     text-align: center;
-    color: #bbbbbb;
+    color: #cbd5e1;
     padding: 40px;
     font-size: 20px;
 }
+
