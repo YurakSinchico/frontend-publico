@@ -12,7 +12,7 @@
 
 <div class="sidebar-container">
 
-    <!-- Logo Mundialista -->
+
     <div class="sidebar-logo">
         <div class="logo-icon-badge">
             <i class="bi bi-dribbble"></i>
@@ -23,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Perfil del Usuario -->
     <div class="sidebar-user-card">
         <div class="user-avatar-glow">
             <i class="bi bi-person-fill"></i>
@@ -94,16 +93,11 @@
                 </a>
             </li>
 
-            <li>
-                <a asp-controller="Home" asp-action="Index" class="nav-item-link">
-                    <i class="bi bi-globe"></i>
-                    <span>Inicio Público</span>
-                </a>
-            </li>
+           
         </ul>
     </div>
 
-    <!-- Footer Logout / Login -->
+
     <div class="sidebar-footer">
         @if (isAuth)
         {

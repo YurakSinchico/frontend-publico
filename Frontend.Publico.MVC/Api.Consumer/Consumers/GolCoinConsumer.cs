@@ -16,9 +16,8 @@ namespace Api.Consumer.Consumers
 
 
 
-        // ===========================
         // WALLET
-        // ===========================
+    
 
         public async Task<WalletDTO?> ObtenerWalletAsync(int userId)
         {
@@ -35,9 +34,8 @@ namespace Api.Consumer.Consumers
 
 
 
-        // ===========================
         // TRANSACCIONES
-        // ===========================
+
 
         public async Task<List<TransactionDTO>> ObtenerTransaccionesAsync(int userId)
         {
@@ -53,11 +51,8 @@ namespace Api.Consumer.Consumers
             }
         }
 
-
-
-        // ===========================
         // PREDICCIONES
-        // ===========================
+
 
         public async Task<List<PredictionDTO>> ObtenerPrediccionesAsync(int userId)
         {
@@ -93,9 +88,9 @@ namespace Api.Consumer.Consumers
             }
         }
 
-        // ===========================
+     
         // RANKING / TODAS LAS WALLETS
-        // ===========================
+        
 
         public async Task<List<WalletDTO>> ObtenerTodasLasWalletsAsync()
         {

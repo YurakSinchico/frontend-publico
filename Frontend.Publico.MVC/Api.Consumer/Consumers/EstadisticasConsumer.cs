@@ -15,10 +15,9 @@ namespace Api.Consumer.Consumers
             _httpClient = httpClient;
         }
 
-        // ==========================
+      
         // PARTIDOS
-        // ==========================
-
+        
         public async Task<List<PartidoDTO>> ObtenerPartidosAsync()
         {
             try
@@ -46,10 +45,8 @@ namespace Api.Consumer.Consumers
             }
         }
 
-        // ==========================
+       
         // GRUPOS
-        // ==========================
-
         public async Task<List<GrupoDTO>> ObtenerGruposAsync()
         {
             try
@@ -90,10 +87,8 @@ namespace Api.Consumer.Consumers
             }
         }
 
-        // ==========================
         // SELECCIONES
-        // ==========================
-
+        
         public async Task<List<SeleccionDTO>> ObtenerSeleccionesAsync()
         {
             try
@@ -121,9 +116,9 @@ namespace Api.Consumer.Consumers
             }
         }
 
-        // ==========================
+ 
         // PREDICCIONES
-        // ==========================
+      
 
         public async Task<HttpResponseMessage> GuardarPrediccionAsync(
             PrediccionDTO prediccion,

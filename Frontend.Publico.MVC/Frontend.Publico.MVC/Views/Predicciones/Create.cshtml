@@ -8,7 +8,7 @@
 
 <div class="container-fluid py-4">
 
-    <!-- HEADER / BREADCRUMB -->
+  
     <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light">
         <div class="d-flex align-items-center gap-2 text-muted small">
             <span>Home</span> / <span class="fw-bold text-dark">Predicciones 1X2</span> / <span class="badge bg-info bg-opacity-10 text-cyan rounded-pill">Mundial 2026</span>
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <!-- PRONÓSTICO 1X2 (3 BOTONES INTERACTIVOS CON CUOTAS DINÁMICAS) -->
+
             <div class="mb-4">
                 <label class="form-label fw-bold text-dark mb-2">Pronóstico 1X2:</label>
                 <div class="row g-3">
@@ -130,7 +130,7 @@
                 <span asp-validation-for="PredictedResult" class="text-danger small mt-1 d-block"></span>
             </div>
 
-            <!-- MONTO A APOSTAR -->
+      
             <div class="mb-4">
                 <label class="form-label fw-bold text-dark mb-2">Monto a apostar (UTNGolCoin):</label>
                 <input asp-for="Amount"
@@ -148,7 +148,7 @@
                 </small>
             </div>
 
-            <!-- BOTÓN CONFIRMAR -->
+
             <div class="mt-4">
                 <button type="submit" class="btn text-white w-100 py-3 fw-bold fs-6 rounded-3 shadow-sm d-flex justify-content-center align-items-center gap-2" style="background: linear-gradient(135deg, #06b6d4 0%, #0d9488 100%);">
                     <i class="bi bi-check-circle-fill fs-5"></i> Confirmar Predicción
@@ -179,10 +179,9 @@
         const lblOddsDraw = document.getElementById("lblOddsDraw");
         const lblOddsAway = document.getElementById("lblOddsAway");
 
-        // Object to hold current odds
+   
         let currentOdds = { '1': 1.8, 'X': 3.2, '2': 2.5 };
 
-        // Default to Local (1)
         hiddenInput.value = "1";
 
         function updateOddsFromSelectedOption() {
@@ -208,7 +207,6 @@
                 currentOdds['X'] = dOdds.replace(',', '.');
                 currentOdds['2'] = aOdds.replace(',', '.');
 
-                // Update applied odds input based on currently selected result
                 if (appliedOddsInput) appliedOddsInput.value = currentOdds[hiddenInput.value];
             }
         }
@@ -237,7 +235,7 @@
             });
         });
 
-        // VALIDACIÓN DE MONTO CLIENTE
+ 
         if (amountInput) {
             amountInput.addEventListener("keydown", function (e) {
                 if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === "E") {

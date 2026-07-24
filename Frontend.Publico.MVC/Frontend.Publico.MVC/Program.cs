@@ -9,9 +9,8 @@ namespace Frontend.Publico.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ==========================
             // AUTENTICACIÓN
-            // ==========================
+    
             builder.Services
                 .AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", options =>
@@ -22,14 +21,14 @@ namespace Frontend.Publico.MVC
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 });
 
-            // ==========================
+  
             // MVC
-            // ==========================
+     
             builder.Services.AddControllersWithViews();
 
-            // ==========================
+
             // SESSION
-            // ==========================
+
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
@@ -37,9 +36,9 @@ namespace Frontend.Publico.MVC
                 options.Cookie.IsEssential = true;
             });
 
-            // ==========================
+
             // HTTP CLIENTS
-            // ==========================
+     
             builder.Services.AddHttpClient<AuthConsumer>();
 
             builder.Services.AddHttpClient<EstadisticasConsumer>();

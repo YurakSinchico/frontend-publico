@@ -17,9 +17,9 @@ namespace Frontend.Publico.MVC.Controllers
         }
 
 
-        // ===========================
+     
         // LOGIN
-        // ===========================
+     
 
         [HttpGet]
         public IActionResult Login()
@@ -134,9 +134,8 @@ namespace Frontend.Publico.MVC.Controllers
 
 
 
-        // ===========================
+   
         // REGISTRO
-        // ===========================
 
         [HttpGet]
         public IActionResult Register()
@@ -220,15 +219,6 @@ namespace Frontend.Publico.MVC.Controllers
                 );
 
 
-                /*
-                 La creación de la wallet NO se hace aquí.
-
-                 La regla del negocio:
-                 "Todo usuario nuevo recibe 10 GolCoins"
-
-                 debe manejarla el backend de GolCoin.
-                */
-
 
                 TempData["Success"] =
                     "Usuario registrado correctamente.";
@@ -257,12 +247,8 @@ namespace Frontend.Publico.MVC.Controllers
             );
         }
 
-
-
-
-        // ===========================
         // LOGOUT
-        // ===========================
+
 
         public async Task<IActionResult> Logout()
         {
